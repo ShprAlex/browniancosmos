@@ -33,7 +33,7 @@ class Simulation {
     }
   
     normalizeBrightness(value, n) {
-      let v = Math.min(1, Math.max(0, value / Math.sqrt(n) / this.brighness / 2.2));
+      let v = Math.min(1, Math.max(0, value / Math.sqrt(n) / this.brighness / 2.3));
       if (isNaN(v)) {
         return 0;
       }
