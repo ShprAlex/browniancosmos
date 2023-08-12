@@ -32,7 +32,6 @@ function fillGrid() {
     if (count>=10 && count<max_population) {
         simulation.increasePopulation(Math.min(max_population,Math.max(count,count*count/100)));
     }
-    
 
     for (let i = 0; i < 10; i++) {
         n = (
@@ -58,6 +57,20 @@ function fillGrid() {
         }
         columns.push({ colors: newColors });
         count+=1;
+    }
+}
+
+function draw() {
+    if (count<=canvas.width/columnWidth) {
+        //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        fillGrid();
+        for (let i = 0; i < columns.length; i++) {
+            const column = columns[i];
+            for (let j = 0; j < column.colors.length; j++) {
+                ctx.fillStyle = column.colors[j];
+                ctx.fillRect((i+(count)-2) * columnWidth, j * segmentHeight, columnWidth, segmentHeight);
+            }
+        }
     }
 }
 
@@ -88,28 +101,20 @@ function scroll() {
     }
 }
 
-function draw() {
+function updateUi() {
     if (count<=canvas.width/columnWidth) {
-        //ctx.clearRect(0, 0, canvas.width, canvas.height);
         let loadedPercent = Math.ceil(count*columnWidth/canvas.width*100);
         document.getElementById('overlayText').textContent = 'Loading '+loadedPercent+'%';
-        for (let i = 0; i < columns.length; i++) {
-            const column = columns[i];
-            for (let j = 0; j < column.colors.length; j++) {
-                ctx.fillStyle = column.colors[j];
-                ctx.fillRect((i+(count)-2) * columnWidth, j * segmentHeight, columnWidth, segmentHeight);
-            }
-        }
-        fillGrid();
     }
-    if (count>=canvas.width/columnWidth) {
+    else {
         document.getElementById('overlayText').textContent = '';
     }
 }
 
 function animate() {
-    scroll();
     draw();
+    scroll();
+    updateUi();
     requestAnimationFrame(animate);
 }
 
