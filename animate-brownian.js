@@ -35,7 +35,7 @@ function fillGrid() {
     }
     
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 3; i++) {
         //n = Math.pow(1.006, count-100)-1;
         n = (
             Math.min(10,Math.pow(1.003, count-120))+
@@ -69,12 +69,7 @@ function setup() {
 
 function draw() {
     if (count>window.innerWidth/columnWidth && scrollSpeed>0 && count<canvas.width*10) {
-        if (count<canvas.width/columnWidth) {
-            scrollPosition = (scrollPosition + scrollSpeed*2);
-        }
-        else {
-            scrollPosition = (scrollPosition + scrollSpeed);
-        }
+        scrollPosition = (scrollPosition + scrollSpeed);
         scrollingDiv.scrollLeft = scrollPosition;
         scrollingDiv.scrollTop = 2400-scrollingDiv.offsetHeight-Math.max(0,(scrollPosition-1800)/3);        
     }
@@ -86,7 +81,7 @@ function draw() {
             //console.log(column);
             for (let j = 0; j < column.colors.length; j++) {
                 ctx.fillStyle = column.colors[j];
-                ctx.fillRect((i+(count)-10) * columnWidth, j * segmentHeight, columnWidth, segmentHeight);
+                ctx.fillRect((i+(count)-2) * columnWidth, j * segmentHeight, columnWidth, segmentHeight);
             }
         }
         fillGrid();
