@@ -8,12 +8,12 @@ const segmentHeight = 2;
 
 const scrollingDiv = document.getElementById('scrollingDiv');
 scrollingDiv.scrollTop = 2400-scrollingDiv.offsetHeight;     
-scrollingDiv.addEventListener('wheel', ()=>{scrollSpeed = 0;}, {passive: true});
-scrollingDiv.addEventListener('touchstart', ()=>{scrollSpeed = 0;}, {passive: true});
-scrollingDiv.addEventListener('touchmove', ()=>{scrollSpeed = 0;}, {passive: true});
+scrollingDiv.addEventListener('wheel', stopAutoScroll, {passive: true});
+scrollingDiv.addEventListener('touchstart', stopAutoScroll, {passive: true});
+scrollingDiv.addEventListener('touchmove', stopAutoScroll, {passive: true});
 
-let scrollPosition = 0;
 let scrollSpeed = 2;
+let autoScrollEnabled = true;
 
 const histogram_size = 1200;
 const initial_population = 0;
@@ -61,29 +61,40 @@ function fillGrid() {
     }
 }
 
+function stopAutoScroll() {
+   if (count>canvas.width/columnWidth/3 && scrollingDiv.scrollLeft===0 || scrollingDiv.scrollLeft===canvas.width-scrollingDiv.offsetWidth) {
+       autoScrollEnabled = false;
+   }
+}
+
 function scroll() {
-    if (count>window.innerWidth/columnWidth && scrollSpeed>0 && count<canvas.width*10) {
-        scrollPosition = (scrollPosition + scrollSpeed);
-        scrollingDiv.scrollLeft = scrollPosition;
-        scrollingDiv.scrollTop = 2400-scrollingDiv.offsetHeight-Math.max(0,(scrollPosition-1800)/3);        
+    if (count>window.innerWidth/columnWidth && autoScrollEnabled && count<canvas.width*10) {
+        let scrollLeft= scrollingDiv.scrollLeft;
+        scrollLeft = (scrollLeft + scrollSpeed);
+        scrollingDiv.scrollLeft = scrollLeft;
+        let scrollTop = scrollingDiv.scrollTop;
+        if (scrollLeft>canvas.width/4) {
+            const distLeft = canvas.width-scrollingDiv.offsetWidth-scrollingDiv.scrollLeft+0.01;
+            scrollTop-=Math.min(1,scrollingDiv.scrollTop/distLeft)*scrollSpeed;
+        }
+
+        scrollingDiv.scrollTop = scrollTop;
+    }
+    if (scrollingDiv.scrollLeft>0) {
+        stopAutoScroll();
     }
     if (count>canvas.width/columnWidth) {
         count+=10;
     }
 }
 
-
-
 function draw() {
-
-    //canvas.style.height = ""+Math.max(100,300-Math.sqrt(count*2.1))+"vh";
     if (count<=canvas.width/columnWidth) {
         //ctx.clearRect(0, 0, canvas.width, canvas.height);
         let loadedPercent = Math.ceil(count*columnWidth/canvas.width*100);
         document.getElementById('overlayText').textContent = 'Loading '+loadedPercent+'%';
         for (let i = 0; i < columns.length; i++) {
             const column = columns[i];
-            //console.log(column);
             for (let j = 0; j < column.colors.length; j++) {
                 ctx.fillStyle = column.colors[j];
                 ctx.fillRect((i+(count)-2) * columnWidth, j * segmentHeight, columnWidth, segmentHeight);
@@ -94,30 +105,6 @@ function draw() {
     if (count>=canvas.width/columnWidth) {
         document.getElementById('overlayText').textContent = '';
     }
-
-    // if (count%240==120) {
-    //     scrollPosition=0;
-    // }
-
-    // Shift columns and add new random column
-    //columns.shift();
-    
-
-    // simulation.step(5);
-    // const red_column = simulation.toWaveRough(40);
-    // const green_column = simulation.toWaveRough(20);
-    // const blue_column = simulation.toWaveRough(10);
-    // //const segmentCount = Math.floor(canvas.height / segmentHeight);
-    // const newColors = [];
-    // //console.log(wave_column.length);
-    // for (let j = 0; j < red_column.length; j++) {
-    //     let r = Math.round(red_column[j]*255);
-    //     let g = Math.round(green_column[j]*255);
-    //     let b = Math.round(blue_column[j]*255);
-    //     //newColors.push(getRandomColor());
-    //     newColors.push("rgb("+r+", "+g+", "+b+")");
-    // }
-    // columns.push({ colors: newColors });
 }
 
 function animate() {
@@ -126,7 +113,3 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-
-
-//setup();
-//animate();
