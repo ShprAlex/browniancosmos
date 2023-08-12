@@ -77,7 +77,7 @@ function draw() {
         scrollingDiv.scrollTop = 2400-scrollingDiv.offsetHeight-Math.max(0,(scrollPosition-1800)/3);        
     }
     //canvas.style.height = ""+Math.max(100,300-Math.sqrt(count*2.1))+"vh";
-    if (count<canvas.width) {
+    if (count<=canvas.width/columnWidth) {
     //ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let i = 0; i < columns.length; i++) {
             const column = columns[i];
