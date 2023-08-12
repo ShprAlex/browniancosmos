@@ -68,8 +68,13 @@ function setup() {
 }
 
 function draw() {
-    if (count>800 && scrollSpeed>0 && count<canvas.width*10) {
-        scrollPosition = (scrollPosition + scrollSpeed); // You can adjust this value
+    if (count>window.innerWidth/columnWidth && scrollSpeed>0 && count<canvas.width*10) {
+        if (count<canvas.width/columnWidth) {
+            scrollPosition = (scrollPosition + scrollSpeed*2);
+        }
+        else {
+            scrollPosition = (scrollPosition + scrollSpeed);
+        }
         scrollingDiv.scrollLeft = scrollPosition;
         scrollingDiv.scrollTop = 2400-scrollingDiv.offsetHeight-Math.max(0,(scrollPosition-1800)/3);        
     }
