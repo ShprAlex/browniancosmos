@@ -8,7 +8,6 @@ const segmentHeight = 2;
 
 const scrollingDiv = document.getElementById('scrollingDiv');
 scrollingDiv.scrollTop = 2400-scrollingDiv.offsetHeight;     
-console.log(scrollingDiv.offsetHeight);
 scrollingDiv.addEventListener('wheel', ()=>{scrollSpeed = 0;}, {passive: true});
 scrollingDiv.addEventListener('touchstart', ()=>{scrollSpeed = 0;}, {passive: true});
 scrollingDiv.addEventListener('touchmove', ()=>{scrollSpeed = 0;}, {passive: true});
@@ -35,11 +34,15 @@ function fillGrid() {
     }
     
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 10; i++) {
         //n = Math.pow(1.006, count-100)-1;
+        initial_zoom = 1.003;
+        if (window.innerWidth<800) {
+            initial_zoom = 1.01;
+        }
         n = (
-            Math.min(10,Math.pow(1.003, count-120))+
-            Math.min(45,Math.pow(1.004, count-120))+
+            Math.min(20,Math.pow(initial_zoom, count-120))+
+            Math.min(35,Math.pow(1.004, count-120))+
             Math.pow(1.00191, count-120)-2
         );
         n = Math.max(1,n);
