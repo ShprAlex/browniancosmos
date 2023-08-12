@@ -10,6 +10,9 @@ const scrollingDiv = document.getElementById('scrollingDiv');
 scrollingDiv.scrollTop = 2400-scrollingDiv.offsetHeight;     
 console.log(scrollingDiv.offsetHeight);
 scrollingDiv.addEventListener('wheel', ()=>{scrollSpeed = 0;}, {passive: true});
+scrollingDiv.addEventListener('touchstart', ()=>{scrollSpeed = 0;}, {passive: true});
+scrollingDiv.addEventListener('touchmove', ()=>{scrollSpeed = 0;}, {passive: true});
+
 let scrollPosition = 0;
 let scrollSpeed = 2;
 
