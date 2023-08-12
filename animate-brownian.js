@@ -17,7 +17,7 @@ let scrollSpeed = 2;
 
 const histogram_size = 1200;
 const initial_population = 0;
-const max_population = 300;
+const max_population = 1000;
 
 canvas.width = 7200;
 canvas.height = histogram_size*segmentHeight;// (window.innerHeight-20)/2;
@@ -29,19 +29,14 @@ function fillGrid() {
     const columnCount = Math.floor(canvas.width / columnWidth);
     columns = [];
     //n = Math.min(60,Math.pow(1.04, count-12))+Math.pow(1.017, count-12)-1;
-    if (count>=10 && count<300) {
-        simulation.increasePopulation(Math.min(max_population,(count)));
+    if (count>=10 && count<max_population) {
+        simulation.increasePopulation(Math.min(max_population,Math.max(count,count*count/100)));
     }
     
 
     for (let i = 0; i < 10; i++) {
-        //n = Math.pow(1.006, count-100)-1;
-        initial_zoom = 1.003;
-        if (window.innerWidth<800) {
-            initial_zoom = 1.01;
-        }
         n = (
-            Math.min(20,Math.pow(initial_zoom, count-120))+
+            Math.min(20,Math.pow(1.01, count-120))+
             Math.min(35,Math.pow(1.004, count-120))+
             Math.pow(1.00191, count-120)-2
         );
