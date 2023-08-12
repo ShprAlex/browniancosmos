@@ -61,19 +61,26 @@ function fillGrid() {
     }
 }
 
-function setup() {
-
-}
-
-function draw() {
+function scroll() {
     if (count>window.innerWidth/columnWidth && scrollSpeed>0 && count<canvas.width*10) {
         scrollPosition = (scrollPosition + scrollSpeed);
         scrollingDiv.scrollLeft = scrollPosition;
         scrollingDiv.scrollTop = 2400-scrollingDiv.offsetHeight-Math.max(0,(scrollPosition-1800)/3);        
     }
+    if (count>canvas.width/columnWidth) {
+        count+=10;
+    }
+}
+
+
+
+function draw() {
+
     //canvas.style.height = ""+Math.max(100,300-Math.sqrt(count*2.1))+"vh";
     if (count<=canvas.width/columnWidth) {
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let loadedPercent = Math.ceil(count*columnWidth/canvas.width*100);
+        document.getElementById('overlayText').textContent = 'Loading '+loadedPercent+'%';
         for (let i = 0; i < columns.length; i++) {
             const column = columns[i];
             //console.log(column);
@@ -84,8 +91,8 @@ function draw() {
         }
         fillGrid();
     }
-    else {
-        count+=10;
+    if (count>=canvas.width/columnWidth) {
+        document.getElementById('overlayText').textContent = '';
     }
 
     // if (count%240==120) {
@@ -114,6 +121,7 @@ function draw() {
 }
 
 function animate() {
+    scroll();
     draw();
     requestAnimationFrame(animate);
 }

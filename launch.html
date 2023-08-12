@@ -13,7 +13,6 @@
             overflow-y: scroll;
             width: 100%;
             height: 100vh;
-            scrollbar-width: none;
         }
 
         body {
@@ -35,10 +34,18 @@
             padding: 10px;
             display: flex;
             justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
             transition: opacity 0.5s;
         }
         #overlay:hover {
-            opacity: 1; /* Make the overlay fully visible on hover */
+            opacity: 1;
+        }
+        #overlayText {
+            color: white;
+            font-size: 16px;
+            text-align: left;
+            font-family:'Courier New', Courier, monospace;
         }
         #fullscreenIcon {
             cursor: pointer;
@@ -52,6 +59,7 @@
         <canvas id="canvas"></canvas>
     </div>
     <div id="overlay">
+        <span id="overlayText"></span>
         <i id="fullscreenIcon" class="fas fa-expand"></i>
     </div>
     <script src="brownian-to-wave.js"></script>
@@ -65,18 +73,21 @@
 
         fullscreenIcon.addEventListener('click', function() {
             if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
-            document.getElementById('overlay').style.opacity = '0';
+                document.documentElement.requestFullscreen();
+                document.getElementById('overlay').style.opacity = '0';
             } else {
-            document.exitFullscreen();
+                document.exitFullscreen();
             }
         });
-        document.addEventListener('mousemove', function(e) {
-        if (window.innerHeight - e.clientY <= 50) { // 50 pixels from the bottom
-            document.getElementById('overlay').style.opacity = '1';
-        } else {
-            document.getElementById('overlay').style.opacity = '0';
-        }
+        document.addEventListener('click', function(e) {
+            /* ignore clicks on overlay */
+            if (window.innerHeight - e.clientY > 50) {
+                if (document.getElementById('overlay').style.opacity === '0') {
+                    document.getElementById('overlay').style.opacity = '1';
+                } else {
+                    document.getElementById('overlay').style.opacity = '0';
+                }
+            }
         });
         
     </script>
