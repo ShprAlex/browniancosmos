@@ -2,28 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Side Scrolling Display</title>
-    
     <style>
 
         #scrollingDiv {
-        /* This will ensure that the canvas overflows the div, allowing for scrolling */
             overflow-x: scroll;
             overflow-y: scroll;
             width: 100%;
             height: 100vh;
+            scrollbar-width: none;
         }
 
         body {
             margin: 0;
             background-color: black;
-            /*overflow: scroll;*/
         }
 
         canvas {
             display: block;
             height: 2400px;
+        }
+
+        #overlay {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0,0,0,0.7);
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+            transition: opacity 0.5s;
+        }
+        #overlay:hover {
+            opacity: 1; /* Make the overlay fully visible on hover */
+        }
+        #fullscreenIcon {
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
         }
     </style>
 </head>
@@ -31,40 +51,33 @@
     <div id="scrollingDiv">
         <canvas id="canvas"></canvas>
     </div>
+    <div id="overlay">
+        <i id="fullscreenIcon" class="fas fa-expand"></i>
+    </div>
     <script src="brownian-to-wave.js"></script>
     <script src="animate-brownian.js"></script>
     <script>
-        // const scrollingDiv = document.getElementById('scrollingDiv');
-        // let scrollPosition = 0;
-        // const scrollSpeed = 2;
         // src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"
         // Math.seedrandom('hello.');
 
-        // setInterval(() => {
-        //     scrollPosition = (scrollPosition + scrollSpeed) % 800; // Adjust value based on content width
-        //     scrollingDiv.scrollLeft = scrollPosition;
-        // }, 1000 / 60); // 60 updates per second, similar to requestAnimationFrame
-
-
-        setup();
         animate();
+        const fullscreenIcon = document.getElementById('fullscreenIcon');
 
-
-        // const scrollingDiv = document.getElementById('scrollingDiv');
-        // let scrollPosition = 0;
-        // const scrollSpeed = 2;
-
-        // function scrollCanvas() {
-        //     scrollPosition = (scrollPosition + scrollSpeed) % 800; // You can adjust this value
-        //     scrollingDiv.scrollLeft = scrollPosition;
-
-        //     requestAnimationFrame(scrollCanvas);
-        // }
-
-        // scrollCanvas();
-
-
-
+        fullscreenIcon.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+            document.getElementById('overlay').style.opacity = '0';
+            } else {
+            document.exitFullscreen();
+            }
+        });
+        document.addEventListener('mousemove', function(e) {
+        if (window.innerHeight - e.clientY <= 50) { // 50 pixels from the bottom
+            document.getElementById('overlay').style.opacity = '1';
+        } else {
+            document.getElementById('overlay').style.opacity = '0';
+        }
+        });
         
     </script>
 </body>
