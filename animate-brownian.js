@@ -16,7 +16,7 @@ const initial_population = 0;
 const max_population = 1000;
 
 let simulation = new Simulation(initial_population, histogram_size);
-let count =0;
+let progress = 0;
 
 const scrollingDiv = document.getElementById('scrollingDiv');
 scrollingDiv.scrollTop = canvas.height-scrollingDiv.offsetHeight;
@@ -40,24 +40,24 @@ function drawColumn(x, waveLength) {
 }
 
 function updateSimulation() {
-    if (count>=10 && count<=max_population) {
-        simulation.increasePopulation(Math.min(max_population,Math.max(count,count*count/100)));
+    if (progress>=10 && progress<=max_population) {
+        simulation.increasePopulation(Math.min(max_population,Math.max(progress,progress*progress/100)));
     }
 }
 
 function draw() {
-    if (count<=canvas.width/columnWidth) {
+    if (progress<=canvas.width/columnWidth) {
         for (let i = 0; i < drawColumnBatchSize; i++) {
             waveLength = (
-                Math.min(20,Math.pow(1.01, count-120))+
-                Math.min(35,Math.pow(1.004, count-120))+
-                Math.pow(1.00191, count-120)-2
+                Math.min(20,Math.pow(1.01, progress-120))+
+                Math.min(35,Math.pow(1.004, progress-120))+
+                Math.pow(1.00191, progress-120)-2
             );
             waveLength = Math.max(1,waveLength);
             simulation.step(5);
 
-            drawColumn(count, waveLength);
-            count++;
+            drawColumn(progress, waveLength);
+            progress++;
         }
     }
 }
@@ -66,13 +66,13 @@ function stopAutoScroll() {
     const initialDelay = canvas.width/columnWidth/3;
     const leftSide = scrollSpeed;
     const rightSide = canvas.width-scrollingDiv.offsetWidth;
-    if (count>initialDelay && scrollingDiv.scrollLeft<=leftSide || scrollingDiv.scrollLeft>=rightSide) {
+    if (progress>initialDelay && scrollingDiv.scrollLeft<=leftSide || scrollingDiv.scrollLeft>=rightSide) {
         autoScrollEnabled = false;
     }
 }
 
 function scroll() {
-    if (count>window.innerWidth/columnWidth && autoScrollEnabled && count<canvas.width*10) {
+    if (progress>window.innerWidth/columnWidth && autoScrollEnabled && progress<canvas.width*10) {
         let scrollLeft= scrollingDiv.scrollLeft;
         scrollLeft = (scrollLeft + scrollSpeed);
         scrollingDiv.scrollLeft = scrollLeft;
@@ -87,14 +87,14 @@ function scroll() {
     if (scrollingDiv.scrollLeft>0) {
         stopAutoScroll();
     }
-    if (count>canvas.width/columnWidth) {
-        count+=10;
+    if (progress>canvas.width/columnWidth) {
+        progress+=10;
     }
 }
 
 function updateUi() {
-    if (count<=canvas.width/columnWidth) {
-        let loadedPercent = Math.ceil(count*columnWidth/canvas.width*100);
+    if (progress<=canvas.width/columnWidth) {
+        let loadedPercent = Math.ceil(progress*columnWidth/canvas.width*100);
         document.getElementById('overlayText').textContent = 'Loading '+loadedPercent+'%';
     }
     else {
