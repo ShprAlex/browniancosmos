@@ -1,5 +1,6 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+let params = new URLSearchParams(window.location.search);
 
 const columnWidth = 2;
 const segmentHeight = 2;
@@ -12,10 +13,10 @@ let scrollSpeed = 2;
 let autoScrollEnabled = true;
 
 const histogram_size = Math.floor(canvas.height/segmentHeight);
-const initial_population = 0;
-const max_population = 1000;
+const initial_particles = 0;
+const max_particles = params.get("particles") || 1000;
 
-let simulation = new Simulation(initial_population, histogram_size);
+let simulation = new Simulation(initial_particles, histogram_size);
 let progress = 0;
 
 const scrollingDiv = document.getElementById('scrollingDiv');
@@ -40,8 +41,8 @@ function drawColumn(x, waveLength) {
 }
 
 function updateSimulation() {
-    if (progress>=10 && progress<=max_population) {
-        simulation.increasePopulation(Math.min(max_population,Math.max(progress,progress*progress/100)));
+    if (progress>=10 && progress<=max_particles) {
+        simulation.increasePopulation(Math.min(max_particles,Math.max(progress,progress*progress/100)));
     }
 }
 
