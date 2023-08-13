@@ -24,36 +24,39 @@ scrollingDiv.addEventListener('wheel', stopAutoScroll, {passive: true});
 scrollingDiv.addEventListener('touchstart', stopAutoScroll, {passive: true});
 scrollingDiv.addEventListener('touchmove', stopAutoScroll, {passive: true});
 
-function drawColumn() {
-    n = (
-        Math.min(20,Math.pow(1.01, count-120))+
-        Math.min(35,Math.pow(1.004, count-120))+
-        Math.pow(1.00191, count-120)-2
-    );
-    n = Math.max(1,n);
-    simulation.step(5);
-    const red_column = simulation.toWaveRough(n);
-    const green_column = simulation.toWaveRough(n/2+0.5);
-    const blue_column = simulation.toWaveRough(n/4+0.75);
+function drawColumn(x, waveLength) {
+    const red_column = simulation.toWaveRough(waveLength);
+    const green_column = simulation.toWaveRough(waveLength/2+0.5);
+    const blue_column = simulation.toWaveRough(waveLength/4+0.75);
 
-    for (let j = 0; j < red_column.length; j++) {
-        let r = Math.round(red_column[j]*255);
-        let g = Math.round(green_column[j]*255);
-        let b = Math.round(blue_column[j]*255);
+    for (let y = 0; y < histogram_size; y++) {
+        let r = Math.round(red_column[y]*255);
+        let g = Math.round(green_column[y]*255);
+        let b = Math.round(blue_column[y]*255);
 
         ctx.fillStyle = "rgb("+r+", "+g+", "+b+")";
-        ctx.fillRect(count * columnWidth, j * segmentHeight, columnWidth, segmentHeight);
+        ctx.fillRect(x * columnWidth, y * segmentHeight, columnWidth, segmentHeight);
+    }
+}
+
+function updateSimulation() {
+    if (count>=10 && count<max_population) {
+        simulation.increasePopulation(Math.min(max_population,Math.max(count,count*count/100)));
     }
 }
 
 function draw() {
-    if (count>=10 && count<max_population) {
-        simulation.increasePopulation(Math.min(max_population,Math.max(count,count*count/100)));
-    }
-
     if (count<=canvas.width/columnWidth) {
         for (let i = 0; i < drawColumnBatchSize; i++) {
-            drawColumn();
+            waveLength = (
+                Math.min(20,Math.pow(1.01, count-120))+
+                Math.min(35,Math.pow(1.004, count-120))+
+                Math.pow(1.00191, count-120)-2
+            );
+            waveLength = Math.max(1,waveLength);
+            simulation.step(5);
+
+            drawColumn(count, waveLength);
             count++;
         }
     }
@@ -100,6 +103,7 @@ function updateUi() {
 }
 
 function animate() {
+    updateSimulation();
     draw();
     scroll();
     updateUi();
