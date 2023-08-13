@@ -17,12 +17,12 @@
 
         body {
             margin: 0;
-            background-color: black;
+            background-color: #101010;
         }
 
         canvas {
-            display: block;
-            height: 2400px;
+            max-height: 2400px;
+            min-height: 100%;
         }
 
         #overlay {
@@ -80,13 +80,15 @@
             }
         });
         document.addEventListener('click', function(e) {
-            /* ignore clicks on overlay */
-            if (window.innerHeight - e.clientY > 50) {
-                if (document.getElementById('overlay').style.opacity === '0') {
-                    document.getElementById('overlay').style.opacity = '1';
-                } else {
-                    document.getElementById('overlay').style.opacity = '0';
-                }
+            if (window.innerHeight - e.clientY <= 50) {
+                /* ignore clicks on overlay */
+                return;
+            }
+
+            if (document.getElementById('overlay').style.opacity === '0') {
+                document.getElementById('overlay').style.opacity = '1';
+            } else {
+                document.getElementById('overlay').style.opacity = '0';
             }
         });
         

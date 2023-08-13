@@ -5,15 +5,15 @@ const columnWidth = 2;
 const segmentHeight = 2;
 const drawColumnBatchSize = 10;
 
+canvas.width = 7200;
+canvas.height = 2400;
+
 let scrollSpeed = 2;
 let autoScrollEnabled = true;
 
-const histogram_size = 1200;
+const histogram_size = Math.floor(canvas.height/segmentHeight);
 const initial_population = 0;
 const max_population = 1000;
-
-canvas.width = 7200;
-canvas.height = histogram_size*segmentHeight;
 
 let simulation = new Simulation(initial_population, histogram_size);
 let count =0;
@@ -25,9 +25,9 @@ scrollingDiv.addEventListener('touchstart', stopAutoScroll, {passive: true});
 scrollingDiv.addEventListener('touchmove', stopAutoScroll, {passive: true});
 
 function drawColumn(x, waveLength) {
-    const red_column = simulation.toWaveRough(waveLength);
-    const green_column = simulation.toWaveRough(waveLength/2+0.5);
-    const blue_column = simulation.toWaveRough(waveLength/4+0.75);
+    const red_column = simulation.toWave(waveLength);
+    const green_column = simulation.toWave(waveLength/2+0.5);
+    const blue_column = simulation.toWave(waveLength/4+0.75);
 
     for (let y = 0; y < histogram_size; y++) {
         let r = Math.round(red_column[y]*255);
@@ -40,7 +40,7 @@ function drawColumn(x, waveLength) {
 }
 
 function updateSimulation() {
-    if (count>=10 && count<max_population) {
+    if (count>=10 && count<=max_population) {
         simulation.increasePopulation(Math.min(max_population,Math.max(count,count*count/100)));
     }
 }
