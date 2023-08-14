@@ -2,11 +2,11 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let params = new URLSearchParams(window.location.search);
 
-const columnWidth = 2;
-const segmentHeight = 2;
+const columnWidth = params.get("cellsize") || 2;
+const segmentHeight = params.get("cellsize") || 2;
 const drawColumnBatchSize = 10;
 
-canvas.width = 7200;
+canvas.width = params.get("width") || 7200;
 canvas.height = params.get("height") || 2400;
 
 let scrollSpeed = 2;
@@ -14,9 +14,10 @@ let autoScrollEnabled = true;
 let finishedRendering = false;
 
 const histogram_size = Math.floor(canvas.height/segmentHeight);
-const columns_size = canvas.width/columnWidth;
-const startWavelength = Math.max(params.get("startwl"),1) || 1;
-const endWavelength = params.get("endwl") || 800;
+const columns_size = Math.ceil(canvas.width/columnWidth);
+const brownianVelocity = params.get("velocity") || 5;
+const startWavelength = Math.max(params.get("startw"),1) || 1;
+const endWavelength = params.get("endw") || histogram_size/1.5;
 const initial_particles = 0;
 const max_particles = params.get("particles") || 1000;
 
@@ -45,17 +46,54 @@ function drawColumn(x, waveLength) {
 }
 
 function updateSimulation() {
-    if (progress>=10 && (progress<=max_particles || max_particles<10)) {
+    if (startWavelength>1) {
+    simulation.increasePopulation(max_particles);
+    } else if (progress>=10 && (progress<=max_particles || max_particles<10)) {
         simulation.increasePopulation(Math.min(max_particles,Math.max(progress,progress*progress/100)));
     }
 }
 
+/**
+ * computeWavelenth interpolates the number of columns we've drawn so far to compute the
+ * wavelength for processing the next column.
+ *
+ * Interpolation allow us to reduce the awkward stage where the wavelength is in the low digits
+ * so we can give more screen space to the nicer looking longer waves. At the same time we want
+ * to keep the initial waves with wavelengh = 1 if desired to visually explain what's happening.
+ */
 function computeWavelength() {
-    let waveLength = (
-        Math.min(20,Math.pow(1.01, progress-120))+
-        Math.min(35,Math.pow(1.004, progress-120))+
-        Math.pow(1.00191, progress-120)-2
-    );
+    let wavelength_growth_stages = [
+        [1,1],
+        [120,1],
+        [400,15],
+        [800,25],
+        [columns_size,endWavelength],
+    ];
+
+    let waveLength = 1;
+    let prevStage = wavelength_growth_stages[0];
+
+    for (stage of wavelength_growth_stages) {
+        if(stage[0]!==columns_size && stage[0]*2>columns_size) {
+            continue;
+        }
+        if (progress<stage[0]) {
+            prevLength = prevStage[1]+startWavelength-1;
+            targetLength = Math.min(endWavelength,stage[1]+startWavelength-1);
+
+            stage_length = stage[0]-prevStage[0];
+            stage_progress = progress-prevStage[0];
+
+            p = Math.pow(targetLength/prevLength, 1/stage_length);
+            waveLength=prevLength*Math.pow(p,stage_progress);
+            break;
+        }
+        if (progress>=stage[0] ) {
+            prevStage = stage;
+            waveLength = stage[1]+startWavelength;
+        }
+    }
+
     waveLength = Math.min(Math.min(endWavelength,Math.max(startWavelength,waveLength)));
     return waveLength;
 }
@@ -63,8 +101,9 @@ function computeWavelength() {
 function draw() {
     if (!finishedRendering) {
         for (let i = 0; i < drawColumnBatchSize; i++) {
-            simulation.step(5);
+            simulation.step(brownianVelocity);
             drawColumn(progress, computeWavelength());
+            console.log(progress,columns_size)
             progress++;
             if (progress==columns_size) {
                 finishedRendering=true;
