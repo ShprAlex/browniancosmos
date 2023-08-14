@@ -7,12 +7,14 @@ const segmentHeight = 2;
 const drawColumnBatchSize = 10;
 
 canvas.width = 7200;
-canvas.height = 2400;
+canvas.height = params.get("height") || 2400;
 
 let scrollSpeed = 2;
 let autoScrollEnabled = true;
 
 const histogram_size = Math.floor(canvas.height/segmentHeight);
+const startWavelength = Math.max(params.get("startwl"),1) || 1;
+const endWavelength = params.get("endwl") || 800;
 const initial_particles = 0;
 const max_particles = params.get("particles") || 1000;
 
@@ -41,23 +43,26 @@ function drawColumn(x, waveLength) {
 }
 
 function updateSimulation() {
-    if (progress>=10 && progress<=max_particles) {
+    if (progress>=10 && (progress<=max_particles || max_particles<10)) {
         simulation.increasePopulation(Math.min(max_particles,Math.max(progress,progress*progress/100)));
     }
+}
+
+function computeWavelength() {
+    let waveLength = (
+        Math.min(20,Math.pow(1.01, progress-120))+
+        Math.min(35,Math.pow(1.004, progress-120))+
+        Math.pow(1.00191, progress-120)-2
+    );
+    waveLength = Math.min(Math.min(endWavelength,Math.max(startWavelength,waveLength)));
+    return waveLength;
 }
 
 function draw() {
     if (progress<=canvas.width/columnWidth) {
         for (let i = 0; i < drawColumnBatchSize; i++) {
-            waveLength = (
-                Math.min(20,Math.pow(1.01, progress-120))+
-                Math.min(35,Math.pow(1.004, progress-120))+
-                Math.pow(1.00191, progress-120)-2
-            );
-            waveLength = Math.max(1,waveLength);
             simulation.step(5);
-
-            drawColumn(progress, waveLength);
+            drawColumn(progress, computeWavelength());
             progress++;
         }
     }
