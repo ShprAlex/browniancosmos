@@ -3,35 +3,55 @@ const params = new URLSearchParams(window.location.search);
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-const CELL_WIDTH = params.get("cellsize") || 2;
-const CELL_HEIGHT = params.get("cellsize") || 2;
-const DRAW_COLUMN_BATCH_SIZE = 10;
+let CELL_WIDTH;
+let CELL_HEIGHT;
+let DRAW_COLUMN_BATCH_SIZE;
+let GRID_HEIGHT;
+let GRID_WIDTH;
+let BROWNIAN_VELOCITY;
+let START_WAVELENGTH;
+let END_WAVELENGTH;
+let INITAL_PARTICLES;
+let MAX_PARTICLES;
 
-canvas.width = params.get("width") || 7200;
-canvas.height = params.get("height") || 2400;
-
-let scrollSpeed = 2;
-let autoScrollEnabled = true;
-let finishedRendering = false;
-
-const GRID_HEIGHT = Math.floor(canvas.height/CELL_HEIGHT);
-const GRID_WIDTH = Math.ceil(canvas.width/CELL_WIDTH);
-const BROWNIAN_VELOCITY = params.get("velocity") || 5;
-const START_WAVELENGTH = Math.max(params.get("startw"),1) || 1;
-const END_WAVELENGTH = params.get("endw") || GRID_HEIGHT/1.5;
-const INITAL_PARTICLES = 0;
-const MAX_PARTICLES = params.get("particles") || 1000;
-
-let simulation = new Simulation(INITAL_PARTICLES, GRID_HEIGHT);
+let simulation;
+let scrollSpeed;
+let autoScrollEnabled;
+let finishedRendering;
 let progress = 0;
 
-window.addEventListener('load', animate);
+window.addEventListener('load', ()=>{reset(); animate();});
 
 const scrollingDiv = document.getElementById('scrollingDiv');
-scrollingDiv.scrollTop = canvas.height-scrollingDiv.offsetHeight;
-scrollingDiv.addEventListener('wheel', stopAutoScroll, {passive: true});
-scrollingDiv.addEventListener('touchstart', stopAutoScroll, {passive: true});
-scrollingDiv.addEventListener('touchmove', stopAutoScroll, {passive: true});
+scrollingDiv.addEventListener('wheel', updateAutoScroll, {passive: true});
+scrollingDiv.addEventListener('touchstart', updateAutoScroll, {passive: true});
+scrollingDiv.addEventListener('touchmove', updateAutoScroll, {passive: true});
+
+function reset() {
+    CELL_WIDTH = params.get("cellsize") || 2;
+    CELL_HEIGHT = params.get("cellsize") || 2;
+    DRAW_COLUMN_BATCH_SIZE = 10;
+
+    canvas.width = params.get("width") || 7200;
+    canvas.height = params.get("height") || 2400;
+
+    GRID_HEIGHT = Math.floor(canvas.height/CELL_HEIGHT);
+    GRID_WIDTH = Math.ceil(canvas.width/CELL_WIDTH);
+    BROWNIAN_VELOCITY = params.get("velocity") || 5;
+    START_WAVELENGTH = Math.max(params.get("startw"),1) || 1;
+    END_WAVELENGTH = params.get("endw") || GRID_HEIGHT/1.5;
+    INITAL_PARTICLES = 0;
+    MAX_PARTICLES = params.get("particles") || 1000;
+
+    scrollSpeed = 2;
+    autoScrollEnabled = true;
+    finishedRendering = false;
+    progress = 0;
+    simulation = new Simulation(INITAL_PARTICLES, GRID_HEIGHT);
+
+    scrollingDiv.scrollLeft = 0;
+    scrollingDiv.scrollTop = canvas.height-scrollingDiv.offsetHeight;
+}
 
 function drawColumn(x, waveLength) {
     const red_column = simulation.toWave(waveLength);
@@ -114,7 +134,7 @@ function draw() {
     }
 }
 
-function stopAutoScroll() {
+function updateAutoScroll() {
     const initialDelay = GRID_WIDTH/3;
     const leftSide = scrollSpeed;
     const rightSide = canvas.width-scrollingDiv.offsetWidth;
@@ -137,7 +157,7 @@ function scroll() {
         scrollingDiv.scrollTop = scrollTop;
     }
     if (scrollingDiv.scrollLeft>0) {
-        stopAutoScroll();
+        updateAutoScroll();
     }
     if (finishedRendering) {
         progress+=10;
