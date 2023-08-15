@@ -49,3 +49,13 @@ canvas {
     font-size: 24px;
     padding-left: 10px;
 }
+.modal-content {
+    background-color: transparent !important;
+    border: none !important;
+}
+.modal-backdrop {
+    opacity:0.6 !important;
+}
+.btn-secondary {
+    --bs-btn-bg: transparent !important;
+}

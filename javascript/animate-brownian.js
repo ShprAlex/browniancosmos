@@ -121,10 +121,6 @@ function stopAutoScroll() {
     const initialDelay = GRID_WIDTH/3;
     const leftSide = scrollSpeed;
     const rightSide = canvas.width-scrollingDiv.offsetWidth;
-    if (autoScrollEnabled && scrollingDiv.scrollLeft>=rightSide) {
-        const aboutModal = new bootstrap.Modal(document.getElementById('aboutModal'), {});
-        setTimeout(()=>{aboutModal.show();}, 500);
-    }
     if (progress>window.innerWidth/CELL_WIDTH+10 && (scrollingDiv.scrollLeft<=leftSide || scrollingDiv.scrollLeft>=rightSide)) {
         autoScrollEnabled = false;
     }
