@@ -5,54 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="javascript/brownian.css">
     <title>BrownianCosmos</title>
-    <style>
-
-        #scrollingDiv {
-            overflow-x: scroll;
-            overflow-y: scroll;
-            width: 100%;
-            height: 100vh;
-        }
-
-        body {
-            margin: 0;
-            background-color: #101010;
-        }
-
-        canvas {
-            max-height: 2400px;
-            min-height: 100%;
-        }
-
-        #overlay {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(0,0,0,0.7);
-            padding: 10px;
-            display: flex;
-            justify-content: flex-end;
-            justify-content: space-between;
-            align-items: center;
-            transition: opacity 0.5s;
-        }
-        #overlay:hover {
-            opacity: 1;
-        }
-        #overlayText {
-            color: white;
-            font-size: 16px;
-            text-align: left;
-            font-family:'Courier New', Courier, monospace;
-        }
-        #fullscreenIcon {
-            cursor: pointer;
-            color: white;
-            font-size: 24px;
-        }
-    </style>
 </head>
 <body>
     <div id="scrollingDiv">
