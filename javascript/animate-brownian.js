@@ -1,6 +1,7 @@
+const params = new URLSearchParams(window.location.search);
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-const params = new URLSearchParams(window.location.search);
 
 const CELL_WIDTH = params.get("cellsize") || 2;
 const CELL_HEIGHT = params.get("cellsize") || 2;
@@ -23,6 +24,8 @@ const MAX_PARTICLES = params.get("particles") || 1000;
 
 let simulation = new Simulation(INITAL_PARTICLES, GRID_HEIGHT);
 let progress = 0;
+
+window.addEventListener('load', animate);
 
 const scrollingDiv = document.getElementById('scrollingDiv');
 scrollingDiv.scrollTop = canvas.height-scrollingDiv.offsetHeight;

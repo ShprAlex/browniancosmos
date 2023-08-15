@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="javascript/brownian.css">
-    <title>BrownianCosmos</title>
+    <title>BrownianCosmos - An exploration of surprising patterns in Brownian motion.</title>
 </head>
 <body>
     <div id="scrollingDiv">
@@ -18,34 +18,6 @@
     </div>
     <script src="javascript/brownian-to-wave.js"></script>
     <script src="javascript/animate-brownian.js"></script>
-    <script>
-        // src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"
-        // Math.seedrandom('hello.');
-
-        animate();
-        const fullscreenIcon = document.getElementById('fullscreenIcon');
-
-        fullscreenIcon.addEventListener('click', function() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-                document.getElementById('overlay').style.opacity = '0';
-            } else {
-                document.exitFullscreen();
-            }
-        });
-        document.addEventListener('click', function(e) {
-            if (window.innerHeight - e.clientY <= 50) {
-                /* ignore clicks on overlay */
-                return;
-            }
-
-            if (document.getElementById('overlay').style.opacity === '0') {
-                document.getElementById('overlay').style.opacity = '1';
-            } else {
-                document.getElementById('overlay').style.opacity = '0';
-            }
-        });
-        
-    </script>
+    <script src="javascript/brownian-ui.js"></script>
 </body>
 </html>
