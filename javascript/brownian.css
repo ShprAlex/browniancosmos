@@ -36,8 +36,13 @@ canvas {
     text-align: left;
     font-family:'Courier New', Courier, monospace;
 }
-#fullscreenIcon {
+.overlayButtons {
+    text-align: right;
+    padding-left: 20px;
+}
+.overlayIcon {
     cursor: pointer;
     color: white;
     font-size: 24px;
+    padding-left: 10px;
 }
