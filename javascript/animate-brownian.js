@@ -75,9 +75,10 @@ function computeWavelength() {
 
     let waveLength = 1;
     let prevStage = wavelength_growth_stages[0];
-
+    const lastStage =wavelength_growth_stages[wavelength_growth_stages.length-1];
     for (stage of wavelength_growth_stages) {
-        if(stage[0]!==GRID_WIDTH && stage[0]*2>GRID_WIDTH) {
+        if(stage!==lastStage && stage[0]*2>GRID_WIDTH) {
+            console.log(targetLength,prevLength, stage_length,p );
             continue;
         }
         if (progress<stage[0]) {
@@ -88,6 +89,7 @@ function computeWavelength() {
             stage_progress = progress-prevStage[0];
 
             p = Math.pow(targetLength/prevLength, 1/stage_length);
+            console.log(targetLength,prevLength, stage_length,p );
             waveLength=prevLength*Math.pow(p,stage_progress);
             break;
         }
@@ -96,7 +98,7 @@ function computeWavelength() {
             waveLength = stage[1]+START_WAVELENGTH;
         }
     }
-
+    console.log(progress,waveLength );
     waveLength = Math.min(Math.min(END_WAVELENGTH,Math.max(START_WAVELENGTH,waveLength)));
     return waveLength;
 }
@@ -106,7 +108,6 @@ function draw() {
         for (let i = 0; i < DRAW_COLUMN_BATCH_SIZE; i++) {
             simulation.step(BROWNIAN_VELOCITY);
             drawColumn(progress, computeWavelength());
-            console.log(progress,GRID_WIDTH)
             progress++;
             if (progress==GRID_WIDTH) {
                 finishedRendering=true;
@@ -120,7 +121,11 @@ function stopAutoScroll() {
     const initialDelay = GRID_WIDTH/3;
     const leftSide = scrollSpeed;
     const rightSide = canvas.width-scrollingDiv.offsetWidth;
-    if (progress>initialDelay && scrollingDiv.scrollLeft<=leftSide || scrollingDiv.scrollLeft>=rightSide) {
+    if (autoScrollEnabled && scrollingDiv.scrollLeft>=rightSide) {
+        const aboutModal = new bootstrap.Modal(document.getElementById('aboutModal'), {});
+        setTimeout(()=>{aboutModal.show();}, 500);
+    }
+    if (progress>window.innerWidth/CELL_WIDTH+10 && (scrollingDiv.scrollLeft<=leftSide || scrollingDiv.scrollLeft>=rightSide)) {
         autoScrollEnabled = false;
     }
 }

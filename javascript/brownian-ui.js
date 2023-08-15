@@ -8,12 +8,12 @@ fullscreenIcon.addEventListener('click', function() {
         document.exitFullscreen();
     }
 });
-document.addEventListener('click', function(e) {
+
+canvas.addEventListener('click', function(e) {
     if (window.innerHeight - e.clientY <= 50) {
         /* ignore clicks on overlay */
         return;
     }
-
     if (document.getElementById('overlay').style.opacity === '0') {
         document.getElementById('overlay').style.opacity = '1';
     } else {
