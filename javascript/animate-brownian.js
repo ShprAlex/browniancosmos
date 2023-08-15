@@ -78,7 +78,6 @@ function computeWavelength() {
     const lastStage =wavelength_growth_stages[wavelength_growth_stages.length-1];
     for (stage of wavelength_growth_stages) {
         if(stage!==lastStage && stage[0]*2>GRID_WIDTH) {
-            console.log(targetLength,prevLength, stage_length,p );
             continue;
         }
         if (progress<stage[0]) {
@@ -89,7 +88,6 @@ function computeWavelength() {
             stage_progress = progress-prevStage[0];
 
             p = Math.pow(targetLength/prevLength, 1/stage_length);
-            console.log(targetLength,prevLength, stage_length,p );
             waveLength=prevLength*Math.pow(p,stage_progress);
             break;
         }
@@ -98,7 +96,6 @@ function computeWavelength() {
             waveLength = stage[1]+START_WAVELENGTH;
         }
     }
-    console.log(progress,waveLength );
     waveLength = Math.min(Math.min(END_WAVELENGTH,Math.max(START_WAVELENGTH,waveLength)));
     return waveLength;
 }
@@ -128,13 +125,13 @@ function stopAutoScroll() {
 
 function scroll() {
     if (progress>window.innerWidth/CELL_WIDTH && autoScrollEnabled && progress<canvas.width*10) {
-        let scrollLeft= scrollingDiv.scrollLeft;
+        let scrollLeft = scrollingDiv.scrollLeft;
         scrollLeft = (scrollLeft + scrollSpeed);
         scrollingDiv.scrollLeft = scrollLeft;
         let scrollTop = scrollingDiv.scrollTop;
         if (scrollLeft>canvas.width/4) {
             const distLeft = canvas.width-scrollingDiv.offsetWidth-scrollingDiv.scrollLeft+0.01;
-            scrollTop-=Math.min(1,scrollingDiv.scrollTop/distLeft)*scrollSpeed;
+            scrollTop -= Math.min(1,scrollingDiv.scrollTop/distLeft)*scrollSpeed;
         }
 
         scrollingDiv.scrollTop = scrollTop;

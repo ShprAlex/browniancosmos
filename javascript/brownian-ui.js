@@ -20,3 +20,7 @@ canvas.addEventListener('click', function(e) {
         document.getElementById('overlay').style.opacity = '0';
     }
 });
+
+const aboutModalEl = document.getElementById('aboutModal');
+aboutModalEl.addEventListener('show.bs.modal', function (event) { scrollSpeed = 0.5; });
+aboutModalEl.addEventListener('hide.bs.modal', function (event) { scrollSpeed = 2; });
