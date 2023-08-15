@@ -1,10 +1,10 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-let params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
 
-const columnWidth = params.get("cellsize") || 2;
-const segmentHeight = params.get("cellsize") || 2;
-const drawColumnBatchSize = 10;
+const CELL_WIDTH = params.get("cellsize") || 2;
+const CELL_HEIGHT = params.get("cellsize") || 2;
+const DRAW_COLUMN_BATCH_SIZE = 10;
 
 canvas.width = params.get("width") || 7200;
 canvas.height = params.get("height") || 2400;
@@ -13,15 +13,15 @@ let scrollSpeed = 2;
 let autoScrollEnabled = true;
 let finishedRendering = false;
 
-const histogram_size = Math.floor(canvas.height/segmentHeight);
-const columns_size = Math.ceil(canvas.width/columnWidth);
-const brownianVelocity = params.get("velocity") || 5;
-const startWavelength = Math.max(params.get("startw"),1) || 1;
-const endWavelength = params.get("endw") || histogram_size/1.5;
-const initial_particles = 0;
-const max_particles = params.get("particles") || 1000;
+const GRID_HEIGHT = Math.floor(canvas.height/CELL_HEIGHT);
+const GRID_WIDTH = Math.ceil(canvas.width/CELL_WIDTH);
+const BROWNIAN_VELOCITY = params.get("velocity") || 5;
+const START_WAVELENGTH = Math.max(params.get("startw"),1) || 1;
+const END_WAVELENGTH = params.get("endw") || GRID_HEIGHT/1.5;
+const INITAL_PARTICLES = 0;
+const MAX_PARTICLES = params.get("particles") || 1000;
 
-let simulation = new Simulation(initial_particles, histogram_size);
+let simulation = new Simulation(INITAL_PARTICLES, GRID_HEIGHT);
 let progress = 0;
 
 const scrollingDiv = document.getElementById('scrollingDiv');
@@ -35,21 +35,21 @@ function drawColumn(x, waveLength) {
     const green_column = simulation.toWave(waveLength/2+0.5);
     const blue_column = simulation.toWave(waveLength/4+0.75);
 
-    for (let y = 0; y < histogram_size; y++) {
+    for (let y = 0; y < GRID_HEIGHT; y++) {
         let r = Math.round(red_column[y]*255);
         let g = Math.round(green_column[y]*255);
         let b = Math.round(blue_column[y]*255);
 
         ctx.fillStyle = "rgb("+r+", "+g+", "+b+")";
-        ctx.fillRect(x * columnWidth, y * segmentHeight, columnWidth, segmentHeight);
+        ctx.fillRect(x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
     }
 }
 
 function updateSimulation() {
-    if (startWavelength>1) {
-    simulation.increasePopulation(max_particles);
-    } else if (progress>=10 && (progress<=max_particles || max_particles<10)) {
-        simulation.increasePopulation(Math.min(max_particles,Math.max(progress,progress*progress/100)));
+    if (START_WAVELENGTH>1) {
+        simulation.increasePopulation(MAX_PARTICLES);
+    } else if (progress>=10 && (progress<=MAX_PARTICLES || MAX_PARTICLES<10)) {
+        simulation.increasePopulation(Math.min(MAX_PARTICLES,Math.max(progress,progress*progress/100)));
     }
 }
 
@@ -67,19 +67,19 @@ function computeWavelength() {
         [120,1],
         [400,15],
         [800,25],
-        [columns_size,endWavelength],
+        [GRID_WIDTH,END_WAVELENGTH],
     ];
 
     let waveLength = 1;
     let prevStage = wavelength_growth_stages[0];
 
     for (stage of wavelength_growth_stages) {
-        if(stage[0]!==columns_size && stage[0]*2>columns_size) {
+        if(stage[0]!==GRID_WIDTH && stage[0]*2>GRID_WIDTH) {
             continue;
         }
         if (progress<stage[0]) {
-            prevLength = prevStage[1]+startWavelength-1;
-            targetLength = Math.min(endWavelength,stage[1]+startWavelength-1);
+            prevLength = prevStage[1]+START_WAVELENGTH-1;
+            targetLength = Math.min(END_WAVELENGTH,stage[1]+START_WAVELENGTH-1);
 
             stage_length = stage[0]-prevStage[0];
             stage_progress = progress-prevStage[0];
@@ -90,22 +90,22 @@ function computeWavelength() {
         }
         if (progress>=stage[0] ) {
             prevStage = stage;
-            waveLength = stage[1]+startWavelength;
+            waveLength = stage[1]+START_WAVELENGTH;
         }
     }
 
-    waveLength = Math.min(Math.min(endWavelength,Math.max(startWavelength,waveLength)));
+    waveLength = Math.min(Math.min(END_WAVELENGTH,Math.max(START_WAVELENGTH,waveLength)));
     return waveLength;
 }
 
 function draw() {
     if (!finishedRendering) {
-        for (let i = 0; i < drawColumnBatchSize; i++) {
-            simulation.step(brownianVelocity);
+        for (let i = 0; i < DRAW_COLUMN_BATCH_SIZE; i++) {
+            simulation.step(BROWNIAN_VELOCITY);
             drawColumn(progress, computeWavelength());
-            console.log(progress,columns_size)
+            console.log(progress,GRID_WIDTH)
             progress++;
-            if (progress==columns_size) {
+            if (progress==GRID_WIDTH) {
                 finishedRendering=true;
                 break;
             }
@@ -114,7 +114,7 @@ function draw() {
 }
 
 function stopAutoScroll() {
-    const initialDelay = columns_size/3;
+    const initialDelay = GRID_WIDTH/3;
     const leftSide = scrollSpeed;
     const rightSide = canvas.width-scrollingDiv.offsetWidth;
     if (progress>initialDelay && scrollingDiv.scrollLeft<=leftSide || scrollingDiv.scrollLeft>=rightSide) {
@@ -123,7 +123,7 @@ function stopAutoScroll() {
 }
 
 function scroll() {
-    if (progress>window.innerWidth/columnWidth && autoScrollEnabled && progress<canvas.width*10) {
+    if (progress>window.innerWidth/CELL_WIDTH && autoScrollEnabled && progress<canvas.width*10) {
         let scrollLeft= scrollingDiv.scrollLeft;
         scrollLeft = (scrollLeft + scrollSpeed);
         scrollingDiv.scrollLeft = scrollLeft;
@@ -145,7 +145,7 @@ function scroll() {
 
 function updateUi() {
     if (!finishedRendering) {
-        let loadedPercent = Math.ceil(progress*columnWidth/canvas.width*100);
+        let loadedPercent = Math.ceil(progress*CELL_WIDTH/canvas.width*100);
         document.getElementById('overlayText').textContent = 'Loading '+loadedPercent+'%';
     }
     else {
