@@ -47,11 +47,12 @@ canvas {
     cursor: pointer;
     color: white;
     font-size: 24px;
-    padding-left: 10px;
+    padding-left: 15px;
 }
 .modal-content {
     background-color: transparent !important;
     border: none !important;
+    padding-bottom: 100px;
 }
 .modal-backdrop {
     opacity:0.6 !important;
