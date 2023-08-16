@@ -16,7 +16,10 @@ let MAX_PARTICLES;
 
 let simulation;
 let scrollSpeed;
-let autoScrollEnabled;
+let scrollLeft;
+let scrollTop;
+let startedScrolling;
+let finishedScrolling;
 let finishedRendering;
 let progress = 0;
 
@@ -44,13 +47,16 @@ function reset() {
     MAX_PARTICLES = params.get("particles") || 300;
 
     scrollSpeed = 2;
-    autoScrollEnabled = true;
+    startedScrolling = false;
+    finishedScrolling = false;
     finishedRendering = false;
     progress = 0;
     simulation = new Simulation(INITAL_PARTICLES, GRID_HEIGHT);
 
-    scrollingDiv.scrollLeft = 0;
-    scrollingDiv.scrollTop = canvas.height-scrollingDiv.offsetHeight;
+    scrollLeft = 0;
+    scrollTop = canvas.clientHeight-scrollingDiv.offsetHeight;
+    scrollingDiv.scrollLeft = scrollLeft;
+    scrollingDiv.scrollTop = scrollTop;
 }
 
 function drawColumn(x, waveLength) {
@@ -133,63 +139,68 @@ function computeWavelength() {
 }
 
 function draw() {
-    if (!finishedRendering) {
-        for (let i = 0; i < DRAW_COLUMN_BATCH_SIZE; i++) {
-            simulation.step(BROWNIAN_VELOCITY);
-            drawColumn(progress, computeWavelength());
-            progress++;
-            if (progress==GRID_WIDTH) {
-                finishedRendering=true;
-                break;
-            }
+    for (let i = 0; i < DRAW_COLUMN_BATCH_SIZE; i++) {
+        simulation.step(BROWNIAN_VELOCITY);
+        drawColumn(progress, computeWavelength());
+        progress++;
+        if (progress==GRID_WIDTH) {
+            break;
         }
+    }
+    if (progress==GRID_WIDTH) {
+        finishedRendering = true;
     }
 }
 
 function updateAutoScroll() {
-    const initialDelay = GRID_WIDTH/3;
     const leftSide = scrollSpeed;
-    const rightSide = canvas.width-scrollingDiv.offsetWidth;
-    if (progress>window.innerWidth/CELL_WIDTH+10 && (scrollingDiv.scrollLeft<=leftSide || scrollingDiv.scrollLeft>=rightSide)) {
-        autoScrollEnabled = false;
+    const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
+    if (startedScrolling && (scrollingDiv.scrollLeft<=leftSide || scrollingDiv.scrollLeft>=rightSide)) {
+        finishedScrolling = true;
     }
 }
 
 function scroll() {
-    if (progress>window.innerWidth/CELL_WIDTH && autoScrollEnabled && progress<canvas.width*10) {
-        let scrollLeft = scrollingDiv.scrollLeft;
+    if (Math.abs(scrollLeft-scrollingDiv.scrollLeft)>scrollSpeed || Math.abs(scrollTop-scrollingDiv.scrollTop)>scrollSpeed) {
+        scrollLeft = scrollingDiv.scrollLeft;
+        scrollTop = scrollingDiv.scrollTop;
+    }
+    if (progress>window.innerWidth/CELL_WIDTH) {
+        startedScrolling = true;
         scrollLeft = (scrollLeft + scrollSpeed);
-        scrollingDiv.scrollLeft = scrollLeft;
-        let scrollTop = scrollingDiv.scrollTop;
-        if (scrollLeft>canvas.width/4) {
-            const distLeft = canvas.width-scrollingDiv.offsetWidth-scrollingDiv.scrollLeft+0.01;
-            scrollTop -= Math.min(1,scrollingDiv.scrollTop/distLeft)*scrollSpeed;
+        if (scrollLeft>canvas.clientWidth/4) {
+            const distLeft = canvas.clientWidth-scrollingDiv.offsetWidth-scrollLeft+0.01;
+            scrollTop -= Math.min(1,scrollTop/distLeft)*scrollSpeed;
         }
-
+        scrollingDiv.scrollLeft = scrollLeft;
         scrollingDiv.scrollTop = scrollTop;
     }
-    if (scrollingDiv.scrollLeft>0) {
+    if (startedScrolling && !finishedScrolling && scrollLeft>scrollSpeed*2) {
         updateAutoScroll();
-    }
-    if (finishedRendering) {
-        progress+=10;
     }
 }
 
-function updateUi() {
+function updateStatusText() {
+    const statusTextEl = document.getElementById('statusText');
     if (!finishedRendering) {
         let loadedPercent = Math.ceil(progress*CELL_WIDTH/canvas.width*100);
-        document.getElementById('overlayText').textContent = 'Loading '+loadedPercent+'%';
+        statusTextEl.textContent = 'Loading '+loadedPercent+'%';
     }
     else {
-        document.getElementById('overlayText').textContent = '';
+        statusTextEl.textContent = '';
     }
 }
 
 function animate() {
-    updateSimulation();
-    draw();
-    scroll();
-    updateUi();
-    requestAnimationFrame(animate);
+    if (!finishedRendering) {
+        updateSimulation();
+        draw();
+        updateStatusText();
+    }
+    if (!finishedScrolling) {
+        scroll();
+    }
+    if(!finishedRendering || !finishedScrolling) {
+        requestAnimationFrame(animate);
+    }
 }

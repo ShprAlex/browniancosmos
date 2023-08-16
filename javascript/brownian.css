@@ -33,7 +33,7 @@ canvas {
 #overlay:hover {
     opacity: 1;
 }
-#overlayText {
+#statusText {
     color: white;
     font-size: 16px;
     text-align: left;
