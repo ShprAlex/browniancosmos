@@ -28,7 +28,7 @@ canvas {
     justify-content: flex-end;
     justify-content: space-between;
     align-items: center;
-    transition: opacity 0.5s;
+    transition: visibility 0.5s, opacity 0.5s;
 }
 #overlay:hover {
     opacity: 1;
@@ -39,7 +39,7 @@ canvas {
     text-align: left;
     font-family:'Courier New', Courier, monospace;
 }
-.overlayButtons {
+#footerButtons {
     text-align: right;
     padding-left: 20px;
 }

@@ -1,26 +1,43 @@
 const fullscreenIcon = document.getElementById('fullscreenIcon');
+const footerEl = document.getElementById('overlay');
+const footerFieldset = document.getElementById('footerButtons');
+const aboutModalEl = document.getElementById('aboutModal');
+
+function showFooter() {
+    footerEl.style.opacity = '1';
+    footerEl.style.visibility = 'visible';
+}
+
+function hideFooter() {
+    footerEl.style.opacity = '0';
+    footerEl.style.visibility = 'hidden';
+}
+
+function handleShowModal() {
+    scrollSpeed = 0.5;
+    hideFooter();
+}
+function handleHideModal() {
+    scrollSpeed = 2;
+    showFooter();
+}
 
 fullscreenIcon.addEventListener('click', function() {
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
-        document.getElementById('overlay').style.opacity = '0';
+        hideFooter();
     } else {
         document.exitFullscreen();
     }
 });
 
 canvas.addEventListener('click', function(e) {
-    if (window.innerHeight - e.clientY <= 50) {
-        /* ignore clicks on overlay */
-        return;
-    }
-    if (document.getElementById('overlay').style.opacity === '0') {
-        document.getElementById('overlay').style.opacity = '1';
+    if (footerEl.style.visibility === 'hidden') {
+        showFooter();
     } else {
-        document.getElementById('overlay').style.opacity = '0';
+        hideFooter();
     }
 });
 
-const aboutModalEl = document.getElementById('aboutModal');
-aboutModalEl.addEventListener('show.bs.modal', function (event) { scrollSpeed = 0.5; });
-aboutModalEl.addEventListener('hide.bs.modal', function (event) { scrollSpeed = 2; });
+aboutModalEl.addEventListener('show.bs.modal', handleShowModal);
+aboutModalEl.addEventListener('hide.bs.modal', handleHideModal);
