@@ -54,9 +54,21 @@ function reset() {
 }
 
 function drawColumn(x, waveLength) {
-    const red_column = simulation.toWave(waveLength);
-    const green_column = simulation.toWave(waveLength/2+0.5);
-    const blue_column = simulation.toWave(waveLength/4+0.75);
+    let red_column;
+    let green_column;
+    let blue_column;
+    if (END_WAVELENGTH>1) {
+        red_column = simulation.toWave(waveLength);
+        green_column = simulation.toWave(waveLength/2+0.5);
+        blue_column = simulation.toWave(waveLength/4+0.75);
+    }
+    else {
+        let brightness = GRID_HEIGHT/MAX_PARTICLES/2;
+        column = simulation.histogram.map(v=>Math.min(v*brightness,1));
+        red_column = column;
+        green_column = column;
+        blue_column = column;
+    }
 
     for (let y = 0; y < GRID_HEIGHT; y++) {
         let r = Math.round(red_column[y]*255);
@@ -69,7 +81,7 @@ function drawColumn(x, waveLength) {
 }
 
 function updateSimulation() {
-    if (START_WAVELENGTH>1) {
+    if (START_WAVELENGTH>1 || progress>300) {
         simulation.increasePopulation(MAX_PARTICLES);
     } else if (progress>=10 && (progress<=MAX_PARTICLES || MAX_PARTICLES<10)) {
         simulation.increasePopulation(Math.min(MAX_PARTICLES,Math.max(progress,progress*progress/100)));
