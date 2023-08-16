@@ -41,7 +41,7 @@ function reset() {
     START_WAVELENGTH = Math.max(params.get("startw"),1) || 1;
     END_WAVELENGTH = params.get("endw") || GRID_HEIGHT/1.5;
     INITAL_PARTICLES = 0;
-    MAX_PARTICLES = params.get("particles") || 1000;
+    MAX_PARTICLES = params.get("particles") || 300;
 
     scrollSpeed = 2;
     autoScrollEnabled = true;
@@ -99,7 +99,7 @@ function updateSimulation() {
 function computeWavelength() {
     let wavelength_growth_stages = [
         [1,1],
-        [120,1],
+        [Math.min(120,GRID_WIDTH/6),1],
         [400,15],
         [800,25],
         [GRID_WIDTH,END_WAVELENGTH],
