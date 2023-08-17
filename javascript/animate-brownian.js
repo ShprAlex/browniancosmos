@@ -1,7 +1,7 @@
-let params = new URLSearchParams(window.location.search);
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+const scrollingDiv = document.getElementById('scrollingDiv');
+const applicationTitleEl = document.getElementById('applicationTitle');
 
 let CELL_WIDTH;
 let CELL_HEIGHT;
@@ -14,6 +14,7 @@ let END_WAVELENGTH;
 let INITAL_PARTICLES;
 let MAX_PARTICLES;
 
+let params;
 let simulation;
 let scrollSpeed;
 let scrollLeft;
@@ -24,16 +25,18 @@ let finishedRendering;
 let progress = 0;
 let hideApplicationTitleCount = 0;
 
-window.addEventListener('load', ()=>{reset(); animate();});
+window.addEventListener('load', ()=>{initialize(); reset(); animate();});
 
-const applicationTitleEl = document.getElementById('applicationTitle');
-const scrollingDiv = document.getElementById('scrollingDiv');
-scrollingDiv.addEventListener('wheel', updateAutoScroll, {passive: true});
-scrollingDiv.addEventListener('touchstart', updateAutoScroll, {passive: true});
-scrollingDiv.addEventListener('touchmove', updateAutoScroll, {passive: true});
-scrollingDiv.addEventListener('wheel', updateApplicationTitle, {passive: true});
-scrollingDiv.addEventListener('touchstart', updateApplicationTitle, {passive: true});
-scrollingDiv.addEventListener('touchmove', updateApplicationTitle, {passive: true});
+function initialize() {
+    params = new URLSearchParams(window.location.search);
+
+    scrollingDiv.addEventListener('wheel', updateAutoScroll, {passive: true});
+    scrollingDiv.addEventListener('touchstart', updateAutoScroll, {passive: true});
+    scrollingDiv.addEventListener('touchmove', updateAutoScroll, {passive: true});
+    scrollingDiv.addEventListener('wheel', updateApplicationTitle, {passive: true});
+    scrollingDiv.addEventListener('touchstart', updateApplicationTitle, {passive: true});
+    scrollingDiv.addEventListener('touchmove', updateApplicationTitle, {passive: true});
+}
 
 function reset() {
     CELL_WIDTH = params.get("cellsize") || 2;
