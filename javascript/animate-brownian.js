@@ -197,7 +197,7 @@ function updateStatusText() {
     }
 }
 
-function updateApplicationTitle() {
+function updateApplicationTitle(event = null) {
     const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
     if(
         (scrollingDiv.scrollLeft>=rightSide || applicationTitleEl.style.opacity==1)
@@ -205,7 +205,12 @@ function updateApplicationTitle() {
         && window.innerWidth<canvas.clientWidth
     ) {
         applicationTitleEl.style.opacity=1;
-        hideApplicationTitleCount++;
+        if (event && event.type==='touchmove') {
+            hideApplicationTitleCount+=8;
+        }
+        else {
+            hideApplicationTitleCount++;
+        }
     }
     else {
         applicationTitleEl.style.opacity=0;
