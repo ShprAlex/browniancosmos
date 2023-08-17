@@ -76,6 +76,8 @@ canvas {
     border: none !important;
     padding-bottom: 100px;
     font-family: 'REM', sans-serif;
+    --bs-body-bg: transparent;
+    --bs-border-color: #6c757d;
 }
 .modal-backdrop {
     opacity:0.6 !important;

@@ -1,4 +1,4 @@
-const params = new URLSearchParams(window.location.search);
+let params = new URLSearchParams(window.location.search);
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -56,6 +56,7 @@ function reset() {
     finishedScrolling = false;
     finishedRendering = false;
     progress = 0;
+    hideApplicationTitleCount = 0;
     simulation = new Simulation(INITAL_PARTICLES, GRID_HEIGHT);
 
     scrollLeft = 0;
@@ -174,7 +175,7 @@ function scroll() {
         startedScrolling = true;
         scrollLeft = (scrollLeft + scrollSpeed);
         if (scrollLeft>canvas.clientWidth/4) {
-            const distLeft = canvas.clientWidth-scrollingDiv.offsetWidth-scrollLeft+0.01;
+            const distLeft = Math.max(0.01, canvas.clientWidth-scrollingDiv.offsetWidth-scrollLeft);
             scrollTop -= Math.min(1,scrollTop/distLeft)*scrollSpeed;
         }
         scrollingDiv.scrollLeft = scrollLeft;
@@ -203,6 +204,7 @@ function updateApplicationTitle(event = null) {
         (scrollingDiv.scrollLeft>=rightSide || applicationTitleEl.style.opacity>'0')
         && hideApplicationTitleCount<60
         && window.innerWidth<canvas.clientWidth
+        && !modalVisible
     ) {
         applicationTitleEl.style.opacity=1;
         if (event && event.type==='touchmove') {

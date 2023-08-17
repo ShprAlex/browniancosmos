@@ -31,17 +31,17 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content modal-dark bg-dark" data-bs-theme="dark">
+            <div class="modal-content modal-dark bg-dark text-light" data-bs-theme="dark">
                 <div class="modal-header">
-                    <h5 class="modal-title text-light" data-bs-theme="dark" id="exampleModalLabel">
+                    <h5 class="modal-title" data-bs-theme="dark">
                         About
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body text-light about-text">
+                <div class="modal-body about-text">
                     <p>
                         BrownianCosmos is an exploration of patterns present in Brownian motion.
                     </p>
@@ -62,11 +62,47 @@
             </div>
         </div>
     </div>
+    <!-- Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-dark bg-dark text-light" data-bs-theme="dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" data-bs-theme="dark">
+                        Settings
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="settingsForm">
+                        <div class="row">
+                          <div class="col-6">
+                            <div class="mb-3">
+                                <label for="settingsWidth" class="form-label">Width</label>
+                                <input type="text" class="form-control" name="width">
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="mb-3">
+                              <label for="settingsHeight" class="form-label">Height</label>
+                              <input type="text" class="form-control" name="height">
+                            </div>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="settingsForm" id="applySettingsButton" class="btn btn-primary">Apply and Reload</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="footer">
         <span id="statusText"></span>
         <div id="footerButtons" >
-            <i id="infoButton" class="fas fa-info-circle footer-icon" data-bs-toggle="modal" data-bs-target="#aboutModal"></i>
-            <i id="fullscreenIcon" class="fas fa-expand footer-icon full-screen-icon"></i>
+            <i id="settingsFooterButton" class="fa-solid fa-gear footer-icon"></i>
+            <i id="aboutFooterButton" class="fa-solid fa-info-circle footer-icon"></i>
+            <i id="fullscreenIcon" class="fa-solid fa-expand footer-icon full-screen-icon"></i>
         </div>
     </div>
     <script src="javascript/brownian-to-wave.js"></script>
