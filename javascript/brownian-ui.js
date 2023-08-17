@@ -1,5 +1,5 @@
 const fullscreenIcon = document.getElementById('fullscreenIcon');
-const footerEl = document.getElementById('overlay');
+const footerEl = document.getElementById('footer');
 const footerFieldset = document.getElementById('footerButtons');
 const aboutModalEl = document.getElementById('aboutModal');
 
