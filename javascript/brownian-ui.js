@@ -15,6 +15,8 @@ function hideFooter() {
 
 function handleShowModal() {
     scrollSpeed = 0.5;
+    applicationTitleEl.style.opacity = '0';
+    hideApplicationTitleCount = 60; // don't show title again
     hideFooter();
 }
 function handleHideModal() {

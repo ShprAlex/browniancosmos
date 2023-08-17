@@ -22,13 +22,18 @@ let startedScrolling;
 let finishedScrolling;
 let finishedRendering;
 let progress = 0;
+let hideApplicationTitleCount = 0;
 
 window.addEventListener('load', ()=>{reset(); animate();});
 
+const applicationTitleEl = document.getElementById('applicationTitle');
 const scrollingDiv = document.getElementById('scrollingDiv');
 scrollingDiv.addEventListener('wheel', updateAutoScroll, {passive: true});
 scrollingDiv.addEventListener('touchstart', updateAutoScroll, {passive: true});
 scrollingDiv.addEventListener('touchmove', updateAutoScroll, {passive: true});
+scrollingDiv.addEventListener('wheel', updateApplicationTitle, {passive: true});
+scrollingDiv.addEventListener('touchstart', updateApplicationTitle, {passive: true});
+scrollingDiv.addEventListener('touchmove', updateApplicationTitle, {passive: true});
 
 function reset() {
     CELL_WIDTH = params.get("cellsize") || 2;
@@ -177,6 +182,7 @@ function scroll() {
     }
     if (startedScrolling && !finishedScrolling && scrollLeft>scrollSpeed*2) {
         updateAutoScroll();
+        updateApplicationTitle();
     }
 }
 
@@ -188,6 +194,21 @@ function updateStatusText() {
     }
     else {
         statusTextEl.textContent = '';
+    }
+}
+
+function updateApplicationTitle() {
+    const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
+    if(
+        (scrollingDiv.scrollLeft>=rightSide || applicationTitleEl.style.opacity==1)
+        && hideApplicationTitleCount<60
+        && window.innerWidth<canvas.clientWidth
+    ) {
+        applicationTitleEl.style.opacity=1;
+        hideApplicationTitleCount++;
+    }
+    else {
+        applicationTitleEl.style.opacity=0;
     }
 }
 
