@@ -39,8 +39,13 @@ class Simulation {
       }
       return v;
     }
-  
-    toWaveRough(n) {
+
+    /**
+     * Scans over the histogram and for every index subtracts the of the next n numbers from the
+     * previous n numbers. This linear sum is a bit like a "square" wave that has sharp boundary
+     * conditions sensitive to noise.
+     */
+    toWaveSquare(n) {
       let column = new Array(this.histogram.length).fill(0);
       let r = Math.floor(n);
       let fraction = n - r;
@@ -53,6 +58,8 @@ class Simulation {
         column[(i+r)%this.HISTOGRAM_SIZE] += running_sum;
         running_sum -= this.histogram[i];
         running_sum += this.histogram[(i+r)%this.HISTOGRAM_SIZE];
+        // Less efficient version of this for loop:
+        //
         // for (let j = -r; j < r; j++) {
         //   let v = this.histogram[(i + j + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE];
         //   if (j < 0) {
@@ -74,36 +81,44 @@ class Simulation {
   
       return column;
     }
-  
-    toWaveSmooth(n) {
+
+    /**
+     * Scans over the histogram and for every index subtracts a weighted sum the of the next n
+     * numbers from the previous n numbers. The weights are in the form of a triagle where the
+     * greatest weight is given to the middle of the n numbers, forming a kino of "tiangular"
+     * wave. This has the benefit of being less affected by noise at the edges where the weights
+     * are low.
+     */
+    toWaveTriangular(n) {
       let column = new Array(this.HISTOGRAM_SIZE).fill(0);
       let r = Math.floor(n);
   
       for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
-        let quarter = 0; // r // 4
-        for (let j = -r + quarter; j < 0 + quarter; j++) {
+        for (let j = -r; j < 0; j++) {
           let v = this.histogram[(i + j + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE];
-          let k = r + j - quarter;
+          let k = r + j;
           column[i] += v * (r - Math.abs(r - 1 - k * 2)) / r;
         }
   
-        for (let j = 0 - quarter; j < r - quarter; j++) {
+        for (let j = 0; j < r; j++) {
           let v = this.histogram[(i + j + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE];
-          let k = j + quarter;
+          let k = j;
           column[i] -= v * (r - Math.abs(r - 1 - k * 2)) / r;
         }
   
         column[i] = this.normalizeBrightness(column[i], n);
       }
-  
       return column;
     }
   
-    toWave(n, smooth = false) {
-      if (smooth) {
-        return this.toWaveSmooth(n);
+    toWave(n, waveShape = "square") {
+      if (waveShape === "square") {
+        return this.toWaveSquare(n);
       }
-      return this.toWaveRough(n);
+      else if (waveShape === "triangular") {
+        return this.toWaveTriangular(n);
+      }
+      return null;
     }
   
     step(generations = 1) {
@@ -112,14 +127,3 @@ class Simulation {
       }
     }
   }
-
-
-//   histogram_size = 400;
-//   max_population = 400;
-//   step_size = 5;
-//   console.log("start");
-//   simulation = new Simulation(max_population=max_population, histogram_size=histogram_size);
-//   for (let i=0;i<100;i++) {
-//     simulation.step();
-//   }
-//   console.log(simulation.toWave(5));
