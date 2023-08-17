@@ -35,9 +35,7 @@ function handleHideModal() {
     modalVisible = false;
     scrollSpeed = 2;
     showFooter();
-    if (applicationTitleEl.style.opacity === '0' && hideApplicationTitleCount<60) {
-        applicationTitleEl.style.opacity = '1'
-    }
+    updateApplicationTitle();
 }
 
 aboutFooterButton.addEventListener('click', function() { aboutModal.show(); });
