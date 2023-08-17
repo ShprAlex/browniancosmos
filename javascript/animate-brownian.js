@@ -200,7 +200,7 @@ function updateStatusText() {
 function updateApplicationTitle(event = null) {
     const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
     if(
-        (scrollingDiv.scrollLeft>=rightSide || applicationTitleEl.style.opacity==1)
+        (scrollingDiv.scrollLeft>=rightSide || applicationTitleEl.style.opacity>'0')
         && hideApplicationTitleCount<60
         && window.innerWidth<canvas.clientWidth
     ) {
