@@ -84,8 +84,8 @@ class Simulation {
 
     /**
      * Scans over the histogram and for every index subtracts a weighted sum the of the next n
-     * numbers from the previous n numbers. The weights are in the form of a triagle where the
-     * greatest weight is given to the middle of the n numbers, forming a kino of "tiangular"
+     * numbers from the previous n numbers. The weights are in the form of a triangle where the
+     * greatest weight is given to the middle of the n numbers, forming a kind of "tiangular"
      * wave. This has the benefit of being less affected by noise at the edges where the weights
      * are low.
      */
@@ -106,7 +106,7 @@ class Simulation {
           column[i] -= v * (r - Math.abs(r - 1 - k * 2)) / r;
         }
   
-        column[i] = this.normalizeBrightness(column[i], n);
+        column[i] = this.normalizeBrightness(column[i]*2, n);
       }
       return column;
     }
