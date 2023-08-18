@@ -8,7 +8,6 @@ const settingsModalEl = document.getElementById('settingsModal');
 const settingsModal = new bootstrap.Modal(settingsModalEl);
 const settingsForm = document.getElementById('settingsForm');
 const aboutFooterButton = document.getElementById('aboutFooterButton');
-const settingsFooterButton = document.getElementById('settingsFooterButton');
 const applySettingsButton = document.getElementById('applySettingsButton');
 const selectPresetEl = document.getElementById("selectPreset");
 const settingsMenuItems = document.querySelectorAll('#settingsMenuItems .dropdown-item');
@@ -79,8 +78,6 @@ function showSettingsModal() {
 }
 
 aboutFooterButton.addEventListener('click', function() { aboutModal.show(); });
-
-settingsFooterButton.addEventListener('click', function() { showSettingsModal(); });
 
 settingsForm.addEventListener('submit', function(event) {
     event.preventDefault();
