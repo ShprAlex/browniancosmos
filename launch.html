@@ -142,9 +142,18 @@
     <div id="footer">
         <span id="statusText"></span>
         <div id="footerButtons" >
-            <i id="settingsFooterButton" class="fa-solid fa-gear footer-icon"></i>
+            <div id="settingsMenuItems" class="btn-group dropup">
+                <i type="button" class="fa-solid fa-gear footer-icon" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" data-value="10-particles" href="#">10 Particles</a></li>
+                    <li><a class="dropdown-item" data-value="pure-brownian-30" href="#">Underlying Brownian 30</a></li>
+                    <li><a class="dropdown-item" data-value="pure-brownian-10000" href="#">Underlying Brownian 10,000</a></li>
+                    <li><a class="dropdown-item" data-value="default" href="#">Default</a></li>
+                    <li><a class="dropdown-item" data-value="custom" href="#">Custom</a></li>
+                </ul>
+            </div>
             <i id="aboutFooterButton" class="fa-solid fa-info-circle footer-icon"></i>
-            <i id="fullscreenIcon" class="fa-solid fa-expand footer-icon full-screen-icon"></i>
+            <i id="fullscreenIcon" class="fa-solid fa-expand footer-icon"></i>
         </div>
     </div>
     <script src="javascript/brownian-to-wave.js"></script>

@@ -94,9 +94,12 @@ function drawColumn(x, waveLength) {
 }
 
 function updateSimulation() {
-    if (START_WAVELENGTH>1 || progress>300) {
+    if (progress<10) {
+        return;
+    }
+    if (START_WAVELENGTH>1 || END_WAVELENGTH == 1 || progress>300 || MAX_PARTICLES<30) {
         simulation.increasePopulation(MAX_PARTICLES);
-    } else if (progress>=10 && (progress<=MAX_PARTICLES || MAX_PARTICLES<10)) {
+    } else if (progress<=MAX_PARTICLES) {
         simulation.increasePopulation(Math.min(MAX_PARTICLES,Math.max(progress,progress*progress/100)));
     }
 }
@@ -189,6 +192,10 @@ function scroll() {
     if (startedScrolling && !finishedScrolling && scrollLeft>scrollSpeed*2) {
         updateAutoScroll();
         updateApplicationTitle();
+    }
+    console.log(window.innerWidth,GRID_WIDTH*CELL_SIZE);
+    if (window.innerWidth+scrollSpeed>=GRID_WIDTH*CELL_SIZE) {
+        finishedScrolling = true;
     }
 }
 

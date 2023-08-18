@@ -67,7 +67,10 @@ canvas {
     font-size: 24px;
     margin: 0 8px;
 }
-.full-screen-icon {
+#settingsMenuItems {
+    vertical-align: inherit;
+}
+#fullscreenIcon {
     margin-right:0px;
 }
 .modal-content {
