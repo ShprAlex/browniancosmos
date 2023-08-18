@@ -50,12 +50,11 @@ settingsForm.addEventListener('submit', function(event) {
     event.preventDefault();
     settingsModal.hide();
     const formData = new FormData(event.target);
-    params = new URLSearchParams(
-        {
-            height: formData.get("height"),
-            width: formData.get("width"),
-        }
-    );
+    const formDataObj = Object.fromEntries(formData.entries());
+    // params is defined in animate-brownian.js setting it here lets us avoid reloading.
+    params = new URLSearchParams(formDataObj);
+    // update the url without reloading.
+    history.pushState({}, 'BrownianCosmos', `launch.html?${params.toString()}`);
     finishedRendering = true;
     finishedScrolling = true;
     reset();
