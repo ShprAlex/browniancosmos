@@ -76,19 +76,19 @@
                     <form id="settingsForm" novalidate>
                         <div class="mb-3">
                             <label for="particles" class="form-label">Number of Particles</label>
-                            <input type="number" step="10" class="form-control" name="particles">
+                            <input type="number" step="10" min="0" class="form-control" name="particles">
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="width" class="form-label">Width</label>
-                                    <input type="number" step="100" class="form-control" name="width">
+                                    <input type="number" step="100" min="0" class="form-control" name="width">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="height" class="form-label">Height</label>
-                                    <input type="number" step="100" class="form-control" name="height">
+                                    <input type="number" step="100" min="0" class="form-control" name="height">
                                 </div>
                             </div>
                         </div>
@@ -96,13 +96,13 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="startw" class="form-label">Wavelength Min</label>
-                                    <input type="number" step="1" class="form-control" name="startw">
+                                    <input type="number" step="1" min="1" class="form-control" name="startw">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="endw" class="form-label">Wavelength Max</label>
-                                    <input type="number" step="1" class="form-control" name="endw">
+                                    <input type="number" step="1" min="1" class="form-control" name="endw">
                                 </div>
                             </div>
                         </div>
@@ -110,13 +110,13 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="cellsize" class="form-label">Cell Size</label>
-                                    <input type="number" step="1" class="form-control" name="cellsize">
+                                    <input type="number" step="1" min="1" class="form-control" name="cellsize">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="velocity" class="form-label">Brownian&nbsp;Velocity</label>
-                                    <input type="number" step="1" class="form-control" name="velocity">
+                                    <input type="number" step="1" min="0" class="form-control" name="velocity">
                                 </div>
                             </div>
                         </div>

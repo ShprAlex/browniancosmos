@@ -35,7 +35,7 @@ canvas {
 }
 #applicationTitle h3 {
     font-size: 18px;
-    margin:100px 0 250px;
+    margin:100px 0 0;
 }
 #footer {
     position: fixed;
