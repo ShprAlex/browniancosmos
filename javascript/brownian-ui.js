@@ -43,6 +43,11 @@ aboutFooterButton.addEventListener('click', function() { aboutModal.show(); });
 settingsFooterButton.addEventListener('click', function() {
     settingsForm.elements["height"].value = canvas.height;
     settingsForm.elements["width"].value = canvas.width;
+    settingsForm.elements["particles"].value = MAX_PARTICLES;
+    settingsForm.elements["startw"].value = START_WAVELENGTH;
+    settingsForm.elements["endw"].value = END_WAVELENGTH;
+    settingsForm.elements["cellsize"].value = CELL_SIZE;
+    settingsForm.elements["velocity"].value = BROWNIAN_VELOCITY;
     settingsModal.show();
 });
 

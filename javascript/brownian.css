@@ -75,8 +75,8 @@ canvas {
     border: none !important;
     padding-bottom: 100px;
     font-family: 'REM', sans-serif;
-    --bs-body-bg: rgb(0,0,0,0.6);
-    --bs-border-color: #6c757d;
+    --bs-body-bg: rgb(0,0,0,0.5);
+    --bs-border-color: #dee2e6;
 }
 .modal-backdrop {
     opacity:0.6 !important;

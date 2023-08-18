@@ -3,8 +3,7 @@ const ctx = canvas.getContext('2d');
 const scrollingDiv = document.getElementById('scrollingDiv');
 const applicationTitleEl = document.getElementById('applicationTitle');
 
-let CELL_WIDTH;
-let CELL_HEIGHT;
+let CELL_SIZE;
 let DRAW_COLUMN_BATCH_SIZE;
 let GRID_HEIGHT;
 let GRID_WIDTH;
@@ -39,15 +38,14 @@ function initialize() {
 }
 
 function reset() {
-    CELL_WIDTH = params.get("cellsize") || 2;
-    CELL_HEIGHT = params.get("cellsize") || 2;
+    CELL_SIZE = params.get("cellsize") || 2;
     DRAW_COLUMN_BATCH_SIZE = 10;
 
     canvas.width = params.get("width") || 7200;
     canvas.height = params.get("height") || 2400;
 
-    GRID_HEIGHT = Math.floor(canvas.height/CELL_HEIGHT);
-    GRID_WIDTH = Math.ceil(canvas.width/CELL_WIDTH);
+    GRID_HEIGHT = Math.floor(canvas.height/CELL_SIZE);
+    GRID_WIDTH = Math.ceil(canvas.width/CELL_SIZE);
     BROWNIAN_VELOCITY = params.get("velocity") || 5;
     START_WAVELENGTH = Math.max(params.get("startw"),1) || 1;
     END_WAVELENGTH = params.get("endw") || GRID_HEIGHT/2;
@@ -91,7 +89,7 @@ function drawColumn(x, waveLength) {
         let b = Math.round(blue_column[y]*255);
 
         ctx.fillStyle = "rgb("+r+", "+g+", "+b+")";
-        ctx.fillRect(x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
+        ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
     }
 }
 
@@ -174,14 +172,13 @@ function scroll() {
         scrollLeft = scrollingDiv.scrollLeft;
         scrollTop = scrollingDiv.scrollTop;
     }
-    if (progress>window.innerWidth/CELL_WIDTH) {
+    if (progress>window.innerWidth/CELL_SIZE) {
         startedScrolling = true;
         scrollLeft = (scrollLeft + scrollSpeed);
         if (scrollLeft>canvas.clientWidth/4) {
             const distLeft = Math.max(0.01, canvas.clientWidth-scrollingDiv.offsetWidth-scrollLeft);
             scrollTop -= Math.min(1,scrollTop/distLeft)*scrollSpeed;
             scrollTop = Math.max(0, scrollTop);
-            console.log(scrollTop, distLeft);
         }
         scrollingDiv.scrollLeft = scrollLeft;
         scrollingDiv.scrollTop = scrollTop;
@@ -195,7 +192,7 @@ function scroll() {
 function updateStatusText() {
     const statusTextEl = document.getElementById('statusText');
     if (!finishedRendering) {
-        let loadedPercent = Math.ceil(progress*CELL_WIDTH/canvas.width*100);
+        let loadedPercent = Math.ceil(progress*CELL_SIZE/canvas.width*100);
         statusTextEl.textContent = 'Loading '+loadedPercent+'%';
     }
     else {
