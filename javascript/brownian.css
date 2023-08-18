@@ -45,7 +45,6 @@ canvas {
     background-color: rgba(0,0,0,0.7);
     padding: 10px;
     display: flex;
-    justify-content: flex-end;
     justify-content: space-between;
     align-items: center;
     transition: visibility 0.5s, opacity 0.5s;
@@ -76,7 +75,7 @@ canvas {
     border: none !important;
     padding-bottom: 100px;
     font-family: 'REM', sans-serif;
-    --bs-body-bg: transparent;
+    --bs-body-bg: rgb(0,0,0,0.6);
     --bs-border-color: #6c757d;
 }
 .modal-backdrop {
@@ -88,5 +87,5 @@ canvas {
     font-size: 17px;
 }
 .btn-secondary {
-    --bs-btn-bg: transparent !important;
+    --bs-btn-bg: rgb(255,255,255,0.2) !important;
 }
