@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=REM:wght@300;400&family=Inder&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="javascript/brownian.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
     <title>BrownianCosmos - An exploration of surprising patterns in Brownian motion.</title>
 </head>
@@ -52,8 +53,9 @@
                         in a continuous wavelike way.
                     </p>
                     <p>
-                        This simulation compares the number of particles in adjacent intervals to reveal
-                        those waves and what they look like across different frequencies.
+                        This simulation reveals those waves by mapping differences in the number of
+                        particles between adjacent intervals to color wavelength and intensity letting
+                        us better appreciate the mathematics of this naturally occuring phenomenon.
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -74,6 +76,14 @@
                 </div>
                 <div class="modal-body">
                     <form id="settingsForm" novalidate>
+                        <div class="mb-3">
+                            <label for="selectPreset" class="form-label">Preset Configurations</label>
+                            <select class="form-select" aria-label="Default select example" id="selectPreset">
+                                <option selected>Custom</option>
+                                <option value="default">Default</option>
+                                <option value="10-particles">10 Particles</option>
+                            </select>
+                        </div>
                         <div class="mb-3">
                             <label for="particles" class="form-label">Number of Particles</label>
                             <input type="number" step="10" min="0" class="form-control" name="particles">
@@ -96,13 +106,13 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="startw" class="form-label">Wavelength Min</label>
-                                    <input type="number" step="1" min="1" class="form-control" name="startw">
+                                    <input type="number" step="10" min="0" class="form-control" name="startw">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="endw" class="form-label">Wavelength Max</label>
-                                    <input type="number" step="1" min="1" class="form-control" name="endw">
+                                    <input type="number" step="10" min="0" class="form-control" name="endw">
                                 </div>
                             </div>
                         </div>

@@ -10,6 +10,7 @@ const settingsForm = document.getElementById('settingsForm');
 const aboutFooterButton = document.getElementById('aboutFooterButton');
 const settingsFooterButton = document.getElementById('settingsFooterButton');
 const applySettingsButton = document.getElementById('applySettingsButton');
+const selectPresetEl = document.getElementById("selectPreset");
 
 function showFooter() {
     footerEl.style.opacity = '1';
@@ -65,6 +66,37 @@ settingsForm.addEventListener('submit', function(event) {
     reset();
     animate();
 });
+
+
+selectPresetEl.addEventListener("change", (event) => {
+    const presets = {
+        "default": {
+            "height": 2400,
+            "width": 7200,
+            "particles": 300,
+            "startw": 1,
+            "endw": 600,
+            "cellsize": 2,
+            "velocity": 4,
+        },
+        "10-particles": {
+            "height": window.innerHeight,
+            "width": Math.max(1000, window.innerWidth),
+            "particles": 10,
+            "startw": 1,
+            "endw": window.innerHeight/4,
+            "cellsize": 2,
+            "velocity": 4,
+        },
+    }
+    if (event.target.value in presets) {
+        const preset_dict =  presets[event.target.value];
+        for (const [key, value] of Object.entries(preset_dict)) {
+            settingsForm.elements[key].value = value;
+        }
+    }
+});
+
 
 fullscreenIcon.addEventListener('click', function() {
     if (!document.fullscreenElement) {
