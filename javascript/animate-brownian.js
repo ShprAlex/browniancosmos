@@ -173,8 +173,11 @@ function scroll() {
         scrollTop = scrollingDiv.scrollTop;
     }
     if (progress>window.innerWidth/CELL_SIZE) {
+        if (!startedScrolling) {
+            scrollLeft+=scrollSpeed; // extra boost at the start
+        }
         startedScrolling = true;
-        scrollLeft = (scrollLeft + scrollSpeed);
+        scrollLeft+=scrollSpeed;
         if (scrollLeft>canvas.clientWidth/4) {
             const distLeft = Math.max(0.01, canvas.clientWidth-scrollingDiv.offsetWidth-scrollLeft);
             scrollTop -= Math.min(1,scrollTop/distLeft)*scrollSpeed;
