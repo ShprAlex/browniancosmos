@@ -94,7 +94,7 @@ function drawColumn(x, waveLength) {
 }
 
 function updateSimulation() {
-    if (progress<10) {
+    if (progress<10 && START_WAVELENGTH==1) {
         return;
     }
     if (START_WAVELENGTH>1 || END_WAVELENGTH == 1 || progress>300 || MAX_PARTICLES<30) {
