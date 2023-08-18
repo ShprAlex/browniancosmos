@@ -16,7 +16,6 @@ settingsMenuItems.forEach(item => {
     item.addEventListener('click', function(event) {
         event.preventDefault();
         const option = event.target.getAttribute('data-value');
-        console.log('Value:', event.target.getAttribute('data-value'));
         if (option === "custom") {
             showSettingsModal();
         }

@@ -181,7 +181,9 @@ function scroll() {
         }
         startedScrolling = true;
         scrollLeft+=scrollSpeed;
-        if (scrollLeft>canvas.clientWidth/4) {
+        // When starting waves are small, start scrolling up a quarter of the way through the animation.
+        // Don't scroll up if the canvas height is only a little bigger than the window height.
+        if ((scrollLeft>canvas.clientWidth/4 || START_WAVELENGTH>10) && canvas.clientHeight>window.innerHeight*1.2) {
             const distLeft = Math.max(0.01, canvas.clientWidth-scrollingDiv.offsetWidth-scrollLeft);
             scrollTop -= Math.min(1,scrollTop/distLeft)*scrollSpeed;
             scrollTop = Math.max(0, scrollTop);
@@ -193,7 +195,6 @@ function scroll() {
         updateAutoScroll();
         updateApplicationTitle();
     }
-    console.log(window.innerWidth,GRID_WIDTH*CELL_SIZE);
     if (window.innerWidth+scrollSpeed>=GRID_WIDTH*CELL_SIZE) {
         finishedScrolling = true;
     }
