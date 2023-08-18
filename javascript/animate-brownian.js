@@ -180,6 +180,8 @@ function scroll() {
         if (scrollLeft>canvas.clientWidth/4) {
             const distLeft = Math.max(0.01, canvas.clientWidth-scrollingDiv.offsetWidth-scrollLeft);
             scrollTop -= Math.min(1,scrollTop/distLeft)*scrollSpeed;
+            scrollTop = Math.max(0, scrollTop);
+            console.log(scrollTop, distLeft);
         }
         scrollingDiv.scrollLeft = scrollLeft;
         scrollingDiv.scrollTop = scrollTop;
