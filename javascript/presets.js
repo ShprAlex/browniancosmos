@@ -3,7 +3,7 @@ function getPresets(option) {
     return {
         "default": {
             "height": 2400,
-            "width": 7200,
+            "width": 6000,
             "particles": 300,
             "startw": 1,
             "endw": 600,
@@ -21,7 +21,7 @@ function getPresets(option) {
         },
         "pure-brownian-30": {
             "height": Math.max(800,window.innerHeight),
-            "width": Math.max(1000,window.innerWidth*2),
+            "width": Math.max(2000,window.innerWidth*1.8),
             "particles": 30,
             "startw": 1,
             "endw": 1,
@@ -39,7 +39,7 @@ function getPresets(option) {
         },
         "big-waves": {
             "height": 2400,
-            "width": 7200,
+            "width": 6000,
             "particles": 300,
             "startw": 60,
             "endw": 300,

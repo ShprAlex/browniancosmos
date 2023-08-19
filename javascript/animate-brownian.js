@@ -36,21 +36,25 @@ function initialize() {
     scrollingDiv.addEventListener('touchstart', updateApplicationTitle, {passive: true});
     scrollingDiv.addEventListener('touchmove', updateApplicationTitle, {passive: true});
 }
+function getParam(key) {
+    let defaultParams = getPresets("default");
+    return parseInt(params.get(key)) || defaultParams[key];
+}
 
 function reset() {
-    CELL_SIZE = params.get("cellsize") || 2;
+    CELL_SIZE = getParam("cellsize");
     DRAW_COLUMN_BATCH_SIZE = 10;
 
-    canvas.width = params.get("width") || 7200;
-    canvas.height = params.get("height") || 2400;
+    canvas.width = getParam("width");
+    canvas.height = getParam("height");
 
     GRID_HEIGHT = Math.floor(canvas.height/CELL_SIZE);
     GRID_WIDTH = Math.ceil(canvas.width/CELL_SIZE);
-    BROWNIAN_VELOCITY = params.get("velocity") || 5;
-    START_WAVELENGTH = Math.max(params.get("startw"),1) || 1;
-    END_WAVELENGTH = params.get("endw") || GRID_HEIGHT/2;
+    BROWNIAN_VELOCITY = getParam("velocity");
+    START_WAVELENGTH = getParam("startw");
+    END_WAVELENGTH = getParam("endw");
     INITAL_PARTICLES = 0;
-    MAX_PARTICLES = params.get("particles") || 300;
+    MAX_PARTICLES = getParam("particles");
 
     scrollSpeed = 2;
     startedScrolling = false;
@@ -190,6 +194,9 @@ function scroll() {
         }
         scrollingDiv.scrollLeft = scrollLeft;
         scrollingDiv.scrollTop = scrollTop;
+        if (hideApplicationTitleCount>0) {
+            hideApplicationTitleCount--;
+        }
     }
     if (startedScrolling && !finishedScrolling && scrollLeft>scrollSpeed*2) {
         updateAutoScroll();
@@ -214,7 +221,7 @@ function updateStatusText() {
 function updateApplicationTitle(event = null) {
     const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
     if(
-        (scrollingDiv.scrollLeft>=rightSide || applicationTitleEl.style.opacity>'0')
+        (scrollingDiv.scrollLeft>=rightSide-150 || applicationTitleEl.style.opacity>'0')
         && hideApplicationTitleCount<60
         && window.innerWidth<canvas.clientWidth
         && !modalVisible
