@@ -1,7 +1,6 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const scrollingDiv = document.getElementById('scrollingDiv');
-const applicationTitleEl = document.getElementById('applicationTitle');
 
 let CELL_SIZE;
 let DRAW_COLUMN_BATCH_SIZE;
@@ -22,7 +21,6 @@ let startedScrolling;
 let finishedScrolling;
 let finishedRendering;
 let progress = 0;
-let hideApplicationTitleCount = 0;
 
 window.addEventListener('load', ()=>{initialize(); reset(); animate();});
 
@@ -32,9 +30,6 @@ function initialize() {
     scrollingDiv.addEventListener('scrollend', updateAutoScroll, {passive: true});
     scrollingDiv.addEventListener('touchstart', updateAutoScroll, {passive: true});
     scrollingDiv.addEventListener('touchmove', updateAutoScroll, {passive: true});
-    scrollingDiv.addEventListener('scrollend', updateApplicationTitle, {passive: true});
-    scrollingDiv.addEventListener('touchstart', updateApplicationTitle, {passive: true});
-    scrollingDiv.addEventListener('touchmove', updateApplicationTitle, {passive: true});
 }
 
 function getParam(key) {
@@ -63,7 +58,6 @@ function reset() {
     finishedScrolling = false;
     finishedRendering = false;
     progress = 0;
-    hideApplicationTitleCount = 0;
     simulation = new Simulation(INITAL_PARTICLES, GRID_HEIGHT);
 
     scrollLeft = 0;
@@ -165,9 +159,7 @@ function draw() {
     }
     if (progress==GRID_WIDTH) {
         finishedRendering = true;
-        if (GRID_WIDTH-1<=window.innerWidth/CELL_SIZE) {
-            showApplicationTitle(true);
-        }
+        canvas.dispatchEvent(new CustomEvent('renderingend', {bubbles: true}));
     }
 }
 
@@ -217,34 +209,6 @@ function updateStatusText() {
     }
     else {
         statusTextEl.textContent = '';
-    }
-}
-
-function showApplicationTitle(show) {
-    if (show) {
-        applicationTitleEl.style.opacity=1;
-        applicationTitleEl.style.visibility='visible';
-    }
-    else {
-        applicationTitleEl.style.opacity=0;
-        applicationTitleEl.style.visibility='hidden';
-    }
-}
-
-function updateApplicationTitle(event = null) {
-    const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
-    if(
-        (scrollingDiv.scrollLeft>=rightSide-150)
-        && window.innerWidth<canvas.clientWidth
-        && !modalVisible
-        && finishedScrolling === false
-    ) {
-        showApplicationTitle(true);
-    }
-    else {
-        if (finishedScrolling && (scrollLeft!=scrollingDiv.scrollLeft || scrollTop!=scrollingDiv.scrollTop)) {
-            showApplicationTitle(false);
-        }
     }
 }
 

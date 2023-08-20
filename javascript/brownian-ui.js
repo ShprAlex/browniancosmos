@@ -28,7 +28,6 @@ function showFooter(show) {
 function handleShowModal() {
     scrollSpeed = 0.5;
     modalVisible = true;
-    showApplicationTitle(false);
     showFooter(false);
 }
 
@@ -36,17 +35,16 @@ function handleHideModal() {
     modalVisible = false;
     scrollSpeed = 2;
     showFooter(true);
-    updateApplicationTitle();
 }
 
 function resetAnimation(settingsData) {
+    canvas.dispatchEvent(new CustomEvent('resetstart', {bubbles: true}));
     // params is defined in animate-brownian.js.
     // Setting params here lets us avoid reloading.
     // after animate() is called, params is internally parsed to extract the parameters.
     params = new URLSearchParams(settingsData);
     // update the url without reloading.
     history.pushState({}, 'BrownianCosmos', `launch.html?${params.toString()}`);
-    showApplicationTitle(false);
     finishedRendering = true;
     finishedScrolling = true;
     setTimeout(()=>{reset(); animate(); aboutModal.show();}, 200); // give the previous animation time to stop
@@ -77,7 +75,6 @@ fullscreenIcon.addEventListener('click', function() {
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
         showFooter(false);
-        showApplicationTitle(false);
     } else {
         document.exitFullscreen();
     }
@@ -88,7 +85,6 @@ canvas.addEventListener('click', function(e) {
         showFooter(true);
     } else {
         showFooter(false);
-        showApplicationTitle(false);
     }
 });
 
