@@ -12,6 +12,8 @@ const applySettingsButton = document.getElementById('applySettingsButton');
 const selectPresetEl = document.getElementById("selectPreset");
 const settingsMenuItems = document.querySelectorAll('#settingsMenuItems .dropdown-item');
 
+window.addEventListener('load', ()=>{aboutModal.show()});
+
 settingsMenuItems.forEach(item => {
     item.addEventListener('click', function(event) {
         event.preventDefault();
@@ -19,9 +21,8 @@ settingsMenuItems.forEach(item => {
         if (option === "custom") {
             showSettingsModal();
         }
-        presets = getPresets(option);
-        if (presets) {
-            resetAnimation(presets);
+        else {
+            resetAnimation({configuration: option});
         }
     });
 });
@@ -51,7 +52,8 @@ function handleHideModal() {
 }
 
 function resetAnimation(settingsData) {
-    // params is defined in animate-brownian.js setting it here lets us avoid reloading.
+    // params is defined in animate-brownian.js.
+    // Setting params here lets us avoid reloading.
     // after animate() is called, params is internally parsed to extract the parameters.
     params = new URLSearchParams(settingsData);
     // update the url without reloading.
@@ -59,7 +61,7 @@ function resetAnimation(settingsData) {
     showApplicationTitle(false);
     finishedRendering = true;
     finishedScrolling = true;
-    setTimeout(()=>{reset(); animate();}, 200); // give the previous animation time to stop
+    setTimeout(()=>{reset(); animate(); aboutModal.show();}, 200); // give the previous animation time to stop
 }
 
 function showSettingsModal() {
@@ -84,10 +86,12 @@ settingsForm.addEventListener('submit', function(event) {
 });
 
 selectPresetEl.addEventListener("change", (event) => {
-    const presets = getPresets(event.target.value);
-    if (presets) {
-        for (const [key, value] of Object.entries(presets)) {
-            settingsForm.elements[key].value = value;
+    const configuration = getConfiguration(event.target.value);
+    if (configuration) {
+        for (const [key, value] of Object.entries(configuration)) {
+            if (key in settingsForm.elements) {
+                settingsForm.elements[key].value = value;
+            }
         }
     }
 });

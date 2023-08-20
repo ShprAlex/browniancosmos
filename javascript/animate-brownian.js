@@ -36,9 +36,11 @@ function initialize() {
     scrollingDiv.addEventListener('touchstart', updateApplicationTitle, {passive: true});
     scrollingDiv.addEventListener('touchmove', updateApplicationTitle, {passive: true});
 }
+
 function getParam(key) {
-    let defaultParams = getPresets("default");
-    return parseInt(params.get(key)) || defaultParams[key];
+    const configurationName = params.get("configuration") || "default";
+    const configurationParams = getConfiguration(configurationName) || getConfiguration("default");
+    return parseInt(params.get(key)) || configurationParams[key];
 }
 
 function reset() {

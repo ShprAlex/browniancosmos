@@ -1,5 +1,4 @@
-
-function getPresets(option) {
+function getConfiguration(option) {
     return {
         "default": {
             "height": 2400,
