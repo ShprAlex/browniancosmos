@@ -8,7 +8,7 @@ function getPresets(option) {
             "startw": 1,
             "endw": 600,
             "cellsize": 2,
-            "velocity": 4,
+            "velocity": 5,
         },
         "10-particles": {
             "height": window.innerHeight,
@@ -44,7 +44,7 @@ function getPresets(option) {
             "startw": 60,
             "endw": 300,
             "cellsize": 2,
-            "velocity": 4,
+            "velocity": 5,
         },
     }[option];
 }

@@ -29,10 +29,10 @@ window.addEventListener('load', ()=>{initialize(); reset(); animate();});
 function initialize() {
     params = new URLSearchParams(window.location.search);
 
-    scrollingDiv.addEventListener('wheel', updateAutoScroll, {passive: true});
+    scrollingDiv.addEventListener('scrollend', updateAutoScroll, {passive: true});
     scrollingDiv.addEventListener('touchstart', updateAutoScroll, {passive: true});
     scrollingDiv.addEventListener('touchmove', updateAutoScroll, {passive: true});
-    scrollingDiv.addEventListener('wheel', updateApplicationTitle, {passive: true});
+    scrollingDiv.addEventListener('scrollend', updateApplicationTitle, {passive: true});
     scrollingDiv.addEventListener('touchstart', updateApplicationTitle, {passive: true});
     scrollingDiv.addEventListener('touchmove', updateApplicationTitle, {passive: true});
 }
@@ -163,13 +163,22 @@ function draw() {
     }
     if (progress==GRID_WIDTH) {
         finishedRendering = true;
+        if (GRID_WIDTH-1<=window.innerWidth/CELL_SIZE) {
+            showApplicationTitle(true);
+        }
     }
 }
 
 function updateAutoScroll() {
     const leftSide = scrollSpeed;
     const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
-    if (startedScrolling && (scrollingDiv.scrollLeft<=leftSide || scrollingDiv.scrollLeft>=rightSide)) {
+    if (
+        startedScrolling 
+        && !finishedScrolling 
+        && (scrollingDiv.scrollLeft<=leftSide || scrollingDiv.scrollLeft>=rightSide)
+    ) {
+        scrollLeft = scrollingDiv.scrollLeft;
+        scrollTop = scrollingDiv.scrollTop;
         finishedScrolling = true;
     }
 }
@@ -185,6 +194,7 @@ function scroll() {
         }
         startedScrolling = true;
         scrollLeft+=scrollSpeed;
+        scrollLeft = Math.min(scrollLeft, canvas.clientWidth-scrollingDiv.offsetWidth);
         // When starting waves are small, start scrolling up a quarter of the way through the animation.
         // Don't scroll up if the canvas height is only a little bigger than the window height.
         if ((scrollLeft>canvas.clientWidth/4 || START_WAVELENGTH>10) && canvas.clientHeight>window.innerHeight*1.2) {
@@ -194,16 +204,6 @@ function scroll() {
         }
         scrollingDiv.scrollLeft = scrollLeft;
         scrollingDiv.scrollTop = scrollTop;
-        if (hideApplicationTitleCount>0) {
-            hideApplicationTitleCount--;
-        }
-    }
-    if (startedScrolling && !finishedScrolling && scrollLeft>scrollSpeed*2) {
-        updateAutoScroll();
-        updateApplicationTitle();
-    }
-    if (window.innerWidth+scrollSpeed>=GRID_WIDTH*CELL_SIZE) {
-        finishedScrolling = true;
     }
 }
 
@@ -218,24 +218,31 @@ function updateStatusText() {
     }
 }
 
-function updateApplicationTitle(event = null) {
-    const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
-    if(
-        (scrollingDiv.scrollLeft>=rightSide-150 || applicationTitleEl.style.opacity>'0')
-        && hideApplicationTitleCount<60
-        && window.innerWidth<canvas.clientWidth
-        && !modalVisible
-    ) {
+function showApplicationTitle(show) {
+    if (show) {
         applicationTitleEl.style.opacity=1;
-        if (event && event.type==='touchmove') {
-            hideApplicationTitleCount+=8;
-        }
-        else {
-            hideApplicationTitleCount++;
-        }
+        applicationTitleEl.style.visibility='visible';
     }
     else {
         applicationTitleEl.style.opacity=0;
+        applicationTitleEl.style.visibility='hidden';
+    }
+}
+
+function updateApplicationTitle(event = null) {
+    const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
+    if(
+        (scrollingDiv.scrollLeft>=rightSide-150)
+        && window.innerWidth<canvas.clientWidth
+        && !modalVisible
+        && finishedScrolling === false
+    ) {
+        showApplicationTitle(true);
+    }
+    else {
+        if (finishedScrolling && (scrollLeft!=scrollingDiv.scrollLeft || scrollTop!=scrollingDiv.scrollTop)) {
+            showApplicationTitle(false);
+        }
     }
 }
 

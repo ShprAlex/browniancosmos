@@ -24,7 +24,7 @@ canvas {
     font-family: 'Inder', sans-serif;
     text-shadow: black 0 0 2px, black 0 0 4px;
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: visibility 1s, opacity 1s;
     pointer-events:none;
 }
 #applicationTitle h1 {

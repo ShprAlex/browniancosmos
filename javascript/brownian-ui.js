@@ -26,30 +26,27 @@ settingsMenuItems.forEach(item => {
     });
 });
 
-function showFooter() {
-    footerEl.style.opacity = '1';
-    footerEl.style.visibility = 'visible';
-}
-
-function hideFooter() {
-    footerEl.style.opacity = '0';
-    footerEl.style.visibility = 'hidden';
+function showFooter(show) {
+    if (show) {
+        footerEl.style.opacity = '1';
+        footerEl.style.visibility = 'visible';
+    }
+    else {
+        footerEl.style.opacity = '0';
+        footerEl.style.visibility = 'hidden';
+    }
 }
 
 function handleShowModal() {
     scrollSpeed = 0.5;
     modalVisible = true;
-
-    if (applicationTitleEl.style.opacity > '0') {
-        applicationTitleEl.style.opacity = '0';
-        hideApplicationTitleCount = 60; // don't show title again
-    }
-    hideFooter();
+    showApplicationTitle(false);
+    showFooter(false);
 }
 function handleHideModal() {
     modalVisible = false;
     scrollSpeed = 2;
-    showFooter();
+    showFooter(true);
     updateApplicationTitle();
 }
 
@@ -59,7 +56,7 @@ function resetAnimation(settingsData) {
     params = new URLSearchParams(settingsData);
     // update the url without reloading.
     history.pushState({}, 'BrownianCosmos', `launch.html?${params.toString()}`);
-    applicationTitleEl.style.opacity = 0;
+    showApplicationTitle(false);
     finishedRendering = true;
     finishedScrolling = true;
     setTimeout(()=>{reset(); animate();}, 200); // give the previous animation time to stop
@@ -98,17 +95,19 @@ selectPresetEl.addEventListener("change", (event) => {
 fullscreenIcon.addEventListener('click', function() {
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
-        hideFooter();
+        showFooter(false);
+        showApplicationTitle(false);
     } else {
         document.exitFullscreen();
     }
 });
 
 canvas.addEventListener('click', function(e) {
-    if (footerEl.style.visibility === 'hidden') {
-        showFooter();
+    if (footerEl.style.visibility==='hidden') {
+        showFooter(true);
     } else {
-        hideFooter();
+        showFooter(false);
+        showApplicationTitle(false);
     }
 });
 
