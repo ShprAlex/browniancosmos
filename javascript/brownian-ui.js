@@ -9,23 +9,10 @@ const settingsModal = new bootstrap.Modal(settingsModalEl);
 const settingsForm = document.getElementById('settingsForm');
 const aboutFooterButton = document.getElementById('aboutFooterButton');
 const applySettingsButton = document.getElementById('applySettingsButton');
-const selectPresetEl = document.getElementById("selectPreset");
-const settingsMenuItems = document.querySelectorAll('#settingsMenuItems .dropdown-item');
+const customSettingsSelectEl = document.getElementById("customSettingsSelect");
+const settingsMenuItems = document.getElementById('settingsMenuItems');
 
-window.addEventListener('load', ()=>{aboutModal.show()});
-
-settingsMenuItems.forEach(item => {
-    item.addEventListener('click', function(event) {
-        event.preventDefault();
-        const option = event.target.getAttribute('data-value');
-        if (option === "custom") {
-            showSettingsModal();
-        }
-        else {
-            resetAnimation({configuration: option});
-        }
-    });
-});
+window.addEventListener('load', ()=>{aboutModal.show(); loadConfigurations();});
 
 function showFooter(show) {
     if (show) {
@@ -44,6 +31,7 @@ function handleShowModal() {
     showApplicationTitle(false);
     showFooter(false);
 }
+
 function handleHideModal() {
     modalVisible = false;
     scrollSpeed = 2;
@@ -85,17 +73,6 @@ settingsForm.addEventListener('submit', function(event) {
     resetAnimation(formDataObj);
 });
 
-selectPresetEl.addEventListener("change", (event) => {
-    const configuration = getConfiguration(event.target.value);
-    if (configuration) {
-        for (const [key, value] of Object.entries(configuration)) {
-            if (key in settingsForm.elements) {
-                settingsForm.elements[key].value = value;
-            }
-        }
-    }
-});
-
 fullscreenIcon.addEventListener('click', function() {
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
@@ -112,6 +89,47 @@ canvas.addEventListener('click', function(e) {
     } else {
         showFooter(false);
         showApplicationTitle(false);
+    }
+});
+
+function loadConfigurations() {
+    const menuItemHtml = (id, name) => `
+        <li><a class="dropdown-item" data-value="${id}" href="#">${name}</a></li>
+    `;
+    for (const [option, data] of Object.entries(getConfigurations())) {
+        settingsMenuItems.innerHTML += menuItemHtml(option, data.name);
+    }
+    settingsMenuItems.innerHTML += menuItemHtml("custom", "Custom");
+
+    Array.from(settingsMenuItems.children).forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+            const option = event.target.getAttribute('data-value');
+            if (option === "custom") {
+                showSettingsModal();
+            }
+            else {
+                resetAnimation({configuration: option});
+            }
+        });
+    });
+
+    const customSettingsOptionHtml = (id, name) => `<option value="${id}">${name}</option>`;
+    customSettingsSelectEl.innerHTML += customSettingsOptionHtml("custom", "Custom");
+
+    for (const [option, data] of Object.entries(getConfigurations())) {
+        customSettingsSelectEl.innerHTML += customSettingsOptionHtml(option, data.name);
+    }
+}
+
+customSettingsSelectEl.addEventListener("change", (event) => {
+    const configuration = getConfiguration(event.target.value);
+    if (configuration) {
+        for (const [key, value] of Object.entries(configuration)) {
+            if (key in settingsForm.elements) {
+                settingsForm.elements[key].value = value;
+            }
+        }
     }
 });
 

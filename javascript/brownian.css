@@ -67,7 +67,7 @@ canvas {
     font-size: 24px;
     margin: 0 8px;
 }
-#settingsMenuItems {
+#settingsMenuDropdown {
     vertical-align: inherit;
 }
 #fullscreenIcon {

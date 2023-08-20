@@ -1,6 +1,7 @@
-function getConfiguration(option) {
+function getConfigurations() {
     return {
         "default": {
+            "name": "Default",
             "height": 2400,
             "width": 6000,
             "particles": 300,
@@ -10,6 +11,7 @@ function getConfiguration(option) {
             "velocity": 5,
         },
         "10-particles": {
+            "name": "10 Particles",
             "height": window.innerHeight,
             "width": Math.max(1000, window.innerWidth),
             "particles": 10,
@@ -19,6 +21,7 @@ function getConfiguration(option) {
             "velocity": 4,
         },
         "pure-brownian-30": {
+            "name": "Basis Brownian 30",
             "height": Math.max(800,window.innerHeight),
             "width": Math.max(2000,window.innerWidth*1.8),
             "particles": 30,
@@ -28,6 +31,7 @@ function getConfiguration(option) {
             "velocity": 3,
         },
         "pure-brownian-10000": {
+            "name": "Basis Brownian 10,000",
             "height": window.innerHeight,
             "width": Math.floor(Math.max(1000,window.innerWidth*1.5)),
             "particles": 10000,
@@ -37,6 +41,7 @@ function getConfiguration(option) {
             "velocity": 4,
         },
         "big-waves": {
+            "name": "Big Waves",
             "height": 2400,
             "width": 6000,
             "particles": 300,
@@ -45,5 +50,9 @@ function getConfiguration(option) {
             "cellsize": 2,
             "velocity": 5,
         },
-    }[option];
+    };
+}
+
+function getConfiguration(option) {
+    return getConfigurations()[option];
 }
