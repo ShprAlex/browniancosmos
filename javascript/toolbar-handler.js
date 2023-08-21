@@ -1,18 +1,18 @@
 const fullscreenIcon = document.getElementById('fullscreenIcon');
-const footerEl = document.getElementById('footer');
-const aboutFooterButton = document.getElementById('aboutFooterButton');
+const toolbarEl = document.getElementById('toolbar');
+const aboutToolbarButton = document.getElementById('aboutToolbarButton');
 
 window.addEventListener('load', ()=>{aboutModal.show(); });
 
 class ToolbarHandler {
     static show() {
-        footerEl.style.opacity = '1';
-        footerEl.style.visibility = 'visible';
+        toolbarEl.style.opacity = '1';
+        toolbarEl.style.visibility = 'visible';
     }
     
     static hide() {
-        footerEl.style.opacity = '0';
-        footerEl.style.visibility = 'hidden';
+        toolbarEl.style.opacity = '0';
+        toolbarEl.style.visibility = 'hidden';
     }
 
     static handleFullscreen() {
@@ -25,7 +25,7 @@ class ToolbarHandler {
     }
 
     static handleCanvasClick() {
-        if (footerEl.style.visibility==='hidden') {
+        if (toolbarEl.style.visibility==='hidden') {
             ToolbarHandler.show();
         } else {
             ToolbarHandler.hide();
@@ -33,7 +33,7 @@ class ToolbarHandler {
     }
 }
 
-aboutFooterButton.addEventListener('click', () => { aboutModal.show(); });
+aboutToolbarButton.addEventListener('click', () => { aboutModal.show(); });
 
 fullscreenIcon.addEventListener('click', ToolbarHandler.handleFullscreen);
 

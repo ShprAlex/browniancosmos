@@ -37,7 +37,7 @@ canvas {
     font-size: 18px;
     margin:100px 0 0;
 }
-#footer {
+#toolbar {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -49,7 +49,7 @@ canvas {
     align-items: center;
     transition: visibility 0.5s, opacity 0.5s;
 }
-#footer:hover {
+#toolbar:hover {
     opacity: 1;
 }
 #statusText {
@@ -58,10 +58,10 @@ canvas {
     text-align: left;
     font-family:'Courier New', Courier, monospace;
 }
-#footerButtons {
+#toolbarButtons {
     text-align: right;
 }
-.footer-icon {
+.toolbar-icon {
     cursor: pointer;
     color: white;
     font-size: 24px;
