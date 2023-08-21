@@ -87,7 +87,7 @@ canvas {
 .about-text {
     text-shadow: black 0 0 1px;
     font-weight: 300;
-    font-size: 17px;
+    font-size: 18px;
 }
 .btn-secondary {
     --bs-btn-bg: rgb(255,255,255,0.2) !important;

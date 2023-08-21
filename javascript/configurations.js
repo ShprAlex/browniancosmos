@@ -1,7 +1,7 @@
 function getConfigurations() {
     return {
         "default": {
-            "name": "Default",
+            "name": "Welcome!",
             "height": 2400,
             "width": 6000,
             "particles": 300,
@@ -9,6 +9,22 @@ function getConfigurations() {
             "endw": 600,
             "cellsize": 2,
             "velocity": 5,
+            "description": `
+                <p>
+                    BrownianCosmos is an exploration of patterns present in Brownian motion.
+                </p>
+                <p>
+                    Surprisingly, randomly placed particles in a bounded span will contain
+                    arbitrary regions of density. Under Brownian motion these regions of density 
+                    move in a continuoys wavelike way. Here we reveal these waves and
+                    their fractal nature at different scales.
+                </p>
+                <p>
+                    For a further explanation of this simulation and the visualization
+                    techniques used here please see additional configurations from the settings 
+                    <i class="fa-solid fa-gear"></i> toolbar on the bottom.
+                </p>
+            `
         },
         "10-particles": {
             "name": "10 Particles",
@@ -19,6 +35,20 @@ function getConfigurations() {
             "endw": window.innerHeight/4,
             "cellsize": 2,
             "velocity": 4,
+            "description": `
+                <p>
+                    This shows the same process as in the "welcome" configuration,
+                    applied to only 10 particles.
+                </p>
+                <p>
+                    As we go from left to right we increase the length of the waves we're
+                    looking for. As we do that, the paths of the particles merge together.
+                </p>
+                <p>
+                    Regions where multiple particles overlap get colored red, and those
+                    with few adjacent particles go to blue and fade to black.
+                </p>
+            `
         },
         "pure-brownian-30": {
             "name": "Basis Brownian 30",
