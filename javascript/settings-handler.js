@@ -30,14 +30,6 @@ function showSettingsModal() {
     settingsModal.show();
 }
 
-settingsForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    settingsModal.hide();
-    const formData = new FormData(event.target);
-    const formDataObj = Object.fromEntries(formData.entries());
-    resetAnimationSettings(formDataObj);
-});
-
 function loadSettingsMenu() {
     const menuItemHtml = (id, name) => `
         <li><a class="dropdown-item" data-value="${id}" href="#">${name}</a></li>
@@ -80,3 +72,11 @@ function loadCustomSettingsSelect() {
         }
     });
 }
+
+settingsForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    settingsModal.hide();
+    const formData = new FormData(event.target);
+    const formDataObj = Object.fromEntries(formData.entries());
+    resetAnimationSettings(formDataObj);
+});
