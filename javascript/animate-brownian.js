@@ -30,6 +30,8 @@ function initialize() {
     scrollingDiv.addEventListener('scrollend', updateAutoScroll, {passive: true});
     scrollingDiv.addEventListener('touchstart', updateAutoScroll, {passive: true});
     scrollingDiv.addEventListener('touchmove', updateAutoScroll, {passive: true});
+    canvas.addEventListener('showmodal', () => { scrollSpeed = 0.5; });
+    canvas.addEventListener('hidemodal', () => { scrollSpeed = 2; });
 }
 
 function getParam(key) {
