@@ -8,7 +8,7 @@ window.addEventListener('load', ()=>{loadSettingsMenu(); loadCustomSettingsSelec
 
 function resetAnimationSettings(settingsData) {
     canvas.dispatchEvent(new CustomEvent('resetstart', {bubbles: true}));
-    // params is defined in animate-brownian.js.
+    // params is defined in animation-handler.js.
     // Setting params here lets us avoid reloading.
     // after animate() is called, params is internally parsed to extract the parameters.
     params = new URLSearchParams(settingsData);
@@ -16,7 +16,7 @@ function resetAnimationSettings(settingsData) {
     history.pushState({}, 'BrownianCosmos', `launch.html?${params.toString()}`);
     finishedRendering = true;
     finishedScrolling = true;
-    setTimeout(()=>{reset(); animate(); aboutModal.show();}, 200); // give the previous animation time to stop
+    setTimeout(()=>{AnimationHandler.reset(); AnimationHandler.animate(); aboutModal.show();}, 200); // give the previous animation time to stop
 }
 
 function showSettingsModal() {
