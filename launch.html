@@ -144,14 +144,18 @@
         <span id="statusText"></span>
         <div id="toolbarButtons" >
             <i id="reloadToolbarButton" class="fa-solid fa-refresh toolbar-icon"></i>
-            <i id="additionalMenuButton" class="fa-solid fa-ellipsis-vertical toolbar-icon"></i>
-            <div id="settingsMenuDropdown" class="btn-group dropup">
-                <i type="button" class="fa-solid fa-gear toolbar-icon" data-bs-toggle="dropdown" aria-expanded="false"></i>
+            <div id="settingsMenuDropdown" class="btn-group dropup toolbar-menu-dropdown">
+                <i type="button" class="fa-solid fa-chart-line toolbar-icon" data-bs-toggle="dropdown" aria-expanded="false"></i>
                 <ul id="settingsMenuItems" class="dropdown-menu">
                     <!-- Filled in dynamically -->
                 </ul>
             </div>
-            <i id="aboutToolbarButton" class="fa-solid fa-info-circle toolbar-icon"></i>
+            <div id="additionalMenuDropdown" class="btn-group dropup toolbar-menu-dropdown">
+                <i type="button" class="fa-solid fa-ellipsis-vertical toolbar-icon" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                <ul id="additionalMenuItems" class="dropdown-menu">
+                    <li><a class="dropdown-item" id="chartInfoMenuItem" href="#"><i class="fa-solid fa-info-circle"></i> Chart Info</a></li>
+                </ul>
+            </div>
             <i id="fullscreenButton" class="fa-solid fa-expand toolbar-icon"></i>
         </div>
     </div>

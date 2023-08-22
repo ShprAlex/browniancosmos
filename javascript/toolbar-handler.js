@@ -1,6 +1,6 @@
 const fullscreenButton = document.getElementById('fullscreenButton');
 const toolbarEl = document.getElementById('toolbar');
-const aboutToolbarButton = document.getElementById('aboutToolbarButton');
+const chartInfoMenuItem = document.getElementById('chartInfoMenuItem');
 const reloadToobarButton = document.getElementById('reloadToolbarButton');
 
 window.addEventListener('load', ()=>{aboutModal.show(); });
@@ -19,7 +19,6 @@ class ToolbarHandler {
     static handleFullscreen() {
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen();
-            ToolbarHandler.hide();
         } else {
             document.exitFullscreen();
         }
@@ -34,7 +33,7 @@ class ToolbarHandler {
     }
 }
 
-aboutToolbarButton.addEventListener('click', () => { aboutModal.show(); });
+chartInfoMenuItem.addEventListener('click', (event) => { event.preventDefault(); aboutModal.show(); });
 reloadToobarButton.addEventListener('click', () => { ApplicationTitle.hide(); AnimationHandler.reset(); AnimationHandler.animate();});
 
 fullscreenButton.addEventListener('click', ToolbarHandler.handleFullscreen);

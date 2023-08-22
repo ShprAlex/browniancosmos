@@ -65,10 +65,13 @@ canvas {
     cursor: pointer;
     color: white;
     font-size: 24px;
-    margin: 0 8px;
+    padding: 0 12px;
 }
-#settingsMenuDropdown {
+.toolbar-menu-dropdown {
     vertical-align: inherit;
+}
+.dropdown-item {
+    font-family: 'REM', sans-serif;
 }
 #fullscreenButton {
     margin-right:0px;
