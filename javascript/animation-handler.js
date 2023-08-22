@@ -12,6 +12,7 @@ let MAX_PARTICLES;
 
 let params;
 let simulation;
+let animationRequest;
 
 window.addEventListener('load', ()=>{
     AnimationHandler.initialize(); AnimationHandler.reset(); AnimationHandler.animate();
@@ -31,6 +32,9 @@ class AnimationHandler {
     }
 
     static reset() {
+        if (animationRequest) {
+            window.cancelAnimationFrame(animationRequest);
+        }
         CELL_SIZE = getParam("cellsize");
     
         canvas.width = getParam("width");
@@ -86,7 +90,7 @@ class AnimationHandler {
             Scroller.scroll();
         }
         if(!finishedRendering || !finishedScrolling) {
-            requestAnimationFrame(AnimationHandler.animate);
+            animationRequest = requestAnimationFrame(AnimationHandler.animate);
         }
     }
 }

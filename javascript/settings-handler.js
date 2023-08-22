@@ -14,9 +14,9 @@ function resetAnimationSettings(settingsData) {
     params = new URLSearchParams(settingsData);
     // update the url without reloading.
     history.pushState({}, 'BrownianCosmos', `launch.html?${params.toString()}`);
-    finishedRendering = true;
-    finishedScrolling = true;
-    setTimeout(()=>{AnimationHandler.reset(); AnimationHandler.animate(); aboutModal.show();}, 200); // give the previous animation time to stop
+    AnimationHandler.reset();
+    AnimationHandler.animate();
+    aboutModal.show();
 }
 
 function showSettingsModal() {

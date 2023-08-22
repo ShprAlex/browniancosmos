@@ -14,15 +14,15 @@ function getConfigurations() {
                     BrownianCosmos is an exploration of patterns present in Brownian motion.
                 </p>
                 <p>
-                    Surprisingly, randomly placed particles will contain
-                    arbitrary regions of density. Under Brownian motion these density regions
-                    move in a continuous wavelike way. Here we reveal these waves and
-                    their fractal nature at different scales.
+                    Surprisingly, randomly placed particles will contain arbitrary regions of density.
+                    When the particles are randomly perturbed by Brownian motion, the density regions 
+                    move in a continuous wavelike way. Here we reveal these waves and show their
+                    fractal nature at different scales.
                 </p>
                 <p>
-                    We hope you enjoy the results! For a further explanation of this simulation and
-                    the visualization techniques used here please see additional configurations
-                    from the settings <i class="fa-solid fa-gear"></i> toolbar on the bottom.
+                    We hope you enjoy the results! For a further explanation of this simulation and its
+                    visualization techniques please see additional configurations from the settings
+                    <i class="fa-solid fa-gear"></i> toolbar below.
                 </p>
             `
         },
@@ -74,8 +74,8 @@ function getConfigurations() {
         },
         "zero-velocity": {
             "name": "Zero Velocity",
-            "height": window.innerHeight,
-            "width": window.innerWidth,
+            "height": screen.height,
+            "width": screen.width,
             "particles": 50,
             "startw": 1,
             "endw": Math.floor(window.innerHeight/2),

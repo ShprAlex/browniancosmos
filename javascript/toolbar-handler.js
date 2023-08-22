@@ -1,6 +1,7 @@
-const fullscreenIcon = document.getElementById('fullscreenIcon');
+const fullscreenButton = document.getElementById('fullscreenButton');
 const toolbarEl = document.getElementById('toolbar');
 const aboutToolbarButton = document.getElementById('aboutToolbarButton');
+const reloadToobarButton = document.getElementById('reloadToolbarButton');
 
 window.addEventListener('load', ()=>{aboutModal.show(); });
 
@@ -34,8 +35,9 @@ class ToolbarHandler {
 }
 
 aboutToolbarButton.addEventListener('click', () => { aboutModal.show(); });
+reloadToobarButton.addEventListener('click', () => { ApplicationTitle.hide(); AnimationHandler.reset(); AnimationHandler.animate();});
 
-fullscreenIcon.addEventListener('click', ToolbarHandler.handleFullscreen);
+fullscreenButton.addEventListener('click', ToolbarHandler.handleFullscreen);
 
 canvas.addEventListener('showmodal', ToolbarHandler.hide);
 canvas.addEventListener('hidemodal', ToolbarHandler.show);
