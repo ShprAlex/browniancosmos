@@ -2,7 +2,6 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 let CELL_SIZE;
-let DRAW_COLUMN_BATCH_SIZE;
 let GRID_HEIGHT;
 let GRID_WIDTH;
 let BROWNIAN_VELOCITY;
@@ -21,7 +20,8 @@ window.addEventListener('load', ()=>{
 function getParam(key) {
     const configurationName = params.get("configuration") || "default";
     const configurationParams = getConfiguration(configurationName) || getConfiguration("default");
-    return parseInt(params.get(key)) || configurationParams[key];
+    const paramValue = params.get(key);
+    return paramValue!=null ? parseInt(paramValue) : configurationParams[key];
 }
 
 class AnimationHandler {
@@ -49,11 +49,16 @@ class AnimationHandler {
         Scroller.reset();
     }
 
-    static updateSimulation() {
-        if (progress<10 && START_WAVELENGTH==1 && END_WAVELENGTH != 1) {
+    /**
+     * To better illustrate what's going on we start with few particles on the left side and ramp up the
+     * number to MAX_PARTICLES over a short duration making their individual paths visible.
+     */
+    static rampUpParticles() {
+        // initial gap on the left where we don't draw anything.
+        if (progress<10 && START_WAVELENGTH==1 && END_WAVELENGTH != 1 && canvas.width>500 && BROWNIAN_VELOCITY>0) {
             return;
         }
-        if (START_WAVELENGTH>1 || END_WAVELENGTH == 1 || progress>300 || MAX_PARTICLES<30) {
+        if (START_WAVELENGTH>1 || END_WAVELENGTH == 1 || progress>300 || MAX_PARTICLES<30 || BROWNIAN_VELOCITY === 0) {
             simulation.increasePopulation(MAX_PARTICLES);
         } else if (progress<=MAX_PARTICLES) {
             simulation.increasePopulation(Math.min(MAX_PARTICLES,Math.max(progress,progress*progress/100)));
@@ -73,7 +78,7 @@ class AnimationHandler {
 
     static animate() {
         if (!finishedRendering) {
-            AnimationHandler.updateSimulation();
+            AnimationHandler.rampUpParticles();
             Renderer.draw();
             AnimationHandler.updateStatusText();
         }

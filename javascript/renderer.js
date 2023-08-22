@@ -1,10 +1,10 @@
 let finishedRendering;
 let progress = 0;
 
+const DRAW_COLUMN_BATCH_SIZE = 10;
+
 class Renderer {
     static reset() {
-        DRAW_COLUMN_BATCH_SIZE = 10;
-        
         finishedRendering = false;
         progress = 0;
     }
