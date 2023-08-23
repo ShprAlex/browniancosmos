@@ -25,7 +25,11 @@ class ToolbarHandler {
         }
     }
 
-    static handleCanvasClick() {
+    static handleCanvasClick(event) {
+        if (window.innerHeight - event.clientY <= 50) {
+            // ignore clicks on the bottom where the toolbar usually is
+            return;
+        }
         if (toolbarEl.style.visibility==='hidden') {
             ToolbarHandler.show();
         } else {

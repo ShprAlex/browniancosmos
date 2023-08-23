@@ -52,14 +52,14 @@ function getConfigurations() {
                 </p>
             `
         },
-        "pure-brownian-30": {
-            "name": "Underlying Brownian 30",
-            "height": Math.max(800,window.innerHeight),
+        "pure-brownian-20": {
+            "name": "Underlying Brownian 20",
+            "height": 800,
             "width": Math.floor(Math.max(2000,window.innerWidth*1.8)),
             "particles": 20,
             "startw": 1,
             "endw": 1,
-            "cellsize": 4,
+            "cellsize": 3,
             "velocity": 2,
             "description": `
                 <p>
