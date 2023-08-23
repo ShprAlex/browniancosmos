@@ -74,7 +74,10 @@ canvas {
     font-family: 'REM', sans-serif;
 }
 #fullscreenButton {
-    margin-right:0px;
+    padding:0px;
+}
+#additionalMenuDropdown .toolbar-icon {
+    padding: 0 24px 0 12px;
 }
 .modal-content {
     background-color: transparent !important;

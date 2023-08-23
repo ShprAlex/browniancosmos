@@ -19,7 +19,9 @@ class ApplicationTitle {
             && !modalVisible
             && finishedScrolling === false
         ) {
-            ApplicationTitle.show();
+            if (allowApplicationTitle) {
+                ApplicationTitle.show();
+            }
         }
         else {
             // When they manually scroll, hide the title
@@ -38,7 +40,7 @@ class ApplicationTitle {
     }
 
     static handleRenderingEnd() {
-        if (window.innerWidth>=canvas.clientWidth && !modalVisible) {
+        if (allowApplicationTitle && window.innerWidth>=canvas.clientWidth && !modalVisible) {
             ApplicationTitle.show();
         }
     }

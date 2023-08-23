@@ -16,7 +16,8 @@ class ToolbarHandler {
         toolbarEl.style.visibility = 'hidden';
     }
 
-    static handleFullscreen() {
+    static handleFullscreen(event) {
+        event.preventDefault();
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen();
         } else {
@@ -34,7 +35,12 @@ class ToolbarHandler {
 }
 
 chartInfoMenuItem.addEventListener('click', (event) => { event.preventDefault(); aboutModal.show(); });
-reloadToobarButton.addEventListener('click', () => { ApplicationTitle.hide(); AnimationHandler.reset(); AnimationHandler.animate();});
+reloadToobarButton.addEventListener('click', () => {
+    ApplicationTitle.hide();
+    AnimationHandler.reset();
+    allowApplicationTitle = false;
+    AnimationHandler.animate();
+});
 
 fullscreenButton.addEventListener('click', ToolbarHandler.handleFullscreen);
 

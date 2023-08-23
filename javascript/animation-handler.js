@@ -13,6 +13,7 @@ let MAX_PARTICLES;
 let params;
 let simulation;
 let animationRequest;
+let allowApplicationTitle;
 
 window.addEventListener('load', ()=>{
     AnimationHandler.initialize(); AnimationHandler.reset(); AnimationHandler.animate();
@@ -48,6 +49,7 @@ class AnimationHandler {
         INITAL_PARTICLES = 0;
         MAX_PARTICLES = getParam("particles");
 
+        allowApplicationTitle = true;
         simulation = new Simulation(INITAL_PARTICLES, GRID_HEIGHT);
         Renderer.reset();
         Scroller.reset();

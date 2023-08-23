@@ -121,13 +121,13 @@ function getConfigurations() {
         },
         "big-waves-high-res": {
             "name": "Big Waves High Res",
-            "height": 1800,
-            "width": 6000,
-            "particles": 500,
+            "height": 1200,
+            "width": 3000,
+            "particles": 300,
             "startw": 90,
-            "endw": 450,
+            "endw": 600,
             "cellsize": 1,
-            "velocity": 10,
+            "velocity": 8,
             "description": `
                 <p>
                     This visualization shows the particle paths 1 pixel thick.
