@@ -1,4 +1,5 @@
 const applicationTitleEl = document.getElementById('applicationTitle');
+const scrollToSeeMore = document.getElementById('applicationTitleScrollForMore');
 
 class ApplicationTitle {
     static show() { 
@@ -15,13 +16,10 @@ class ApplicationTitle {
         const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
         if(
             (scrollingDiv.scrollLeft>=rightSide-150)
-            && window.innerWidth<canvas.clientWidth
             && !modalVisible
             && finishedScrolling === false
         ) {
-            if (allowApplicationTitle) {
-                ApplicationTitle.show();
-            }
+            ApplicationTitle.show();
         }
         else {
             // When they manually scroll, hide the title
@@ -36,13 +34,29 @@ class ApplicationTitle {
     }
 
     static handleHideModal() {
-        ApplicationTitle.updateAfterScroll();
+        const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
+        if(scrollingDiv.scrollLeft>=rightSide-150) {
+            ApplicationTitle.show();
+        }
     }
 
     static handleRenderingEnd() {
-        if (allowApplicationTitle && window.innerWidth>=canvas.clientWidth && !modalVisible) {
+        if (window.innerWidth>=canvas.clientWidth && !modalVisible) {
             ApplicationTitle.show();
         }
+    }
+
+    static updateScrollToSeeMore() {
+        setTimeout(()=> {
+                if (canvas.width*canvas.height<2000*2000) {
+                    scrollToSeeMore.style.display='none';
+                }
+                else {
+                    scrollToSeeMore.style.display='inherit';
+                }
+            },
+            1000
+        )
     }
 }
 
@@ -53,6 +67,7 @@ scrollingDiv.addEventListener('touchmove', ApplicationTitle.updateAfterScroll, {
 canvas.addEventListener('renderingend', ApplicationTitle.handleRenderingEnd);
 canvas.addEventListener('click', ApplicationTitle.hide);
 canvas.addEventListener('resetstart', ApplicationTitle.hide);
+canvas.addEventListener('resetend', ApplicationTitle.updateScrollToSeeMore);
 
 aboutModalEl.addEventListener('show.bs.modal', ApplicationTitle.handleShowModal);
 aboutModalEl.addEventListener('hide.bs.modal', ApplicationTitle.handleHideModal);

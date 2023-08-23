@@ -121,11 +121,11 @@ function getConfigurations() {
         },
         "big-waves-high-res": {
             "name": "Big Waves High Res",
-            "height": 1200,
+            "height": 1600,
             "width": 3000,
-            "particles": 300,
-            "startw": 90,
-            "endw": 600,
+            "particles": 500,
+            "startw": 100,
+            "endw": 800,
             "cellsize": 1,
             "velocity": 8,
             "description": `

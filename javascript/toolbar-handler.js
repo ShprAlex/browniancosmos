@@ -3,7 +3,13 @@ const toolbarEl = document.getElementById('toolbar');
 const chartInfoMenuItem = document.getElementById('chartInfoMenuItem');
 const reloadToobarButton = document.getElementById('reloadToolbarButton');
 
-window.addEventListener('load', ()=>{aboutModal.show(); });
+window.addEventListener('load', ()=>{
+    aboutModal.show();
+    if (!document.fullscreenEnabled) {
+        fullscreenButton.style.display='none';
+
+    }
+});
 
 class ToolbarHandler {
     static show() {
@@ -26,6 +32,7 @@ class ToolbarHandler {
     }
 
     static handleCanvasClick(event) {
+        event.preventDefault();
         if (window.innerHeight - event.clientY <= 50) {
             // ignore clicks on the bottom where the toolbar usually is
             return;
@@ -42,7 +49,6 @@ chartInfoMenuItem.addEventListener('click', (event) => { event.preventDefault();
 reloadToobarButton.addEventListener('click', () => {
     ApplicationTitle.hide();
     AnimationHandler.reset();
-    allowApplicationTitle = false;
     AnimationHandler.animate();
 });
 

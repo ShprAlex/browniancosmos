@@ -32,10 +32,10 @@ canvas {
 }
 #applicationTitle h2 {
     font-size: 20px;
+    margin: 0 0 100px;
 }
 #applicationTitle h3 {
     font-size: 18px;
-    margin:100px 0 0;
 }
 #toolbar {
     position: fixed;
@@ -54,7 +54,7 @@ canvas {
 }
 #statusText {
     color: white;
-    font-size: 16px;
+    font-size: max(18px,1.5vw);
     text-align: left;
     font-family:'Courier New', Courier, monospace;
 }
@@ -64,8 +64,8 @@ canvas {
 .toolbar-icon {
     cursor: pointer;
     color: white;
-    font-size: 24px;
-    padding: 0 12px;
+    font-size: max(24px, 2vw);
+    padding: 0 max(12px, 1vw);
 }
 .toolbar-menu-dropdown {
     vertical-align: inherit;
@@ -77,7 +77,7 @@ canvas {
     padding:0px;
 }
 #additionalMenuDropdown .toolbar-icon {
-    padding: 0 24px 0 12px;
+    padding: 0 max(24px, 2vw) 0 max(12px, 1vw);
 }
 .modal-content {
     background-color: transparent !important;

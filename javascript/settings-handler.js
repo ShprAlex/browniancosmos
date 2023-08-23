@@ -7,7 +7,6 @@ const settingsMenuItems = document.getElementById('settingsMenuItems');
 window.addEventListener('load', ()=>{loadSettingsMenu(); loadCustomSettingsSelect();});
 
 function resetAnimationSettings(settingsData) {
-    canvas.dispatchEvent(new CustomEvent('resetstart', {bubbles: true}));
     // params is defined in animation-handler.js.
     // Setting params here lets us avoid reloading.
     // after animate() is called, params is internally parsed to extract the parameters.
