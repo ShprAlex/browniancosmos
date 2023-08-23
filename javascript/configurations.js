@@ -55,12 +55,25 @@ function getConfigurations() {
         "pure-brownian-30": {
             "name": "Underlying Brownian 30",
             "height": Math.max(800,window.innerHeight),
-            "width": Math.max(2000,window.innerWidth*1.8),
-            "particles": 30,
+            "width": Math.floor(Math.max(2000,window.innerWidth*1.8)),
+            "particles": 20,
             "startw": 1,
             "endw": 1,
-            "cellsize": 3,
-            "velocity": 3,
+            "cellsize": 4,
+            "velocity": 2,
+            "description": `
+                <p>
+                    Here is what the underlying Brownian motion looks like on it's own.
+                </p>
+                <p>
+                    The pattern can be surprisingly pretty and look almost intentionally designed.
+                </p>
+                <p>
+                    Even though the particles have random starting positions and move completely
+                    independently, we still see regions where several partiles seem to move together
+                    as well as large gaps that persist in time.
+                </p>
+            `
         },
         "pure-brownian-10000": {
             "name": "Underlying Brownian 10,000",
@@ -74,11 +87,11 @@ function getConfigurations() {
         },
         "zero-velocity": {
             "name": "Zero Velocity",
-            "height": screen.height,
-            "width": screen.width,
+            "height": window.innerHeight,
+            "width": window.innerWidth,
             "particles": 50,
             "startw": 1,
-            "endw": Math.floor(window.innerHeight/2),
+            "endw": Math.floor(window.innerWidth/2),
             "cellsize": 2,
             "velocity": 0,
             "description": `

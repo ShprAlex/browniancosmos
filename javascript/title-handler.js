@@ -22,6 +22,7 @@ class ApplicationTitle {
             ApplicationTitle.show();
         }
         else {
+            // When they manually scroll, hide the title
             if (finishedScrolling && (scrollLeft!=scrollingDiv.scrollLeft || scrollTop!=scrollingDiv.scrollTop)) {
                 ApplicationTitle.hide();
             }
@@ -37,7 +38,7 @@ class ApplicationTitle {
     }
 
     static handleRenderingEnd() {
-        if (GRID_WIDTH-1<=window.innerWidth/CELL_SIZE && !modalVisible) {
+        if (window.innerWidth>=canvas.clientWidth && !modalVisible) {
             ApplicationTitle.show();
         }
     }
