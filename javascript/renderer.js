@@ -14,9 +14,9 @@ class Renderer {
         let green_column;
         let blue_column;
         if (END_WAVELENGTH>1) {
-            red_column = simulation.toWave(waveLength);
-            green_column = simulation.toWave(waveLength/2+0.5);
-            blue_column = simulation.toWave(waveLength/4+0.75);
+            red_column = simulation.toWave(waveLength, WAVE_SHAPE);
+            green_column = simulation.toWave(waveLength/2+0.5, WAVE_SHAPE);
+            blue_column = simulation.toWave(waveLength/4+0.75, WAVE_SHAPE);
         }
         else {
             const brightness = GRID_HEIGHT/MAX_PARTICLES/2;

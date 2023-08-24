@@ -64,8 +64,8 @@ canvas {
 .toolbar-icon {
     cursor: pointer;
     color: white;
-    font-size: max(24px, 2vw);
-    padding: 0 max(12px, 1vw);
+    font-size: max(24px, 1.8vw);
+    padding: 0 max(12px, 0.9vw);
 }
 .toolbar-menu-dropdown {
     vertical-align: inherit;
@@ -77,7 +77,7 @@ canvas {
     padding:0px;
 }
 #additionalMenuDropdown .toolbar-icon {
-    padding: 0 max(24px, 2vw) 0 max(12px, 1vw);
+    padding: 0 max(24px, 1.8vw) 0 max(12px, 0.9vw);
 }
 .modal-content {
     background-color: transparent !important;

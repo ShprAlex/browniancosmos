@@ -41,7 +41,7 @@ class ToolbarHandler {
 window.addEventListener('load', ()=>{
     if (!document.fullscreenEnabled) {
         fullscreenButton.style.display='none';
-        additionalMenuDropdown.style.padding = '0 max(12px, 1vw)';
+        additionalMenuDropdown.style.padding = '0 max(12px, 0.9vw)';
     }
 });
 

@@ -7,6 +7,7 @@ function getConfigurations() {
             "particles": 300,
             "startw": 1,
             "endw": 600,
+            "waveshape": "square",
             "cellsize": 2,
             "velocity": 5,
             "description": `
@@ -33,6 +34,7 @@ function getConfigurations() {
             "particles": 10,
             "startw": 1,
             "endw": window.innerHeight/4,
+            "waveshape": "square",
             "cellsize": 2,
             "velocity": 4,
             "description": `
@@ -59,6 +61,7 @@ function getConfigurations() {
             "particles": 20,
             "startw": 1,
             "endw": 1,
+            "waveshape": "square",
             "cellsize": 3,
             "velocity": 2,
             "description": `
@@ -82,6 +85,7 @@ function getConfigurations() {
             "particles": 10000,
             "startw": 1,
             "endw": 1,
+            "waveshape": "square",
             "cellsize": 2,
             "velocity": 4,
         },
@@ -92,6 +96,24 @@ function getConfigurations() {
             "particles": 50,
             "startw": 1,
             "endw": Math.floor(window.innerWidth/2),
+            "waveshape": "square",
+            "cellsize": 2,
+            "velocity": 0,
+            "description": `
+                <p>
+                    We can increase the scanning wavelenths while the partiles aren't moving
+                    and they still merge together.
+                </p>
+            `
+        },
+        "zero-velocity-triangular": {
+            "name": "Zero Velocity Triangular",
+            "height": window.innerHeight,
+            "width": window.innerWidth,
+            "particles": 50,
+            "startw": 1,
+            "endw": Math.floor(window.innerWidth/2),
+            "waveshape": "triangular",
             "cellsize": 2,
             "velocity": 0,
             "description": `
@@ -108,6 +130,7 @@ function getConfigurations() {
             "particles": 300,
             "startw": 60,
             "endw": 300,
+            "waveshape": "square",
             "cellsize": 2,
             "velocity": 5,
             "description": `
@@ -126,6 +149,7 @@ function getConfigurations() {
             "particles": 500,
             "startw": 100,
             "endw": 800,
+            "waveshape": "square",
             "cellsize": 1,
             "velocity": 8,
             "description": `
@@ -134,6 +158,25 @@ function getConfigurations() {
                 </p>
                 <p>
                     The results still look similar because we're looking at a fractal.
+                </p>
+            `
+        },
+        "big-waves-triangular": {
+            "name": "Big Waves Triangular",
+            "height": 2400,
+            "width": 6000,
+            "particles": 300,
+            "startw": 60,
+            "endw": 300,
+            "waveshape": "triangular",
+            "cellsize": 2,
+            "velocity": 5,
+            "description": `
+                <p>
+                    Scanning at large wavelenghts produces nice patterns.
+                </p>
+                <p>
+                    The results look fuzzy, and there is nothing that can be done about that.
                 </p>
             `
         },

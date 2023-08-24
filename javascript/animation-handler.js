@@ -7,6 +7,7 @@ let GRID_WIDTH;
 let BROWNIAN_VELOCITY;
 let START_WAVELENGTH;
 let END_WAVELENGTH;
+let WAVE_SHAPE;
 let INITAL_PARTICLES;
 let MAX_PARTICLES;
 
@@ -21,8 +22,14 @@ window.addEventListener('load', ()=>{
 function getParam(key) {
     const configurationName = params.get("configuration") || "default";
     const configurationParams = getConfiguration(configurationName) || getConfiguration("default");
-    const paramValue = params.get(key);
-    return paramValue!=null ? parseInt(paramValue) : configurationParams[key];
+    let paramValue = params.get(key);
+    if (paramValue===null) {
+        return configurationParams[key];
+    }
+    if (key!=='waveshape') {
+        paramValue = parseInt(paramValue);
+    }
+    return paramValue;
 }
 
 class AnimationHandler {
@@ -46,6 +53,7 @@ class AnimationHandler {
         BROWNIAN_VELOCITY = getParam("velocity");
         START_WAVELENGTH = getParam("startw");
         END_WAVELENGTH = getParam("endw");
+        WAVE_SHAPE = getParam("waveshape");
         INITAL_PARTICLES = 0;
         MAX_PARTICLES = getParam("particles");
 
