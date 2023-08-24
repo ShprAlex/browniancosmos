@@ -16,9 +16,9 @@ function getConfigurations() {
                 </p>
                 <p>
                     Surprisingly, randomly placed particles contain arbitrary regions of density.
-                    When the particles are perturbed by Brownian motion, the density regions 
-                    shift in a continuous wavelike way. This simulation reveals these waves and shows their
-                    fractal nature at different scales.
+                    Brownian motion shifts these regions in a continuous wavelike way.
+                    This simulation reveals those density waves and shows their fractal nature at
+                    different scales.
                 </p>
                 <p>
                     We hope you enjoy the results! For further illustrations and explanation please
@@ -33,31 +33,33 @@ function getConfigurations() {
             "width": Math.max(1000, window.innerWidth),
             "particles": 10,
             "startw": 1,
-            "endw": window.innerHeight/4,
+            "endw": window.innerHeight / 4,
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 4,
             "description": `
                 <p>
-                    This shows the same process applied to only 10 particles.
+                    This shows our density detection applied to just 10 particles.
                 </p>
                 <p>
-                    As we go from left to right we scsn for neighboring particles in
-                    increasing vertical intervals. It appears like the paths are getting thinner
-                    but actually the underlying particle paths are still thin, we just detect them
-                    from further away.
+                    As we go from left to right we scan for particles in increasing vertical
+                    intervals.
+                    It appears like the particle paths are getting thicker but actually we just detect
+                    them from further away.
                 </p>
                 <p>
-                    Regions where multiple particles are close together stand out when we look over
-                    longer distances and are colored red, while isolated particles show up in shorter
-                    blue scans and eventually fade to black.
+                    Regions where multiple particles are close together stand out from a longer
+                    distance and are colored red, while isolated particles are noticeable at
+                    shorter distances and are colored blue.
+                    We scan for red, green, and blue interval lengths simultaneously and where they
+                    overlap we get white.
                 </p>
             `
         },
         "pure-brownian-20": {
             "name": "Underlying Brownian 20",
             "height": 800,
-            "width": Math.floor(Math.max(2000,window.innerWidth*1.8)),
+            "width": Math.floor(Math.max(2000, window.innerWidth * 1.8)),
             "particles": 20,
             "startw": 1,
             "endw": 1,
@@ -69,25 +71,41 @@ function getConfigurations() {
                     Here is what the underlying Brownian motion looks like on it's own.
                 </p>
                 <p>
-                    The pattern can be surprisingly pretty and look almost intentionally designed.
+                    The pattern can be surprisingly pretty and appears almost intentionally designed.
                 </p>
                 <p>
                     Even though the particles have random starting positions and move completely
-                    independently, we still see regions where several partiles seem to move together
-                    as well as large gaps that persist in time.
+                    independently, we still see regions where the particles appear to move together
+                    and large gaps that persist in time.
                 </p>
             `
         },
         "pure-brownian-10000": {
             "name": "Underlying Brownian 10,000",
             "height": window.innerHeight,
-            "width": Math.floor(Math.max(1000,window.innerWidth*1.5)),
+            "width": Math.floor(Math.max(1000, window.innerWidth * 1.5)),
             "particles": 10000,
             "startw": 1,
             "endw": 1,
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 4,
+            "description": `
+                <p>
+                    Suprisingly even with 10,000 particles we can see regions of density along the
+                    vertical axis. Here the brightness represents how many particles are in one space.
+                </p>
+                <p>
+                    The folds and valleys are more noticable on the small scale, but the same kinds of
+                    density differences happen at every scale, for instance if we compare the top and
+                    bottom half of a column.
+                </p>
+                <p>
+                    Mathematically in a random distribution, the bigger the intervals we compare the
+                    bigger the expected difference in the number of particles, proportional to the
+                    square root of the interval.
+                </p>
+            `
         },
         "zero-velocity": {
             "name": "Zero Velocity",
@@ -95,14 +113,25 @@ function getConfigurations() {
             "width": window.innerWidth,
             "particles": 50,
             "startw": 1,
-            "endw": Math.floor(window.innerWidth/2),
+            "endw": Math.floor(window.innerWidth / 2),
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 0,
             "description": `
                 <p>
-                    We can increase the scanning wavelenths while the partiles aren't moving
-                    and they still merge together.
+                    The quirks of our density detection algithm are more apperent if we keep the
+                    particles still.
+                </p>
+                <p>
+                    You can see that the colors appear below the white lines.
+                    This is because for any location we subtract the number of particles above from
+                    the particles below, and when we're below a line we get a positive difference.
+                </p>
+                <p>
+                    There is thus a downward drift in the colored density areas relative to the
+                    center of mass.
+                    When there are several particles next to each other the thick colored band
+                    grows from the bottom most particle whele the ones on top fade out to blue.
                 </p>
             `
         },
@@ -112,7 +141,7 @@ function getConfigurations() {
             "width": window.innerWidth,
             "particles": 50,
             "startw": 1,
-            "endw": Math.floor(window.innerWidth/2),
+            "endw": Math.floor(window.innerWidth / 2),
             "waveshape": "triangular",
             "cellsize": 2,
             "velocity": 0,
