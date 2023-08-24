@@ -1,12 +1,13 @@
 let finishedRendering;
 let progress = 0;
 
-const DRAW_COLUMN_BATCH_SIZE = 10;
+let DRAW_COLUMN_BATCH_SIZE;
 
 class Renderer {
     static reset() {
         finishedRendering = false;
         progress = 0;
+        DRAW_COLUMN_BATCH_SIZE = (WAVE_SHAPE === 'square' ? 10 : 2);
     }
 
     static drawColumn(x, waveLength) {
