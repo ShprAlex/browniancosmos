@@ -9,7 +9,7 @@ class ToolbarHandler {
         toolbarEl.style.opacity = '1';
         toolbarEl.style.visibility = 'visible';
     }
-    
+
     static hide() {
         toolbarEl.style.opacity = '0';
         toolbarEl.style.visibility = 'hidden';
@@ -30,7 +30,7 @@ class ToolbarHandler {
             // ignore clicks on the bottom where the toolbar usually is
             return;
         }
-        if (toolbarEl.style.visibility==='hidden') {
+        if (toolbarEl.style.visibility === 'hidden') {
             ToolbarHandler.show();
         } else {
             ToolbarHandler.hide();
@@ -38,9 +38,9 @@ class ToolbarHandler {
     }
 }
 
-window.addEventListener('load', ()=>{
+window.addEventListener('load', () => {
     if (!document.fullscreenEnabled) {
-        fullscreenButton.style.display='none';
+        fullscreenButton.style.display = 'none';
         additionalMenuDropdown.style.padding = '0 max(12px, 0.9vw)';
     }
 });

@@ -7,14 +7,17 @@ canvas {
     max-height: 2400px;
     min-height: 100%;
 }
+
 #scrollingDiv {
     overflow-x: scroll;
     overflow-y: scroll;
     width: 100%;
     height: 100vh;
 }
+
 #applicationTitle {
-    position: absolute; /* Positions the div in relation to its parent */
+    position: absolute;
+    /* Positions the div in relation to its parent */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -25,76 +28,92 @@ canvas {
     text-shadow: black 0 0 2px, black 0 0 4px;
     opacity: 0;
     transition: visibility 1s, opacity 1s;
-    pointer-events:none;
+    pointer-events: none;
 }
+
 #applicationTitle h1 {
     font-size: 40px;
 }
+
 #applicationTitle h2 {
     font-size: 20px;
     margin: 0 0 100px;
 }
+
 #applicationTitle h3 {
     font-size: 18px;
 }
+
 #toolbar {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: visibility 0.5s, opacity 0.5s;
 }
+
 #toolbar:hover {
     opacity: 1;
 }
+
 #statusText {
     color: white;
-    font-size: max(18px,1.3vw);
+    font-size: max(18px, 1.3vw);
     text-align: left;
-    font-family:'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
 }
+
 #toolbarButtons {
     text-align: right;
 }
+
 .toolbar-icon {
     cursor: pointer;
     color: white;
     font-size: max(24px, 1.8vw);
     padding: 0 max(12px, 0.9vw);
 }
+
 .toolbar-menu-dropdown {
     vertical-align: inherit;
 }
+
 .dropdown-item {
     font-family: 'REM', sans-serif;
 }
+
 #fullscreenButton {
-    padding:0px;
+    padding: 0px;
 }
+
 #additionalMenuDropdown .toolbar-icon {
     padding: 0 max(24px, 1.8vw) 0 max(12px, 0.9vw);
 }
+
 .modal-content {
     background-color: transparent !important;
     border: none !important;
     padding-bottom: 100px;
     font-family: 'REM', sans-serif;
-    --bs-body-bg: rgb(0,0,0,0.5);
+    --bs-body-bg: rgb(0, 0, 0, 0.5);
     --bs-border-color: #dee2e6;
 }
+
 .modal-backdrop {
-    opacity:0.6 !important;
+    opacity: 0.6 !important;
 }
+
 .about-text {
     text-shadow: black 0 0 1px;
     font-weight: 300;
     font-size: 18px;
 }
+
 .btn-secondary {
-    --bs-btn-bg: rgb(255,255,255,0.2) !important;
+    --bs-btn-bg: rgb(255, 255, 255, 0.2) !important;
 }

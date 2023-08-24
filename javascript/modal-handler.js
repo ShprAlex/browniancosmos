@@ -3,16 +3,16 @@ const aboutModalEl = document.getElementById('aboutModal');
 const aboutModal = new bootstrap.Modal(aboutModalEl);
 const settingsModalEl = document.getElementById('settingsModal');
 
-window.addEventListener('load', ()=>{aboutModal.show(); });
+window.addEventListener('load', () => { aboutModal.show(); });
 
 class ModalHandler {
     static show() {
         modalVisible = true;
-        canvas.dispatchEvent(new CustomEvent('showmodal', {bubbles: true}));
+        canvas.dispatchEvent(new CustomEvent('showmodal', { bubbles: true }));
     }
     static hide() {
         modalVisible = false;
-        canvas.dispatchEvent(new CustomEvent('hidemodal', {bubbles: true}));
+        canvas.dispatchEvent(new CustomEvent('hidemodal', { bubbles: true }));
     }
 }
 

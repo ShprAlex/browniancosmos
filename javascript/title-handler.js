@@ -2,20 +2,20 @@ const applicationTitleEl = document.getElementById('applicationTitle');
 const scrollToSeeMore = document.getElementById('applicationTitleScrollForMore');
 
 class ApplicationTitle {
-    static show() { 
-        applicationTitleEl.style.opacity=1;
-        applicationTitleEl.style.visibility='visible';
+    static show() {
+        applicationTitleEl.style.opacity = 1;
+        applicationTitleEl.style.visibility = 'visible';
     }
 
     static hide() {
-        applicationTitleEl.style.opacity=0;
-        applicationTitleEl.style.visibility='hidden';
+        applicationTitleEl.style.opacity = 0;
+        applicationTitleEl.style.visibility = 'hidden';
     }
 
     static updateAfterScroll() {
-        const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
-        if(
-            (scrollingDiv.scrollLeft>=rightSide-150)
+        const rightSide = canvas.clientWidth - scrollingDiv.offsetWidth;
+        if (
+            (scrollingDiv.scrollLeft >= rightSide - 150)
             && !modalVisible
             && finishedScrolling === false
         ) {
@@ -23,7 +23,7 @@ class ApplicationTitle {
         }
         else {
             // When they manually scroll, hide the title
-            if (finishedScrolling && (scrollLeft!=scrollingDiv.scrollLeft || scrollTop!=scrollingDiv.scrollTop)) {
+            if (finishedScrolling && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)) {
                 ApplicationTitle.hide();
             }
         }
@@ -34,25 +34,26 @@ class ApplicationTitle {
     }
 
     static handleHideModal() {
-        const rightSide = canvas.clientWidth-scrollingDiv.offsetWidth;
-        if(scrollingDiv.scrollLeft>=rightSide-150) {
+        const rightSide = canvas.clientWidth - scrollingDiv.offsetWidth;
+        if (scrollingDiv.scrollLeft >= rightSide - 150) {
             ApplicationTitle.show();
         }
     }
 
     static handleRenderingEnd() {
-        if (window.innerWidth>=canvas.clientWidth && !modalVisible) {
+        if (window.innerWidth >= canvas.clientWidth && !modalVisible) {
             ApplicationTitle.show();
         }
     }
 
     static updateScrollToSeeMore() {
-        setTimeout(()=> {
-                if (canvas.width*canvas.height<2000*2000) {
-                    scrollToSeeMore.style.display='none';
+        setTimeout(
+            () => {
+                if (canvas.width * canvas.height < 2000 * 2000) {
+                    scrollToSeeMore.style.display = 'none';
                 }
                 else {
-                    scrollToSeeMore.style.display='inherit';
+                    scrollToSeeMore.style.display = 'inherit';
                 }
             },
             1000
@@ -60,9 +61,9 @@ class ApplicationTitle {
     }
 }
 
-scrollingDiv.addEventListener('scrollend', ApplicationTitle.updateAfterScroll, {passive: true});
-scrollingDiv.addEventListener('touchstart', ApplicationTitle.updateAfterScroll, {passive: true});
-scrollingDiv.addEventListener('touchmove', ApplicationTitle.updateAfterScroll, {passive: true});
+scrollingDiv.addEventListener('scrollend', ApplicationTitle.updateAfterScroll, { passive: true });
+scrollingDiv.addEventListener('touchstart', ApplicationTitle.updateAfterScroll, { passive: true });
+scrollingDiv.addEventListener('touchmove', ApplicationTitle.updateAfterScroll, { passive: true });
 
 canvas.addEventListener('renderingend', ApplicationTitle.handleRenderingEnd);
 canvas.addEventListener('click', ApplicationTitle.hide);
