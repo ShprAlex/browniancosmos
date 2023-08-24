@@ -92,21 +92,27 @@ class Simulation {
     toWaveTriangular(n) {
       let column = new Array(this.HISTOGRAM_SIZE).fill(0);
       let r = Math.floor(n);
+      let fraction = n - r;
   
       for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
         for (let j = -r; j < 0; j++) {
           let v = this.histogram[(i + j + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE];
-          let k = r + j;
-          column[i] += v * (r - Math.abs(r - 1 - k * 2)) / r;
+          let k = n + j;
+          column[i] += v * (n - Math.abs(n - 1 - k * 2)) / n;
         }
   
         for (let j = 0; j < r; j++) {
           let v = this.histogram[(i + j + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE];
           let k = j;
-          column[i] -= v * (r - Math.abs(r - 1 - k * 2)) / r;
+          column[i] -= v * (n - Math.abs(n - 1 - k * 2)) / n;
+        }
+
+        if (fraction) {
+          column[i] += this.histogram[(i - r - 1 + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE] * fraction/n;
+          column[i] -= this.histogram[(i + r + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE] * fraction/n;
         }
   
-        column[i] = this.normalizeBrightness(column[i]*2, n);
+        column[i] = this.normalizeBrightness(column[i]*2.2, n);
       }
       return column;
     }
