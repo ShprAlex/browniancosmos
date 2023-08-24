@@ -54,7 +54,7 @@ canvas {
 }
 #statusText {
     color: white;
-    font-size: max(18px,1.5vw);
+    font-size: max(18px,1.3vw);
     text-align: left;
     font-family:'Courier New', Courier, monospace;
 }

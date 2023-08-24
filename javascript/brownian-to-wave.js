@@ -112,7 +112,7 @@ class Simulation {
           column[i] -= this.histogram[(i + r + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE] * fraction/n;
         }
   
-        column[i] = this.normalizeBrightness(column[i]*2.2, n);
+        column[i] = this.normalizeBrightness(column[i]*2, n);
       }
       return column;
     }
