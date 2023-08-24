@@ -2,14 +2,7 @@ const fullscreenButton = document.getElementById('fullscreenButton');
 const toolbarEl = document.getElementById('toolbar');
 const chartInfoMenuItem = document.getElementById('chartInfoMenuItem');
 const reloadToobarButton = document.getElementById('reloadToolbarButton');
-
-window.addEventListener('load', ()=>{
-    aboutModal.show();
-    if (!document.fullscreenEnabled) {
-        fullscreenButton.style.display='none';
-
-    }
-});
+const additionalMenuDropdown = document.getElementById('additionalMenuDropdown');
 
 class ToolbarHandler {
     static show() {
@@ -44,6 +37,13 @@ class ToolbarHandler {
         }
     }
 }
+
+window.addEventListener('load', ()=>{
+    if (!document.fullscreenEnabled) {
+        fullscreenButton.style.display='none';
+        additionalMenuDropdown.style.padding = '0 max(12px, 1vw)';
+    }
+});
 
 chartInfoMenuItem.addEventListener('click', (event) => { event.preventDefault(); aboutModal.show(); });
 reloadToobarButton.addEventListener('click', () => {
