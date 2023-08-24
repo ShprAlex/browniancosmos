@@ -13,6 +13,10 @@ class Scroller {
         scrollingDiv.addEventListener('touchmove', Scroller.updateAutoScroll, { passive: true });
         canvas.addEventListener('showmodal', () => { scrollSpeed = 0.5; });
         canvas.addEventListener('hidemodal', () => { scrollSpeed = 2; });
+
+        if (canvas.clientWidth <= window.innerWidth) {
+            finishedScrolling = true;
+        }
     }
 
     static reset() {
