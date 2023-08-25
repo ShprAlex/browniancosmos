@@ -45,9 +45,9 @@ class Simulation {
     }
 
     /**
-     * Scans over the histogram and for every index subtracts the of the next n numbers from the
-     * previous n numbers. This linear sum is a bit like a 'square' wave that has sharp boundary
-     * conditions sensitive to noise.
+     * Scans over the histogram and for every index subtracts the sum of the next n numbers from
+     * the previous n numbers. This simple sum is a bit like a 'square' wave that has sharp
+     * boundary conditions sensitive to noise.
      */
     toWaveSquare(n) {
         let column = new Array(this.histogram.length).fill(0);
