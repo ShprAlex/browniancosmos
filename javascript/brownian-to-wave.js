@@ -6,6 +6,10 @@ class Simulation {
         this.brighness = Math.sqrt(this.MAX_POPULATION) / Math.sqrt(this.HISTOGRAM_SIZE);
     }
 
+    modh(v) {
+        return v >= 0 ? v % this.HISTOGRAM_SIZE : v % this.HISTOGRAM_SIZE + this.HISTOGRAM_SIZE;
+    }
+
     initializePopulation() {
         this.histogram = new Array(this.HISTOGRAM_SIZE).fill(0);
         for (let i = 0; i < this.MAX_POPULATION; i++) {
@@ -18,7 +22,7 @@ class Simulation {
         for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
             for (let j = 0; j < this.histogram[i]; j++) {
                 let r = Math.floor(Math.random() * 3) - 1;
-                hist2[(i + r + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE]++;
+                hist2[this.modh(i + r)]++;
             }
         }
         this.histogram = hist2;
@@ -51,17 +55,17 @@ class Simulation {
         let fraction = n - r;
         let running_sum = 0;
         for (let j = 0; j < r; j++) {
-            running_sum += this.histogram[j % this.HISTOGRAM_SIZE];
+            running_sum += this.histogram[this.modh(j)];
         }
         for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
             column[i] -= running_sum;
             column[(i + r) % this.HISTOGRAM_SIZE] += running_sum;
             running_sum -= this.histogram[i];
-            running_sum += this.histogram[(i + r) % this.HISTOGRAM_SIZE];
+            running_sum += this.histogram[this.modh(i + r)];
             // Less efficient version of this for loop:
             //
             // for (let j = -r; j < r; j++) {
-            //   let v = this.histogram[(i + j + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE];
+            //   let v = this.histogram[this.modh(i + j)];
             //   if (j < 0) {
             //     column[i] += v;
             //   } else {
@@ -71,8 +75,8 @@ class Simulation {
         }
         if (fraction > 0) {
             for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
-                column[i] += this.histogram[(i - r - 1 + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE] * fraction;
-                column[i] -= this.histogram[(i + r + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE] * fraction;
+                column[i] += this.histogram[this.modh(i - r - 1)] * fraction;
+                column[i] -= this.histogram[this.modh(i + r)] * fraction;
             }
         }
         for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
@@ -96,20 +100,20 @@ class Simulation {
 
         for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
             for (let j = -r; j < 0; j++) {
-                let v = this.histogram[(i + j + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE];
+                let v = this.histogram[this.modh(i + j)];
                 let k = n + j;
                 column[i] += v * (n - Math.abs(n - 1 - k * 2)) / n;
             }
 
             for (let j = 0; j < r; j++) {
-                let v = this.histogram[(i + j + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE];
+                let v = this.histogram[this.modh(i + j)];
                 let k = j;
                 column[i] -= v * (n - Math.abs(n - 1 - k * 2)) / n;
             }
 
             if (fraction) {
-                column[i] += this.histogram[(i - r - 1 + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE] * fraction / n;
-                column[i] -= this.histogram[(i + r + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE] * fraction / n;
+                column[i] += this.histogram[this.modh(i - r - 1)] * fraction / n;
+                column[i] -= this.histogram[this.modh(i + r)] * fraction / n;
             }
 
             column[i] = this.normalizeBrightness(column[i] * 2, n);
