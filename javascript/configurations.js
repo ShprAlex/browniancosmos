@@ -135,14 +135,14 @@ function getConfigurations() {
                 </p>
             `
         },
-        "zero-velocity-triangular": {
-            "name": "Zero Velocity Triangular",
+        "zero-velocity-triangle": {
+            "name": "Zero Velocity Triangle",
             "height": window.innerHeight,
             "width": window.innerWidth,
             "particles": 50,
             "startw": 1,
             "endw": Math.floor(window.innerHeight / 2),
-            "waveshape": "triangular",
+            "waveshape": "triangle",
             "cellsize": 2,
             "velocity": 0,
             "description": `
@@ -190,14 +190,14 @@ function getConfigurations() {
                 </p>
             `
         },
-        "big-waves-triangular": {
-            "name": "Big Waves Triangular",
+        "big-waves-triangle": {
+            "name": "Big Waves Triangle",
             "height": 1600,
             "width": 4000,
             "particles": 400,
             "startw": 40,
             "endw": 400,
-            "waveshape": "triangular",
+            "waveshape": "triangle",
             "cellsize": 2,
             "velocity": 5,
             "description": `
@@ -209,19 +209,19 @@ function getConfigurations() {
                 </p>
             `
         },
-        "triangular-scan": {
-            "name": "Triangular Scan",
+        "triangle-scan": {
+            "name": "Triangle Scan",
             "height": window.innerHeight,
             "width": window.innerWidth,
             "particles": 1000,
             "startw": 2,
             "endw": window.innerHeight,
-            "waveshape": "triangular",
+            "waveshape": "triangle",
             "cellsize": 1,
             "velocity": 1,
             "description": `
                 <p>
-                    A scan with triangular waves looks nice in the big picture.
+                    A scan with triangle waves looks nice in the big picture.
                 </p>
             `
         },

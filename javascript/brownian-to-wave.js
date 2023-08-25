@@ -89,11 +89,11 @@ class Simulation {
     /**
      * Scans over the histogram and for every index subtracts a weighted sum the of the next n
      * numbers from the previous n numbers. The weights are in the form of a triangle where the
-     * greatest weight is given to the middle of the n numbers, forming a kind of 'tiangular'
+     * greatest weight is given to the middle of the n numbers, forming a kind of "triangle"
      * wave. This has the benefit of being less affected by noise at the edges where the weights
      * are low.
      */
-    toWaveTriangular(n) {
+    toWaveTriangle(n) {
         let column = new Array(this.HISTOGRAM_SIZE).fill(0);
         let r = Math.floor(n);
         let fraction = n - r;
@@ -125,8 +125,8 @@ class Simulation {
         if (waveShape === 'square') {
             return this.toWaveSquare(n);
         }
-        else if (waveShape === 'triangular') {
-            return this.toWaveTriangular(n);
+        else if (waveShape === 'triangle') {
+            return this.toWaveTriangle(n);
         }
         return null;
     }
