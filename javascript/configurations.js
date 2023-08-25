@@ -33,7 +33,7 @@ function getConfigurations() {
             "width": Math.max(1000, window.innerWidth),
             "particles": 10,
             "startw": 1,
-            "endw": window.innerHeight / 4,
+            "endw": Math.floor(window.innerHeight / 4),
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 4,
@@ -113,7 +113,7 @@ function getConfigurations() {
             "width": window.innerWidth,
             "particles": 50,
             "startw": 1,
-            "endw": Math.floor(window.innerWidth / 2),
+            "endw": Math.floor(window.innerHeight / 4),
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 0,
@@ -141,7 +141,7 @@ function getConfigurations() {
             "width": window.innerWidth,
             "particles": 50,
             "startw": 1,
-            "endw": Math.floor(window.innerWidth / 2),
+            "endw": Math.floor(window.innerHeight / 2),
             "waveshape": "triangular",
             "cellsize": 2,
             "velocity": 0,
@@ -206,6 +206,38 @@ function getConfigurations() {
                 </p>
                 <p>
                     The results look fuzzy, and there is nothing that can be done about that.
+                </p>
+            `
+        },
+        "triangular-scan": {
+            "name": "Triangular Scan",
+            "height": window.innerHeight,
+            "width": window.innerWidth,
+            "particles": 1000,
+            "startw": 2,
+            "endw": window.innerHeight,
+            "waveshape": "triangular",
+            "cellsize": 1,
+            "velocity": 1,
+            "description": `
+                <p>
+                    A scan with triangular waves looks nice in the big picture.
+                </p>
+            `
+        },
+        "pixellated": {
+            "name": "Pixellated",
+            "height": Math.floor(window.innerHeight * 1.2),
+            "width": Math.max(1000, window.innerWidth),
+            "particles": 80,
+            "startw": 1,
+            "endw": Math.floor(window.innerHeight * 1.2 / 8),
+            "waveshape": "square",
+            "cellsize": 4,
+            "velocity": 1,
+            "description": `
+                <p>
+                    Pixellation with noise looks nice up close.
                 </p>
             `
         },
