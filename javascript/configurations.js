@@ -135,8 +135,8 @@ function getConfigurations() {
                 </p>
             `
         },
-        "zero-velocity-triangle": {
-            "name": "Zero Velocity Triangle",
+        "zero-velocity-tapered": {
+            "name": "Zero Velocity Tapered",
             "height": window.innerHeight,
             "width": window.innerWidth,
             "particles": 50,
@@ -176,7 +176,7 @@ function getConfigurations() {
             "height": 1600,
             "width": 3000,
             "particles": 500,
-            "startw": 100,
+            "startw": 80,
             "endw": 800,
             "waveshape": "square",
             "cellsize": 1,
@@ -190,16 +190,16 @@ function getConfigurations() {
                 </p>
             `
         },
-        "big-waves-triangle": {
-            "name": "Big Waves Triangle",
+        "big-waves-tapered": {
+            "name": "Big Waves Tapered",
             "height": 1600,
-            "width": 4000,
-            "particles": 400,
-            "startw": 40,
-            "endw": 400,
+            "width": 3000,
+            "particles": 500,
+            "startw": 80,
+            "endw": 800,
             "waveshape": "triangle",
-            "cellsize": 2,
-            "velocity": 5,
+            "cellsize": 1,
+            "velocity": 8,
             "description": `
                 <p>
                     Scanning at large wavelenghts produces nice patterns.
@@ -209,8 +209,8 @@ function getConfigurations() {
                 </p>
             `
         },
-        "triangle-scan": {
-            "name": "Triangle Scan",
+        "tapered-scan": {
+            "name": "Tapered Scan",
             "height": window.innerHeight,
             "width": window.innerWidth,
             "particles": 1000,
@@ -227,11 +227,11 @@ function getConfigurations() {
         },
         "pixellated": {
             "name": "Pixellated",
-            "height": Math.floor(window.innerHeight * 1.2),
+            "height": Math.floor(window.innerHeight * 1.5),
             "width": Math.max(1000, window.innerWidth),
             "particles": 80,
             "startw": 1,
-            "endw": Math.floor(window.innerHeight * 1.2 / 8),
+            "endw": Math.floor(window.innerHeight * 1.5 / 8),
             "waveshape": "square",
             "cellsize": 4,
             "velocity": 1,
