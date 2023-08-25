@@ -121,12 +121,44 @@ class Simulation {
         return column;
     }
 
+    /**
+     * Scans over the histogram and for every index computes a weighted sum by sin(x/PI) for x in
+     * range of -n to n. This has the same effect as a triangle wave where the goal is to give
+     * greater weight to the middle of the intervals ahead and behind and lower weights to their
+     * ends to reduce noise.
+     */
+    toWaveSine(n) {
+        let column = new Array(this.HISTOGRAM_SIZE).fill(0);
+        let r = Math.floor(n);
+        let fraction = n - r;
+
+        for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
+            for (let j = -r - 1; j < r + 1; j++) {
+                let v = this.histogram[this.modh(i + j)];
+                v = v * Math.sin((n + j + 0.5) / n * Math.PI);
+                if (j > -r - 1 && j < r) {
+                    column[i] += v;
+                }
+                else {
+                    if (v * (r + j) < 0) {
+                        column[i] += v * fraction;
+                    }
+                }
+            }
+            column[i] = this.normalizeBrightness(column[i] * 2, n);
+        }
+        return column;
+    }
+
     toWave(n, waveShape = 'square') {
         if (waveShape === 'square') {
             return this.toWaveSquare(n);
         }
         else if (waveShape === 'triangle') {
             return this.toWaveTriangle(n);
+        }
+        else if (waveShape === 'sine') {
+            return this.toWaveSine(n);
         }
         return null;
     }
