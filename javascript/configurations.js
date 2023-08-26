@@ -15,8 +15,9 @@ function getConfigurations() {
                     BrownianCosmos is an exploration of patterns present in Brownian motion.
                 </p>
                 <p>
-                    Surprisingly, randomly placed particles contain arbitrary regions of density.
-                    Brownian motion shifts these regions in a continuous wavelike way.
+                    Surprisingly, random placements of particles have arbitrary regions of density.
+                    When the particles undergo Brownian motion these regions shift in a continuous
+                    wavelike way.
                     This simulation reveals those density waves and shows their fractal nature at
                     different scales.
                 </p>
@@ -71,11 +72,11 @@ function getConfigurations() {
                     Here is what the underlying Brownian motion looks like on it's own.
                 </p>
                 <p>
-                    The pattern can be surprisingly pretty and appears almost intentionally designed.
+                    The pattern can be surprisingly pretty and appear almost intentionally designed.
                 </p>
                 <p>
                     Even though the particles have random starting positions and move completely
-                    independently, we still see regions where the particles appear to move together
+                    independently, we still see regions where the particle paths overlap
                     and large gaps that persist in time.
                 </p>
             `
@@ -135,8 +136,8 @@ function getConfigurations() {
                 </p>
             `
         },
-        "zero-velocity-tapered": {
-            "name": "Zero Velocity Tapered",
+        "zero-velocity-smoothed": {
+            "name": "Zero Velocity Smoothed",
             "height": window.innerHeight,
             "width": window.innerWidth,
             "particles": 50,
@@ -190,8 +191,8 @@ function getConfigurations() {
                 </p>
             `
         },
-        "big-waves-tapered": {
-            "name": "Big Waves Tapered",
+        "big-waves-smoothed": {
+            "name": "Big Waves Smoothed",
             "height": 1600,
             "width": 3000,
             "particles": 500,
@@ -209,8 +210,8 @@ function getConfigurations() {
                 </p>
             `
         },
-        "tapered-scan": {
-            "name": "Tapered Scan",
+        "smoothed-scan": {
+            "name": "Smoothed Scan",
             "height": window.innerHeight,
             "width": window.innerWidth,
             "particles": 1000,

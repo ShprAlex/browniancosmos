@@ -3,6 +3,10 @@ class Simulation {
         this.MAX_POPULATION = max_population;
         this.HISTOGRAM_SIZE = histogram_size;
         this.initializePopulation();
+        this.updateBrightness();
+    }
+
+    updateBrightness() {
         this.brighness = Math.sqrt(this.MAX_POPULATION) / Math.sqrt(this.HISTOGRAM_SIZE);
     }
 
@@ -33,15 +37,14 @@ class Simulation {
             this.histogram[Math.floor(Math.random() * this.HISTOGRAM_SIZE)]++;
         }
         this.MAX_POPULATION = Math.max(this.MAX_POPULATION, targetPopulation);
-        this.brighness = Math.sqrt(this.MAX_POPULATION) / Math.sqrt(this.HISTOGRAM_SIZE);
+        this.updateBrightness();
     }
 
     normalizeBrightness(value, n) {
-        let v = Math.min(1, Math.max(0, value / Math.sqrt(n) / this.brighness / 2.3));
-        if (isNaN(v)) {
+        if (n===0 || this.brighness===0) {
             return 0;
         }
-        return v;
+        return Math.min(1, Math.max(0, value / Math.sqrt(n) / this.brighness / 2.3));
     }
 
     /**
@@ -59,19 +62,9 @@ class Simulation {
         }
         for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
             column[i] -= running_sum;
-            column[(i + r) % this.HISTOGRAM_SIZE] += running_sum;
+            column[this.modh(i + r)] += running_sum;
             running_sum -= this.histogram[i];
             running_sum += this.histogram[this.modh(i + r)];
-            // Less efficient version of this for loop:
-            //
-            // for (let j = -r; j < r; j++) {
-            //   let v = this.histogram[this.modh(i + j)];
-            //   if (j < 0) {
-            //     column[i] += v;
-            //   } else {
-            //     column[i] -= v;
-            //   }
-            // }
         }
         if (fraction > 0) {
             for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
