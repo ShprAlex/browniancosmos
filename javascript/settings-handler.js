@@ -12,7 +12,7 @@ function resetAnimationSettings(settingsData) {
     // after animate() is called, params is internally parsed to extract the parameters.
     params = new URLSearchParams(settingsData);
     // update the url without reloading.
-    history.pushState({}, 'BrownianCosmos', `launch.html?${params.toString()}`);
+    history.pushState({}, 'BrownianCosmos', `index.html?${params.toString()}`);
     AnimationHandler.reset();
     AnimationHandler.animate();
     if ('configuration' in settingsData) {
