@@ -1,15 +1,30 @@
 const applicationTitleEl = document.getElementById('applicationTitle');
 const scrollToSeeMore = document.getElementById('applicationTitleScrollForMore');
+let titleState = null;
 
 class ApplicationTitle {
+    static reset() {
+        ApplicationTitle.hide();
+        titleState = null;
+    }
+
     static show() {
-        applicationTitleEl.style.opacity = 1;
-        applicationTitleEl.style.visibility = 'visible';
+        if (titleState !== 'manually-hidden') {
+            applicationTitleEl.style.opacity = 1;
+            applicationTitleEl.style.visibility = 'visible';
+        }
     }
 
     static hide() {
         applicationTitleEl.style.opacity = 0;
         applicationTitleEl.style.visibility = 'hidden';
+    }
+
+    static hideUntilReset() {
+        if (applicationTitleEl.style.visibility === 'visible') {
+            ApplicationTitle.hide();
+            titleState = 'manually-hidden';
+        }
     }
 
     static updateAfterScroll() {
@@ -24,7 +39,7 @@ class ApplicationTitle {
         else {
             // When they manually scroll, hide the title
             if (finishedScrolling && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)) {
-                ApplicationTitle.hide();
+                ApplicationTitle.hideUntilReset();
             }
         }
     }
@@ -66,11 +81,9 @@ scrollingDiv.addEventListener('touchstart', ApplicationTitle.updateAfterScroll, 
 scrollingDiv.addEventListener('touchmove', ApplicationTitle.updateAfterScroll, { passive: true });
 
 canvas.addEventListener('renderingend', ApplicationTitle.handleRenderingEnd);
-canvas.addEventListener('click', ApplicationTitle.hide);
-canvas.addEventListener('resetstart', ApplicationTitle.hide);
+canvas.addEventListener('click', ApplicationTitle.hideUntilReset);
+canvas.addEventListener('resetstart', ApplicationTitle.reset);
 canvas.addEventListener('resetend', ApplicationTitle.updateScrollToSeeMore);
 
-aboutModalEl.addEventListener('show.bs.modal', ApplicationTitle.handleShowModal);
-aboutModalEl.addEventListener('hide.bs.modal', ApplicationTitle.handleHideModal);
-settingsModalEl.addEventListener('show.bs.modal', ApplicationTitle.handleShowModal);
-settingsModalEl.addEventListener('hide.bs.modal', ApplicationTitle.handleHideModal);
+canvas.addEventListener('showmodal', ApplicationTitle.handleShowModal);
+canvas.addEventListener('hidemodal', ApplicationTitle.handleHideModal);
