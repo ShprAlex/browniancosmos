@@ -1,193 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=REM:wght@300;400&family=Inder&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="javascript/brownian.css">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
-    <title>BrownianCosmos - An exploration of surprising patterns in Brownian motion.</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=REM:wght@300;400&family=Inder&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="javascript/brownian.css">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+  <title>
+    BrownianCosmos - An exploration of surprising patterns in Brownian motion.
+  </title>
 </head>
+
 <body>
-    <div id="scrollingDiv">
-        <canvas id="canvas"></canvas>
-        <div id="applicationTitle" style="opacity:0; visibility: hidden;">
-            <h1>BrownianCosmos</h1>
-            <h2>
-                An exploration of patterns in
-                <br/>
-                Brownian motion.
-            </h2>
-            <h3 id="applicationTitleScrollForMore">
-                <i class="fa-solid fa-arrows-up-down-left-right"></i>
-                <br/>
-                Scroll to see more
-            </h3>
-        </div>
+  <div id="scrollingDiv">
+    <canvas id="canvas"></canvas>
+    <div id="applicationTitle" style="opacity:0; visibility: hidden;">
+      <h1>
+        BrownianCosmos
+      </h1>
+      <h2>
+        An exploration of patterns in
+        <br />
+        Brownian motion.
+      </h2>
+      <h3 id="applicationTitleScrollForMore">
+        <i class="fa-solid fa-arrows-up-down-left-right"></i>
+        <br />
+        Scroll to see more
+      </h3>
     </div>
+  </div>
 
-    <!-- About Modal -->
-    <div class="modal fade" id="aboutModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content modal-dark bg-dark text-light" data-bs-theme="dark">
-                <div class="modal-header">
-                    <h5 id="aboutTitle" class="modal-title" data-bs-theme="dark">
-                        About
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div id="aboutText" class="modal-body about-text">
-                    <p>
-                        BrownianCosmos is an exploration of patterns present in Brownian motion.
-                    </p>
-                    <p>
-                        Surprisingly, simple randomness does not result in a perfectly even distribution,
-                        but rather produces fractal clumps of density at every scale.
-                        In a system of particles under Brownian motion these regions of density shift
-                        in a continuous wavelike way.
-                    </p>
-                    <p>
-                        This simulation reveals Brownian density waves by converting differences in
-                        the number of particles between adjacent interval lengths to color wavelength
-                        and intensity, letting us better appreciate the mathematics and beauty of this
-                        phenomenon.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
+  <!-- About Modal -->
+  <div class="modal fade" id="aboutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content modal-dark bg-dark text-light" data-bs-theme="dark">
+        <div class="modal-header">
+          <h5 id="aboutTitle" class="modal-title" data-bs-theme="dark">
+            About
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-    </div>
-
-    <!-- Settings Modal -->
-    <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content modal-dark bg-dark text-light" data-bs-theme="dark">
-                <div class="modal-header">
-                    <h5 class="modal-title" data-bs-theme="dark">
-                        Settings
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="settingsForm" novalidate>
-                        <div class="mb-3">
-                            <label for="customSettingsSelect" class="form-label">Preset Configurations</label>
-                            <select class="form-select" id="customSettingsSelect">
-                                <!-- Filled in dynamically -->
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="particles" class="form-label">Number of Particles</label>
-                            <input type="number" step="10" min="0" class="form-control" name="particles">
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="width" class="form-label">Width</label>
-                                    <input type="number" step="100" min="0" class="form-control" name="width">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="height" class="form-label">Height</label>
-                                    <input type="number" step="100" min="0" class="form-control" name="height">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="startw" class="form-label">Wavelength Min</label>
-                                    <input type="number" step="10" min="0" class="form-control" name="startw">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="endw" class="form-label">Wavelength Max</label>
-                                    <input type="number" step="10" min="0" class="form-control" name="endw">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pt-2 pb-2">
-                            <div class="col-6">
-                                <div class="mb-3 form-check">
-                                    <input class="form-check-input" type="radio" name="waveshape" value="square" checked>
-                                    <label class="form-check-label" for="squareWave">
-                                        Square Wave
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-3 form-check">
-                                    <input class="form-check-input" type="radio" name="waveshape" value="triangle">
-                                    <label class="form-check-label" for="triangleWave">
-                                        Smoothed&nbsp;Wave
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="cellsize" class="form-label">Cell Size</label>
-                                    <input type="number" step="1" min="1" class="form-control" name="cellsize">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="velocity" class="form-label">Brownian&nbsp;Velocity</label>
-                                    <input type="number" step="1" min="0" class="form-control" name="velocity">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="settingsForm" id="applySettingsButton" class="btn btn-primary">Apply and Reload</button>
-                </div>
-            </div>
+        <div id="aboutText" class="modal-body about-text">
+          <!-- Filled in dynamically -->
         </div>
-    </div>
-
-    <div id="toolbar">
-        <span id="statusText"></span>
-        <div id="toolbarButtons" >
-            <i id="reloadToolbarButton" class="fa-solid fa-refresh toolbar-icon"></i>
-            <div id="settingsMenuDropdown" class="btn-group dropup toolbar-menu-dropdown">
-                <i type="button" class="fa-solid fa-chart-line toolbar-icon" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                <ul id="settingsMenuItems" class="dropdown-menu">
-                    <!-- Filled in dynamically -->
-                </ul>
-            </div>
-            <div id="additionalMenuDropdown" class="btn-group dropup toolbar-menu-dropdown">
-                <i type="button" class="fa-solid fa-ellipsis-vertical toolbar-icon" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                <ul id="additionalMenuItems" class="dropdown-menu">
-                    <li><a class="dropdown-item" id="chartInfoMenuItem" href="#"><i class="fa-solid fa-info-circle"></i> Chart Info</a></li>
-                    <li><a class="dropdown-item" id="sourceCode" href="https://github.com/ShprAlex/browniancosmos"><i class="fa-brands fa-github"></i> Source Code</a></li>
-                </ul>
-            </div>
-            <i id="fullscreenButton" class="fa-solid fa-expand toolbar-icon"></i>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
         </div>
+      </div>
     </div>
+  </div>
 
-    <script src="javascript/brownian-to-wave.js"></script>
-    <script src="javascript/animation-handler.js"></script>
-    <script src="javascript/renderer.js"></script>
-    <script src="javascript/scroll-handler.js"></script>
-    <script src="javascript/toolbar-handler.js"></script>
-    <script src="javascript/modal-handler.js"></script>
-    <script src="javascript/settings-handler.js"></script>
-    <script src="javascript/title-handler.js"></script>
-    <script src="javascript/about-handler.js"></script>
-    <script src="javascript/configurations.js"></script>
+  <!-- Settings Modal -->
+  <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-dark bg-dark text-light" data-bs-theme="dark">
+        <div class="modal-header">
+          <h5 class="modal-title" data-bs-theme="dark">
+            Settings
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="settingsForm" novalidate>
+            <div class="mb-3">
+              <label for="customSettingsSelect" class="form-label">
+                Preset Configurations
+              </label>
+              <select class="form-select" id="customSettingsSelect">
+                <!-- Filled in dynamically -->
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="particles" class="form-label">
+                Number of Particles
+              </label>
+              <input type="number" step="10" min="0" class="form-control" name="particles">
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="width" class="form-label">
+                    Width
+                  </label>
+                  <input type="number" step="100" min="0" class="form-control" name="width">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="height" class="form-label">
+                    Height
+                  </label>
+                  <input type="number" step="100" min="0" class="form-control" name="height">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="startw" class="form-label">
+                    Wavelength Min
+                  </label>
+                  <input type="number" step="10" min="0" class="form-control" name="startw">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="endw" class="form-label">
+                    Wavelength Max
+                  </label>
+                  <input type="number" step="10" min="0" class="form-control" name="endw">
+                </div>
+              </div>
+            </div>
+            <div class="row pt-2 pb-2">
+              <div class="col-6">
+                <div class="mb-3 form-check">
+                  <input class="form-check-input" type="radio" name="waveshape" value="square" checked>
+                  <label class="form-check-label" for="squareWave">
+                    Square Wave
+                  </label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3 form-check">
+                  <input class="form-check-input" type="radio" name="waveshape" value="triangle">
+                  <label class="form-check-label" for="triangleWave">
+                    Smoothed&nbsp;Wave
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="cellsize" class="form-label">
+                    Cell Size
+                  </label>
+                  <input type="number" step="1" min="1" class="form-control" name="cellsize">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="velocity" class="form-label">
+                    Brownian&nbsp;Velocity
+                  </label>
+                  <input type="number" step="1" min="0" class="form-control" name="velocity">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" form="settingsForm" id="applySettingsButton" class="btn btn-primary">
+            Apply and Reload
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toolbar">
+    <span id="statusText"></span>
+    <div id="toolbarButtons">
+      <i id="reloadToolbarButton" class="fa-solid fa-refresh toolbar-icon"></i>
+      <div id="settingsMenuDropdown" class="btn-group dropup toolbar-menu-dropdown">
+        <i type="button" class="fa-solid fa-chart-line toolbar-icon" data-bs-toggle="dropdown"
+          aria-expanded="false"></i>
+        <ul id="settingsMenuItems" class="dropdown-menu">
+          <!-- Filled in dynamically -->
+        </ul>
+      </div>
+      <div id="additionalMenuDropdown" class="btn-group dropup toolbar-menu-dropdown">
+        <i type="button" class="fa-solid fa-ellipsis-vertical toolbar-icon" data-bs-toggle="dropdown"
+          aria-expanded="false">
+        </i>
+        <ul id="additionalMenuItems" class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" id="chartInfoMenuItem" href="#">
+              <i class="fa-solid fa-info-circle"></i>
+              Chart Info
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" id="sourceCode" href="https://github.com/ShprAlex/browniancosmos">
+              <i class="fa-brands fa-github"></i>
+              Source Code
+            </a>
+          </li>
+        </ul>
+      </div>
+      <i id="fullscreenButton" class="fa-solid fa-expand toolbar-icon"></i>
+    </div>
+  </div>
+
+  <script src="javascript/brownian-to-wave.js"></script>
+  <script src="javascript/animation-handler.js"></script>
+  <script src="javascript/renderer.js"></script>
+  <script src="javascript/scroll-handler.js"></script>
+  <script src="javascript/toolbar-handler.js"></script>
+  <script src="javascript/modal-handler.js"></script>
+  <script src="javascript/settings-handler.js"></script>
+  <script src="javascript/title-handler.js"></script>
+  <script src="javascript/about-handler.js"></script>
+  <script src="javascript/configurations.js"></script>
 </body>
+
 </html>
