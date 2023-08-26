@@ -92,8 +92,7 @@ class AnimationHandler {
 
     static animate() {
         if (!finishedRendering) {
-            AnimationHandler.rampUpParticles();
-            Renderer.draw();
+            Renderer.draw(AnimationHandler.rampUpParticles);
             AnimationHandler.updateStatusText();
         }
         if (!finishedScrolling) {

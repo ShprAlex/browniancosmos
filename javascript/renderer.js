@@ -88,10 +88,11 @@ class Renderer {
         return waveLength;
     }
 
-    static draw() {
+    static draw(updateAfterDrawColumn) {
         for (let i = 0; i < DRAW_COLUMN_BATCH_SIZE; i++) {
             simulation.step(BROWNIAN_VELOCITY);
             Renderer.drawColumn(progress, Renderer.computeWavelength());
+            updateAfterDrawColumn();
             progress++;
             if (progress == GRID_WIDTH) {
                 break;
