@@ -32,16 +32,16 @@ canvas {
 }
 
 #applicationTitle h1 {
-    font-size: max(40px, 3.2vw);
+    font-size: max(40px, 2.8vw);
 }
 
 #applicationTitle h2 {
-    font-size: max(20px, 1.6vw);
+    font-size: max(20px, 1.4vw);
     margin: 0 0 100px;
 }
 
 #applicationTitle h3 {
-    font-size: max(18px, 1.45vw);
+    font-size: max(18px, 1.25vw);
 }
 
 #toolbar {
