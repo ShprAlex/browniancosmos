@@ -118,6 +118,15 @@ class HistogramToWave {
         return column;
     }
 
+    /**
+     * Returns the original histogram adjusted for brightness.
+     */
+    static toWaveNone(histogram, populationSize) {
+        let HISTOGRAM_SIZE = histogram.length;
+        const brightness = HISTOGRAM_SIZE / populationSize / 2;
+        return histogram.map((v) => Math.min(v * brightness, 1));
+    }
+
     static toWave(histogram, populationSize, n, waveShape = 'square') {
         if (waveShape === 'square') {
             return HistogramToWave.toWaveSquare(histogram, populationSize, n);
@@ -128,6 +137,6 @@ class HistogramToWave {
         else if (waveShape === 'sine') {
             return HistogramToWave.toWaveSine(histogram, populationSize, n);
         }
-        return null;
+        return HistogramToWave.toWaveNone(histogram, populationSize);
     }
 }

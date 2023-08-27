@@ -19,10 +19,7 @@ class Renderer {
             green_column = HistogramToWave.toWave(simulation.histogram, simulation.POPULATION_SIZE, waveLength / 2 + 0.5, WAVE_SHAPE);
             blue_column = HistogramToWave.toWave(simulation.histogram, simulation.POPULATION_SIZE, waveLength / 4 + 0.75, WAVE_SHAPE);
         } else {
-            const brightness = GRID_HEIGHT / MAX_PARTICLES / 2;
-            const column = simulation.histogram.map((v) =>
-                Math.min(v * brightness, 1)
-            );
+            const column = HistogramToWave.toWaveNone(simulation.histogram, simulation.POPULATION_SIZE);
             red_column = column;
             green_column = column;
             blue_column = column;
