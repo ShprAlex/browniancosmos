@@ -15,9 +15,9 @@ class Renderer {
         let green_column;
         let blue_column;
         if (END_WAVELENGTH > 1) {
-            red_column = simulation.toWave(waveLength, WAVE_SHAPE);
-            green_column = simulation.toWave(waveLength / 2 + 0.5, WAVE_SHAPE);
-            blue_column = simulation.toWave(waveLength / 4 + 0.75, WAVE_SHAPE);
+            red_column = HistogramToWave.toWave(simulation.histogram, simulation.POPULATION_SIZE, waveLength, WAVE_SHAPE);
+            green_column = HistogramToWave.toWave(simulation.histogram, simulation.POPULATION_SIZE, waveLength / 2 + 0.5, WAVE_SHAPE);
+            blue_column = HistogramToWave.toWave(simulation.histogram, simulation.POPULATION_SIZE, waveLength / 4 + 0.75, WAVE_SHAPE);
         } else {
             const brightness = GRID_HEIGHT / MAX_PARTICLES / 2;
             const column = simulation.histogram.map((v) =>
