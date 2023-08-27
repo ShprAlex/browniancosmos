@@ -228,9 +228,9 @@ function getConfigurations() {
         },
         "pixellated": {
             "name": "Pixellated",
-            "height": Math.floor(window.innerHeight * 1.5),
+            "height": window.innerHeight,
             "width": Math.max(1000, window.innerWidth),
-            "particles": 120,
+            "particles": 60,
             "startw": 1,
             "endw": Math.floor(window.innerHeight / 10),
             "waveshape": "square",
