@@ -1,7 +1,11 @@
-class Simulation {
-    constructor(POPULATION_SIZE, histogram_size) {
-        this.POPULATION_SIZE = POPULATION_SIZE;
-        this.HISTOGRAM_SIZE = histogram_size;
+/**
+ * This is a simple implementation of a Browninan motion simulator which uses a histogram
+ * as the model to keep track of particle positions.
+ */
+class BrownianSimulation {
+    constructor(populationSize, histogramSize) {
+        this.POPULATION_SIZE = populationSize;
+        this.HISTOGRAM_SIZE = histogramSize;
         this.initializePopulation();
     }
 
@@ -16,27 +20,34 @@ class Simulation {
         }
     }
 
-    updatePopulation() {
-        let hist2 = new Array(this.HISTOGRAM_SIZE).fill(0);
+    updatePositions() {
+        const updatedHist = new Array(this.HISTOGRAM_SIZE).fill(0);
         for (let i = 0; i < this.HISTOGRAM_SIZE; i++) {
             for (let j = 0; j < this.histogram[i]; j++) {
-                let r = Math.floor(Math.random() * 3) - 1;
-                hist2[this.modh(i + r)]++;
+                const r = Math.floor(Math.random() * 3) - 1;
+                updatedHist[this.modh(i + r)]++;
             }
         }
-        this.histogram = hist2;
+        this.histogram = updatedHist;
     }
 
     increasePopulation(targetPopulation) {
+        if (targetPopulation<=this.POPULATION_SIZE) {
+            return;
+        }
         for (let i = this.POPULATION_SIZE; i < targetPopulation; i++) {
             this.histogram[Math.floor(Math.random() * this.HISTOGRAM_SIZE)]++;
         }
-        this.POPULATION_SIZE = Math.max(this.POPULATION_SIZE, targetPopulation);
+        this.POPULATION_SIZE = targetPopulation;
     }
 
-    step(generations = 1) {
-        for (let i = 0; i < generations; i++) {
-            this.updatePopulation();
+    getHistogram() {
+        return this.histogram;
+    }
+
+    step(iterations = 1) {
+        for (let i = 0; i < iterations; i++) {
+            this.updatePositions();
         }
     }
 }

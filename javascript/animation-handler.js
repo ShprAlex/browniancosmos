@@ -57,7 +57,7 @@ class AnimationHandler {
         INITAL_PARTICLES = 0;
         MAX_PARTICLES = getParam('particles');
 
-        simulation = new Simulation(INITAL_PARTICLES, GRID_HEIGHT);
+        simulation = new BrownianSimulation(INITAL_PARTICLES, GRID_HEIGHT);
         Renderer.reset();
         Scroller.reset();
         canvas.dispatchEvent(new CustomEvent('resetend', { bubbles: true }));
