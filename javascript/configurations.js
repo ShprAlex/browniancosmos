@@ -125,10 +125,8 @@ function getConfigurations() {
                     the particles below, and when we're below a line we get a positive difference.
                 </p>
                 <p>
-                    There is thus a downward drift in the colored density areas relative to the
-                    center of mass.
-                    When there are several particles next to each other the thick colored band
-                    grows from the bottom most particle whele the ones on top fade out to blue.
+                    While somewhat distorted this technique still accurately reveals where the
+                    density regions are staying true to the data.
                 </p>
             `
         },
@@ -144,8 +142,19 @@ function getConfigurations() {
             "velocity": 0,
             "description": `
                 <p>
-                    We can increase the scanning wavelenths while the partiles aren't moving
-                    and they still merge together.
+                    We've been using a square wave to detect density patterns, by subtracting
+                    the number of particles at an interval above from those below. The square
+                    wave has a sharp boundary with particles suddently entering our scanning
+                    window.
+                </p>
+                <p>
+                    We can use smoothing techniques similar to those for moving averages to
+                    give less weight to the particles at the ends of the intervals and increasing
+                    the weight towards the middle forming a triangular wave or a sine wave.
+                </p>
+                </p>
+                    Smoothed waves better capture density at a specific wavelengh, but they lose
+                    some of the texture the square waves preserve.
                 </p>
             `
         },
