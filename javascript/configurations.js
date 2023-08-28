@@ -15,10 +15,10 @@ function getConfigurations() {
                     BrownianCosmos is an exploration of patterns in Brownian motion.
                 </p>
                 <p>
-                    We tend to expect randomness to even out, so it's surprising to find that
-                    clumps and gaps are everpresent in randomply placed particles. Brownian
-                    motion accentuates these features causing them to shift in a continuous
-                    wavelike way.
+                    We tend to expect randomness to even out, so it's surprising that randomply
+                    placed particles have clumps and gaps.
+                    Brownian motion accentuates these features causing them to shift in a
+                    continuous wavelike way.
                     Our simulation reveals these density waves and shows their fractal nature at
                     different scales.
                 </p>
