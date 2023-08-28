@@ -12,13 +12,14 @@ function getConfigurations() {
             "velocity": 5,
             "description": `
                 <p>
-                    BrownianCosmos is an exploration of patterns present in Brownian motion.
+                    BrownianCosmos is an exploration of patterns in Brownian motion.
                 </p>
                 <p>
-                    Surprisingly, random placements of particles have arbitrary regions of density.
-                    When the particles undergo Brownian motion these regions shift in a continuous
+                    We tend to expect randomness to even out, so it's surprising to find that
+                    clumps and gaps are everpresent in randomply placed particles. Brownian
+                    motion accentuates these features causing them to shift in a continuous
                     wavelike way.
-                    This simulation reveals those density waves and shows their fractal nature at
+                    Our simulation reveals these density waves and shows their fractal nature at
                     different scales.
                 </p>
                 <p>
