@@ -59,7 +59,8 @@ class Scroller {
         }
         if (progress > window.innerWidth / CELL_SIZE) {
             if (!startedScrolling) {
-                scrollLeft += scrollSpeed; // extra boost at the start
+                // extra boost at the start so that autoscroll stop detection doesn't trigger
+                scrollLeft += scrollSpeed*5;
             }
             startedScrolling = true;
             scrollLeft += scrollSpeed;
