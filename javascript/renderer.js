@@ -14,12 +14,13 @@ class Renderer {
         let red_column;
         let green_column;
         let blue_column;
+        const histogram = simulation.getHistogram();
         if (END_WAVELENGTH > 1) {
-            red_column = HistogramToWave.toWave(simulation.histogram, simulation.POPULATION_SIZE, waveLength, WAVE_SHAPE);
-            green_column = HistogramToWave.toWave(simulation.histogram, simulation.POPULATION_SIZE, waveLength / 2 + 0.5, WAVE_SHAPE);
-            blue_column = HistogramToWave.toWave(simulation.histogram, simulation.POPULATION_SIZE, waveLength / 4 + 0.75, WAVE_SHAPE);
+            red_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength, WAVE_SHAPE);
+            green_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength / 2 + 0.5, WAVE_SHAPE);
+            blue_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength / 4 + 0.75, WAVE_SHAPE);
         } else {
-            const column = HistogramToWave.toWaveNone(simulation.histogram, simulation.POPULATION_SIZE);
+            const column = HistogramToWave.toWaveNone(histogram, simulation.POPULATION_SIZE);
             red_column = column;
             green_column = column;
             blue_column = column;
@@ -83,6 +84,13 @@ class Renderer {
             Math.min(END_WAVELENGTH, Math.max(START_WAVELENGTH, waveLength))
         );
         return waveLength;
+    }
+
+    static getProgressPercent() {
+        if (!finishedRendering) {
+            return Math.ceil(progress * CELL_SIZE / canvas.width * 100);
+        }
+        return 100;
     }
 
     static draw(updateAfterDrawColumn) {

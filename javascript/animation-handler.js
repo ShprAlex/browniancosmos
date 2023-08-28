@@ -82,8 +82,7 @@ class AnimationHandler {
     static updateStatusText() {
         const statusTextEl = document.getElementById('statusText');
         if (!finishedRendering) {
-            let loadedPercent = Math.ceil(progress * CELL_SIZE / canvas.width * 100);
-            statusTextEl.textContent = 'Loading ' + loadedPercent + '%';
+            statusTextEl.textContent = `Loading ${Renderer.getProgressPercent()}%`;
         }
         else {
             statusTextEl.textContent = '';
@@ -93,11 +92,11 @@ class AnimationHandler {
     static animate() {
         if (!finishedRendering) {
             Renderer.draw(AnimationHandler.rampUpParticles);
-            AnimationHandler.updateStatusText();
         }
         if (!finishedScrolling) {
             Scroller.scroll();
         }
+        AnimationHandler.updateStatusText();
         if (!finishedRendering || !finishedScrolling) {
             animationRequest = requestAnimationFrame(AnimationHandler.animate);
         }

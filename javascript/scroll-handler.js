@@ -13,10 +13,6 @@ class Scroller {
         scrollingDiv.addEventListener('touchmove', Scroller.updateAutoScroll, { passive: true });
         canvas.addEventListener('showmodal', () => { scrollSpeed = 0.5; });
         canvas.addEventListener('hidemodal', () => { scrollSpeed = 2; });
-
-        if (canvas.clientWidth <= window.innerWidth) {
-            finishedScrolling = true;
-        }
     }
 
     static reset() {
@@ -28,6 +24,10 @@ class Scroller {
         scrollTop = canvas.clientHeight - scrollingDiv.offsetHeight;
         scrollingDiv.scrollLeft = scrollLeft;
         scrollingDiv.scrollTop = scrollTop;
+
+        if (canvas.clientWidth <= window.innerWidth) {
+            finishedScrolling = true;
+        }
     }
 
     static updateAutoScroll() {
@@ -36,12 +36,20 @@ class Scroller {
         if (
             startedScrolling
             && !finishedScrolling
-            && (scrollingDiv.scrollLeft <= leftSide || scrollingDiv.scrollLeft >= rightSide)
+            && (scrollLeft <= leftSide || scrollLeft >= rightSide)
         ) {
             scrollLeft = scrollingDiv.scrollLeft;
             scrollTop = scrollingDiv.scrollTop;
             finishedScrolling = true;
         }
+    }
+
+    static getProgressPercent() {
+        if (!finishedScrolling) {
+            const scrollWidth = canvas.clientWidth - scrollingDiv.offsetWidth;
+            return Math.ceil(scrollingDiv.scrollLeft / scrollWidth * 100);
+        }
+        return 100;
     }
 
     static scroll() {

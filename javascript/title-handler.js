@@ -30,15 +30,16 @@ class ApplicationTitle {
     static updateAfterScroll() {
         const rightSide = canvas.clientWidth - scrollingDiv.offsetWidth;
         if (
-            (scrollingDiv.scrollLeft >= rightSide - 150)
-            && !modalVisible
-            && finishedScrolling === false
+            (scrollingDiv.scrollLeft >= rightSide - 150) && !modalVisible
         ) {
             ApplicationTitle.show();
         }
         else {
             // When they manually scroll, hide the title
-            if (finishedScrolling && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)) {
+            if (
+                applicationTitleEl.style.visibility === 'visible'
+                && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)
+            ) {
                 ApplicationTitle.hideUntilReset();
             }
         }
