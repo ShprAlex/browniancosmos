@@ -44,17 +44,17 @@ function getConfigurations() {
                     This shows our density detection applied to just 10 particles.
                 </p>
                 <p>
-                    As we go from left to right we scan for particles in increasing vertical
-                    intervals.
-                    It appears like the particle paths are getting thicker but actually we just detect
-                    them from further away.
+                    It appears as if the particle paths are getting thicker, but actually we just
+                    detect the particles from further away.
                 </p>
                 <p>
-                    Regions where multiple particles are close together stand out from a longer
-                    distance and are colored red, while isolated particles are noticeable at
-                    shorter distances and are colored blue.
-                    We scan for red, green, and blue interval lengths simultaneously and where they
-                    overlap we get white.
+                    As we go from left to right we scan for the number of particles in increasing
+                    vertical intervals.
+                    In the vertical direction we scan for 3 interval lengths simultaneously around
+                    every point.
+                    If the interval contains enough particels, we color the point red, green, and
+                    blue depending on which of the intervals met the density criteria, and white
+                    if it's all of them.
                 </p>
             `
         },
@@ -70,7 +70,7 @@ function getConfigurations() {
             "velocity": 2,
             "description": `
                 <p>
-                    Here is what the underlying Brownian motion looks like on it's own.
+                    Here is what the underlying Brownian motion looks like on its own.
                 </p>
                 <p>
                     The pattern can be surprisingly pretty and appear almost intentionally designed.
@@ -94,18 +94,13 @@ function getConfigurations() {
             "velocity": 4,
             "description": `
                 <p>
-                    Suprisingly even with 10,000 particles we can see regions of density along the
-                    vertical axis. Here the brightness represents how many particles are in one space.
+                    Even with 10,000 particles we can see density regions. Here the brightness
+                    represents how many particles are in one space.
                 </p>
                 <p>
-                    The folds and valleys are more noticable on the small scale, but the same kinds of
+                    The folds and valleys are noticable on the small scale, but the same kinds of
                     density differences happen at every scale, for instance if we compare the top and
                     bottom half of a column.
-                </p>
-                <p>
-                    Mathematically in a random distribution, the bigger the intervals we compare the
-                    bigger the expected difference in the number of particles, proportional to the
-                    square root of the interval.
                 </p>
             `
         },
