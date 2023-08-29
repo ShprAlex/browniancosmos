@@ -17,8 +17,10 @@ class Renderer {
         const histogram = simulation.getHistogram();
         if (END_WAVELENGTH > 1) {
             red_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength, WAVE_SHAPE);
-            green_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength / 2 + 0.5, WAVE_SHAPE);
-            blue_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength / 4 + 0.75, WAVE_SHAPE);
+            if (PALETTE !== 'bw') {
+                green_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength / 2 + 0.5, WAVE_SHAPE);
+                blue_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength / 4 + 0.75, WAVE_SHAPE);
+            }
         } else {
             const column = HistogramToWave.toWaveNone(histogram, simulation.POPULATION_SIZE);
             red_column = column;
@@ -27,10 +29,15 @@ class Renderer {
         }
 
         for (let y = 0; y < GRID_HEIGHT; y++) {
-            let r = Math.round(red_column[y] * 255);
-            let g = Math.round(green_column[y] * 255);
-            let b = Math.round(blue_column[y] * 255);
-
+            let r, g, b;
+            if (PALETTE === 'bw') {
+                r = g = b = Math.round(red_column[y] * 255);
+            }
+            else {
+                r = Math.round(red_column[y] * 255);
+                g = Math.round(green_column[y] * 255);
+                b = Math.round(blue_column[y] * 255);
+            }
             ctx.fillStyle = "rgb(" + r + ", " + g + ", " + b + ")";
             ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
         }

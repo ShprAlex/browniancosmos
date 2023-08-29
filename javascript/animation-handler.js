@@ -10,6 +10,7 @@ let END_WAVELENGTH;
 let WAVE_SHAPE;
 let INITAL_PARTICLES;
 let MAX_PARTICLES;
+let PALETTE;
 
 let params;
 let simulation;
@@ -26,8 +27,8 @@ function getParam(key) {
     if (paramValue === null) {
         return configurationParams[key];
     }
-    if (key !== 'waveshape') {
-        paramValue = parseInt(paramValue);
+    if (!isNaN(paramValue)) {
+        paramValue = parseFloat(paramValue);
     }
     return paramValue;
 }
@@ -43,11 +44,11 @@ class AnimationHandler {
             window.cancelAnimationFrame(animationRequest);
         }
         canvas.dispatchEvent(new CustomEvent('resetstart', { bubbles: true }));
-        CELL_SIZE = getParam('cellsize');
 
         canvas.width = getParam('width');
         canvas.height = getParam('height');
 
+        CELL_SIZE = getParam('cellsize');
         GRID_HEIGHT = Math.floor(canvas.height / CELL_SIZE);
         GRID_WIDTH = Math.ceil(canvas.width / CELL_SIZE);
         BROWNIAN_VELOCITY = getParam('velocity');
@@ -56,6 +57,7 @@ class AnimationHandler {
         WAVE_SHAPE = getParam('waveshape');
         INITAL_PARTICLES = 0;
         MAX_PARTICLES = getParam('particles');
+        PALETTE = getParam('palette');
 
         simulation = new BrownianSimulation(INITAL_PARTICLES, GRID_HEIGHT);
         Renderer.reset();
