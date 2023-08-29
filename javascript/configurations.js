@@ -149,17 +149,35 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    We've been using a square wave to detect density patterns, which has a sharp
-                    boundary with particles suddenly entering and exiting our scanning window.
+                    We can use smoothing techniques similar to those for moving averages to
+                    produce a cleaner result.
                 </p>
                 <p>
-                    We can use smoothing techniques similar to those for moving averages to
-                    give less weight to the particles at the ends of the intervals and increasing
-                    the weight towards the middle forming a triangular wave or a sine wave.
+                    The square wave we've been using has a sharp boundary when particles enter
+                    in and out of our scanning window.
+                    We can smooth things by using a triangle or sine scanning wave to give less
+                    weight to the particles at the ends and more to those in the middle.
                 </p>
                 </p>
                     Smoothed waves better capture density at a specific wavelengh, but they lose
                     some of the texture the square waves preserve.
+                </p>
+            `
+        },
+        "zero-velocity-cosine": {
+            "name": "Zero Velocity Cosine",
+            "height": window.innerHeight,
+            "width": window.innerWidth,
+            "particles": 50,
+            "startw": 2,
+            "endw": Math.floor(window.innerHeight / 2),
+            "waveshape": "cosine",
+            "cellsize": 2,
+            "velocity": 0,
+            "palette": "bw",
+            "description": `
+                <p>
+                    Cosine shows us what things look like without downward distortion.
                 </p>
             `
         },
@@ -185,11 +203,11 @@ function getConfigurations() {
         },
         "big-waves-bw": {
             "name": "Big Waves B&W",
-            "height": 2400,
-            "width": 6000,
+            "height": 1200,
+            "width": 3000,
             "particles": 300,
-            "startw": 60,
-            "endw": 300,
+            "startw": 40,
+            "endw": 200,
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 5,
@@ -211,7 +229,7 @@ function getConfigurations() {
             "startw": 60,
             "endw": 300,
             "waveshape": "cosine",
-            "cellsize": 2,
+            "cellsize": 1,
             "velocity": 5,
             "palette": "rgb",
             "description": `
@@ -220,23 +238,6 @@ function getConfigurations() {
                 </p>
                 <p>
                     The results look fuzzy, and there is nothing that can be done about that.
-                </p>
-            `
-        },
-        "smoothed-scan": {
-            "name": "High Res Scan",
-            "height": window.innerHeight,
-            "width": window.innerWidth,
-            "particles": 1000,
-            "startw": 2,
-            "endw": window.innerHeight,
-            "waveshape": "triangle",
-            "cellsize": 1,
-            "velocity": 1,
-            "palette": "rgb",
-            "description": `
-                <p>
-                    A scan with triangle waves looks nice in the big picture.
                 </p>
             `
         },
