@@ -3,7 +3,7 @@ function getConfigurations() {
         "default": {
             "name": "Welcome!",
             "height": 2400,
-            "width": 6000,
+            "width": 5000,
             "particles": 300,
             "startw": 1,
             "endw": 600,
@@ -53,8 +53,8 @@ function getConfigurations() {
                     In the vertical direction we scan for 3 interval lengths simultaneously around
                     every point.
                     If the interval contains enough particels, we color the point red, green, and
-                    blue depending on which of the intervals met the density criteria, and white
-                    if it's all of them.
+                    blue depending on which of the interval size met the density criteria, and
+                    white if it's all of them.
                 </p>
             `
         },
@@ -125,8 +125,9 @@ function getConfigurations() {
                     the particles below, and when we're below a line we get a positive difference.
                 </p>
                 <p>
-                    While somewhat distorted this technique still accurately reveals where the
-                    density regions are staying true to the data.
+                    We also get a type of rainbow diffraction effect because the longer red
+                    intervals are aligned at the top but have their bottom shifted down below the
+                    other ones.
                 </p>
             `
         },
@@ -142,10 +143,8 @@ function getConfigurations() {
             "velocity": 0,
             "description": `
                 <p>
-                    We've been using a square wave to detect density patterns, by subtracting
-                    the number of particles at an interval above from those below. The square
-                    wave has a sharp boundary with particles suddently entering our scanning
-                    window.
+                    We've been using a square wave to detect density patterns, which has a sharp
+                    boundary with particles suddenly entering and exiting our scanning window.
                 </p>
                 <p>
                     We can use smoothing techniques similar to those for moving averages to
