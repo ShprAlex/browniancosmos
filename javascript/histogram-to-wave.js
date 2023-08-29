@@ -60,7 +60,7 @@ class HistogramToWave {
         let fraction = n - r;
 
         const modh = (v) => (v >= 0 ? v % HISTOGRAM_SIZE : v % HISTOGRAM_SIZE + HISTOGRAM_SIZE);
-        
+
         for (let i = 0; i < HISTOGRAM_SIZE; i++) {
             for (let j = -r; j < 0; j++) {
                 let v = histogram[modh(i + j)];
@@ -78,10 +78,10 @@ class HistogramToWave {
                 column[i] += histogram[modh(i - r - 1)] * fraction / n;
                 column[i] -= histogram[modh(i + r)] * fraction / n;
             }
-            
+
             column[i] = HistogramToWave.normalizeBrightness(HISTOGRAM_SIZE, populationSize, n, column[i] * 2);
         }
-        
+
         return column;
     }
 
@@ -102,15 +102,44 @@ class HistogramToWave {
         for (let i = 0; i < HISTOGRAM_SIZE; i++) {
             for (let j = -r - 1; j < r + 1; j++) {
                 let v = histogram[modh(i + j)];
-                v = v * Math.sin((n + j + 0.5) / n * Math.PI);
+                // We're taking the difference between particles above and particles below, so we
+                // need to center our sin wave between rows, hence adding the 0.5.
+                v *= Math.sin((j + 0.5) / n * Math.PI);
                 if (j > -r - 1 && j < r) {
-                    column[i] += v;
+                    column[i] -= v;
                 }
                 else {
-                    if (v * (r + j) < 0) {
-                        column[i] += v * fraction;
+                    if (v * (r + j) > 0) {
+                        column[i] -= v * fraction;
                     }
                 }
+            }
+
+            column[i] = HistogramToWave.normalizeBrightness(HISTOGRAM_SIZE, populationSize, n, column[i] * 2);
+        }
+        return column;
+    }
+
+    /**
+     * This produces surprisingly good results. We're doing a symmetrical comparison using a Cos
+     * curve subtracting the particles in the middle from the particles at the ends.
+     */
+    static toWaveCosine(histogram, populationSize, n) {
+        let HISTOGRAM_SIZE = histogram.length;
+        let column = new Array(HISTOGRAM_SIZE).fill(0);
+        let r = Math.floor(n);
+
+        const modh = (v) => (v >= 0 ? v % HISTOGRAM_SIZE : v % HISTOGRAM_SIZE + HISTOGRAM_SIZE);
+
+        for (let i = 0; i < HISTOGRAM_SIZE; i++) {
+            for (let j = -r; j < r + 1; j++) {
+                let v = histogram[modh(i + j)];
+                // First we take 3 short half waves - 'down', 'up', 'down'
+                v *= Math.cos(j / n * 1.5 * Math.PI);
+                // Then we use another long half wave to weigh the results giving the 2 'downs'
+                // the same weight as the single 'up'.
+                v *= Math.cos(j / n * 0.5 * Math.PI);
+                column[i] += v;
             }
 
             column[i] = HistogramToWave.normalizeBrightness(HISTOGRAM_SIZE, populationSize, n, column[i] * 2);
@@ -136,6 +165,9 @@ class HistogramToWave {
         }
         else if (waveShape === 'sine') {
             return HistogramToWave.toWaveSine(histogram, populationSize, n);
+        }
+        else if (waveShape === 'cosine') {
+            return HistogramToWave.toWaveCosine(histogram, populationSize, n);
         }
         return HistogramToWave.toWaveNone(histogram, populationSize);
     }
