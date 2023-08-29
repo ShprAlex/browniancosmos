@@ -15,7 +15,7 @@ function getConfigurations() {
                     BrownianCosmos is an exploration of patterns in Brownian motion.
                 </p>
                 <p>
-                    We tend to expect randomness to even out, so it's surprising that randomply
+                    We tend to expect randomness to even out, so it's surprising that randomly
                     placed particles have clumps and gaps.
                     Brownian motion accentuates these features causing them to shift in a
                     continuous wavelike way.
@@ -23,9 +23,9 @@ function getConfigurations() {
                     different scales.
                 </p>
                 <p>
-                    We hope you enjoy the results! For further illustrations and explanation please
-                    see additional configurations from the charts <i class="fa-solid fa-chart-line"></i>
-                    toolbar below.
+                    We hope you enjoy the results!
+                    For more please see additional configurations from the charts
+                    <i class="fa-solid fa-chart-line"></i> toolbar below.
                 </p>
             `
         },
