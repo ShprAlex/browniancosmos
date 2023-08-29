@@ -10,6 +10,7 @@ function getConfigurations() {
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 5,
+            "palette": "rgb",
             "description": `
                 <p>
                     BrownianCosmos is an exploration of patterns in Brownian motion.
@@ -39,6 +40,7 @@ function getConfigurations() {
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 4,
+            "palette": "rgb",
             "description": `
                 <p>
                     This shows our density detection applied to just 10 particles.
@@ -68,6 +70,7 @@ function getConfigurations() {
             "waveshape": "square",
             "cellsize": 3,
             "velocity": 2,
+            "palette": "rgb",
             "description": `
                 <p>
                     Here is what the underlying Brownian motion looks like on its own.
@@ -92,6 +95,7 @@ function getConfigurations() {
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 4,
+            "palette": "rgb",
             "description": `
                 <p>
                     Even with 10,000 particles we can see density regions. Here the brightness
@@ -114,6 +118,7 @@ function getConfigurations() {
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 0,
+            "palette": "rgb",
             "description": `
                 <p>
                     The quirks of our density detection algithm are more apperent if we keep the
@@ -141,6 +146,7 @@ function getConfigurations() {
             "waveshape": "triangle",
             "cellsize": 2,
             "velocity": 0,
+            "palette": "rgb",
             "description": `
                 <p>
                     We've been using a square wave to detect density patterns, which has a sharp
@@ -167,6 +173,7 @@ function getConfigurations() {
             "waveshape": "square",
             "cellsize": 2,
             "velocity": 5,
+            "palette": "rgb",
             "description": `
                 <p>
                     Scanning at large wavelenghts produces nice patterns.
@@ -206,6 +213,7 @@ function getConfigurations() {
             "waveshape": "cosine",
             "cellsize": 2,
             "velocity": 5,
+            "palette": "rgb",
             "description": `
                 <p>
                     Scanning at large wavelenghts produces nice patterns.
@@ -225,6 +233,7 @@ function getConfigurations() {
             "waveshape": "triangle",
             "cellsize": 1,
             "velocity": 1,
+            "palette": "rgb",
             "description": `
                 <p>
                     A scan with triangle waves looks nice in the big picture.
@@ -241,6 +250,7 @@ function getConfigurations() {
             "waveshape": "square",
             "cellsize": 4,
             "velocity": 1,
+            "palette": "rgb",
             "description": `
                 <p>
                     Pixellation with noise looks nice up close.
