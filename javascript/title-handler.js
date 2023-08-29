@@ -13,6 +13,9 @@ class ApplicationTitle {
             applicationTitleEl.style.opacity = 1;
             applicationTitleEl.style.visibility = 'visible';
         }
+        // change the title state after a delay so when manually scrolling shows it,
+        // it's not immediately hidden by the same scrolling action.
+        setTimeout(function () { titleState = 'visible' }, 1000);
     }
 
     static hide() {
@@ -21,7 +24,7 @@ class ApplicationTitle {
     }
 
     static hideUntilReset() {
-        if (applicationTitleEl.style.visibility === 'visible') {
+        if (titleState === 'visible') {
             ApplicationTitle.hide();
             titleState = 'manually-hidden';
         }
@@ -30,14 +33,16 @@ class ApplicationTitle {
     static updateAfterScroll() {
         const rightSide = canvas.clientWidth - scrollingDiv.offsetWidth;
         if (
-            (scrollingDiv.scrollLeft >= rightSide - 150) && !modalVisible
+            (scrollingDiv.scrollLeft >= rightSide - 150)
+            && !modalVisible
+            && titleState === null
         ) {
             ApplicationTitle.show();
         }
         else {
             // When they manually scroll, hide the title
             if (
-                applicationTitleEl.style.visibility === 'visible'
+                titleState === 'visible'
                 && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)
             ) {
                 ApplicationTitle.hideUntilReset();
