@@ -10,7 +10,7 @@ class BrownianSimulation {
     }
 
     modh(v) {
-        return v >= 0 ? v % this.HISTOGRAM_SIZE : v % this.HISTOGRAM_SIZE + this.HISTOGRAM_SIZE;
+        return (v % this.HISTOGRAM_SIZE+this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE;
     }
 
     initializePopulation() {

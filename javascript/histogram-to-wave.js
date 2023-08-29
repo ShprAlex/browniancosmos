@@ -1,10 +1,10 @@
 class HistogramToWave {
 
-    static normalizeBrightness(histogramSize, populationSize, spanSize, spanValue) {
-        if (spanValue === 0 || populationSize === 0) {
+    static normalizeBrightness(histogramSize, populationSize, spanSize, pointValue) {
+        if (pointValue === 0 || populationSize === 0) {
             return 0;
         }
-        return Math.max(0, spanValue * Math.sqrt(histogramSize / spanSize / populationSize) / 2.3);
+        return Math.max(0, pointValue * Math.sqrt(histogramSize / spanSize / populationSize) / 2.3);
     }
 
     /**
@@ -19,7 +19,7 @@ class HistogramToWave {
         let fraction = n - r;
         let running_sum = 0;
 
-        const modh = (v) => (v >= 0 ? v % HISTOGRAM_SIZE : v % HISTOGRAM_SIZE + HISTOGRAM_SIZE);
+        const modh = (v) => (v % HISTOGRAM_SIZE+HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
 
         for (let j = 0; j < r; j++) {
             running_sum += histogram[modh(j)];
@@ -59,7 +59,7 @@ class HistogramToWave {
         let r = Math.floor(n);
         let fraction = n - r;
 
-        const modh = (v) => (v >= 0 ? v % HISTOGRAM_SIZE : v % HISTOGRAM_SIZE + HISTOGRAM_SIZE);
+        const modh = (v) => (v % HISTOGRAM_SIZE+HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
 
         for (let i = 0; i < HISTOGRAM_SIZE; i++) {
             for (let j = -r; j < 0; j++) {
@@ -97,7 +97,7 @@ class HistogramToWave {
         let r = Math.floor(n);
         let fraction = n - r;
 
-        const modh = (v) => (v >= 0 ? v % HISTOGRAM_SIZE : v % HISTOGRAM_SIZE + HISTOGRAM_SIZE);
+        const modh = (v) => (v % HISTOGRAM_SIZE+HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
 
         for (let i = 0; i < HISTOGRAM_SIZE; i++) {
             for (let j = -r - 1; j < r + 1; j++) {
@@ -127,9 +127,9 @@ class HistogramToWave {
     static toWaveCosine(histogram, populationSize, n) {
         let HISTOGRAM_SIZE = histogram.length;
         let column = new Array(HISTOGRAM_SIZE).fill(0);
+        n=n+0.5;
         let r = Math.floor(n);
-
-        const modh = (v) => (v >= 0 ? v % HISTOGRAM_SIZE : v % HISTOGRAM_SIZE + HISTOGRAM_SIZE);
+        const modh = (v) => (v % HISTOGRAM_SIZE+HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
 
         for (let i = 0; i < HISTOGRAM_SIZE; i++) {
             for (let j = -r; j < r + 1; j++) {
@@ -141,7 +141,6 @@ class HistogramToWave {
                 v *= Math.cos(j / n * 0.5 * Math.PI);
                 column[i] += v;
             }
-
             column[i] = HistogramToWave.normalizeBrightness(HISTOGRAM_SIZE, populationSize, n, column[i] * 2);
         }
         return column;
