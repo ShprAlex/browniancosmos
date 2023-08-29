@@ -84,7 +84,7 @@
               <label for="particles" class="form-label">
                 Number of Particles
               </label>
-              <input type="number" step="10" min="0" class="form-control" name="particles">
+              <input type="number" step="10" min="0" class="form-control" name="particles" id="particles">
             </div>
             <div class="row">
               <div class="col-6">
@@ -92,7 +92,7 @@
                   <label for="width" class="form-label">
                     Width
                   </label>
-                  <input type="number" step="100" min="0" class="form-control" name="width">
+                  <input type="number" step="100" min="0" class="form-control" name="width" id="width">
                 </div>
               </div>
               <div class="col-6">
@@ -100,7 +100,7 @@
                   <label for="height" class="form-label">
                     Height
                   </label>
-                  <input type="number" step="100" min="0" class="form-control" name="height">
+                  <input type="number" step="100" min="0" class="form-control" name="height" id="height">
                 </div>
               </div>
             </div>
@@ -110,7 +110,7 @@
                   <label for="startw" class="form-label">
                     Wavelength Min
                   </label>
-                  <input type="number" step="10" min="0" class="form-control" name="startw">
+                  <input type="number" step="10" min="0" class="form-control" name="startw" id="startw">
                 </div>
               </div>
               <div class="col-6">
@@ -118,24 +118,35 @@
                   <label for="endw" class="form-label">
                     Wavelength Max
                   </label>
-                  <input type="number" step="10" min="0" class="form-control" name="endw">
+                  <input type="number" step="10" min="0" class="form-control" name="endw" id="endw">
                 </div>
               </div>
             </div>
-            <div class="row pt-2 pb-2">
-              <div class="col-6">
+            <div class="row">
+              <label class="form-label">
+                Wave Shape
+              </label>
+              <div class="col-4">
                 <div class="mb-3 form-check">
-                  <input class="form-check-input" type="radio" name="waveshape" value="square" checked>
+                  <input class="form-check-input" type="radio" name="waveshape" value="square" id="squareWave" checked>
                   <label class="form-check-label" for="squareWave">
-                    Square Wave
+                    Square
                   </label>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-4">
                 <div class="mb-3 form-check">
-                  <input class="form-check-input" type="radio" name="waveshape" value="triangle">
+                  <input class="form-check-input" type="radio" name="waveshape" value="triangle" id="triangleWave">
                   <label class="form-check-label" for="triangleWave">
-                    Smoothed&nbsp;Wave
+                    Triangle
+                  </label>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="mb-3 form-check">
+                  <input class="form-check-input" type="radio" name="waveshape" value="cosine" id="cosineWave">
+                  <label class="form-check-label" for="cosineWave">
+                    Cosine
                   </label>
                 </div>
               </div>
@@ -146,7 +157,7 @@
                   <label for="cellsize" class="form-label">
                     Cell Size
                   </label>
-                  <input type="number" step="1" min="1" class="form-control" name="cellsize">
+                  <input type="number" step="1" min="1" class="form-control" name="cellsize" id="cellsize">
                 </div>
               </div>
               <div class="col-6">
@@ -154,7 +165,7 @@
                   <label for="velocity" class="form-label">
                     Brownian&nbsp;Velocity
                   </label>
-                  <input type="number" step="1" min="0" class="form-control" name="velocity">
+                  <input type="number" step="1" min="0" class="form-control" name="velocity" id="velocity">
                 </div>
               </div>
             </div>
