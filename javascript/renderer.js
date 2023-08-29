@@ -7,7 +7,7 @@ class Renderer {
     static reset() {
         finishedRendering = false;
         progress = 0;
-        DRAW_COLUMN_BATCH_SIZE = (WAVE_SHAPE === 'square' ? 10 : 2);
+        DRAW_COLUMN_BATCH_SIZE = (WAVE_SHAPE === 'square' || WAVE_SHAPE === 'none' ? 10 : 2);
     }
 
     static drawColumn(x, waveLength) {
