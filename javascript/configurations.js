@@ -169,10 +169,10 @@ function getConfigurations() {
             "height": window.innerHeight,
             "width": window.innerWidth,
             "particles": 50,
-            "startw": 2,
+            "startw": 4,
             "endw": Math.floor(window.innerHeight / 2),
             "waveshape": "cosine",
-            "cellsize": 2,
+            "cellsize": 1,
             "velocity": 0,
             "palette": "bw",
             "description": `
