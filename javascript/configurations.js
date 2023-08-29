@@ -176,35 +176,36 @@ function getConfigurations() {
                 </p>
             `
         },
-        "big-waves-high-res": {
-            "name": "Big Waves High Res",
-            "height": 1600,
-            "width": 3000,
-            "particles": 500,
-            "startw": 80,
-            "endw": 800,
+        "big-waves-bw": {
+            "name": "Big Waves B&W",
+            "height": 2400,
+            "width": 6000,
+            "particles": 300,
+            "startw": 60,
+            "endw": 300,
             "waveshape": "square",
-            "cellsize": 1,
-            "velocity": 8,
+            "cellsize": 2,
+            "velocity": 5,
+            "palette": "bw",
             "description": `
                 <p>
-                    This visualization shows the particle paths 1 pixel thick.
+                    Scanning at large wavelenghts produces nice patterns.
                 </p>
                 <p>
-                    The results still look similar because we're looking at a fractal.
+                    The results look fuzzy, and there is nothing that can be done about that.
                 </p>
             `
         },
         "big-waves-smoothed": {
             "name": "Big Waves Smoothed",
-            "height": 1600,
+            "height": window.innerHeight,
             "width": 3000,
-            "particles": 500,
-            "startw": 80,
-            "endw": 800,
-            "waveshape": "triangle",
-            "cellsize": 1,
-            "velocity": 8,
+            "particles": 300,
+            "startw": 60,
+            "endw": 300,
+            "waveshape": "cosine",
+            "cellsize": 2,
+            "velocity": 5,
             "description": `
                 <p>
                     Scanning at large wavelenghts produces nice patterns.
@@ -215,7 +216,7 @@ function getConfigurations() {
             `
         },
         "smoothed-scan": {
-            "name": "Smoothed Scan",
+            "name": "High Res Scan",
             "height": window.innerHeight,
             "width": window.innerWidth,
             "particles": 1000,

@@ -29,6 +29,7 @@ function showSettingsModal() {
     settingsForm.elements['cellsize'].value = CELL_SIZE;
     settingsForm.elements['velocity'].value = BROWNIAN_VELOCITY;
     settingsForm.elements['waveshape'].value = WAVE_SHAPE;
+    settingsForm.elements['palette'].value = PALETTE;
     settingsModal.show();
 }
 
