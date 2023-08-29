@@ -19,7 +19,7 @@ class HistogramToWave {
         let fraction = n - r;
         let running_sum = 0;
 
-        const modh = (v) => (v % HISTOGRAM_SIZE+HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
+        const modh = (v) => (v % HISTOGRAM_SIZE + HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
 
         for (let j = 0; j < r; j++) {
             running_sum += histogram[modh(j)];
@@ -59,7 +59,7 @@ class HistogramToWave {
         let r = Math.floor(n);
         let fraction = n - r;
 
-        const modh = (v) => (v % HISTOGRAM_SIZE+HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
+        const modh = (v) => (v % HISTOGRAM_SIZE + HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
 
         for (let i = 0; i < HISTOGRAM_SIZE; i++) {
             for (let j = -r; j < 0; j++) {
@@ -97,7 +97,7 @@ class HistogramToWave {
         let r = Math.floor(n);
         let fraction = n - r;
 
-        const modh = (v) => (v % HISTOGRAM_SIZE+HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
+        const modh = (v) => (v % HISTOGRAM_SIZE + HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
 
         for (let i = 0; i < HISTOGRAM_SIZE; i++) {
             for (let j = -r - 1; j < r + 1; j++) {
@@ -127,9 +127,9 @@ class HistogramToWave {
     static toWaveCosine(histogram, populationSize, n) {
         let HISTOGRAM_SIZE = histogram.length;
         let column = new Array(HISTOGRAM_SIZE).fill(0);
-        n=n+0.5;
+        n = n + 0.5;
         let r = Math.floor(n);
-        const modh = (v) => (v % HISTOGRAM_SIZE+HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
+        const modh = (v) => (v % HISTOGRAM_SIZE + HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
 
         for (let i = 0; i < HISTOGRAM_SIZE; i++) {
             for (let j = -r; j < r + 1; j++) {

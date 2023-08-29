@@ -10,7 +10,7 @@ class BrownianSimulation {
     }
 
     modh(v) {
-        return (v % this.HISTOGRAM_SIZE+this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE;
+        return (v % this.HISTOGRAM_SIZE + this.HISTOGRAM_SIZE) % this.HISTOGRAM_SIZE;
     }
 
     initializePopulation() {
@@ -32,7 +32,7 @@ class BrownianSimulation {
     }
 
     increasePopulation(targetPopulation) {
-        if (targetPopulation<=this.POPULATION_SIZE) {
+        if (targetPopulation <= this.POPULATION_SIZE) {
             return;
         }
         for (let i = this.POPULATION_SIZE; i < targetPopulation; i++) {
