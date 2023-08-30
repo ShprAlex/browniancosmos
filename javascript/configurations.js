@@ -107,7 +107,7 @@ function getConfigurations() {
         "zero-velocity": {
             "name": "Zero Velocity",
             "height": window.innerHeight,
-            "width": Math.min(window.innerWidth, Math.ceil(window.innerHeight*3/4)),
+            "width": Math.min(window.innerWidth, Math.max(600, Math.ceil(window.innerHeight*3/4))),
             "particles": 30,
             "startw": 1,
             "endw": Math.floor(window.innerHeight / 2),
@@ -135,7 +135,7 @@ function getConfigurations() {
         "zero-velocity-smoothed": {
             "name": "Zero Velocity Smoothed",
             "height": window.innerHeight,
-            "width": Math.min(window.innerWidth, Math.ceil(window.innerHeight*3/4)),
+            "width": Math.min(window.innerWidth, Math.max(600, Math.ceil(window.innerHeight*3/4))),
             "particles": 50,
             "startw": 1,
             "endw": Math.floor(window.innerHeight / 2),
