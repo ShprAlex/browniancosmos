@@ -17,7 +17,7 @@ class ToolbarHandler {
     }
 
     static handleFullscreen(event) {
-        event.preventDefault();
+        event.stopPropagation();
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen();
         } else {
@@ -26,11 +26,7 @@ class ToolbarHandler {
     }
 
     static handleCanvasClick(event) {
-        event.preventDefault();
-        if (window.innerHeight - event.clientY <= 50) {
-            // ignore clicks on the bottom where the toolbar usually is
-            return;
-        }
+        event.stopPropagation();
         if (toolbarEl.style.visibility === 'hidden') {
             ToolbarHandler.show();
         } else {
@@ -65,3 +61,4 @@ fullscreenButton.addEventListener('click', ToolbarHandler.handleFullscreen);
 canvas.addEventListener('showmodal', ToolbarHandler.hide);
 canvas.addEventListener('hidemodal', ToolbarHandler.show);
 canvas.addEventListener('click', ToolbarHandler.handleCanvasClick);
+scrollingDiv.addEventListener('click', ToolbarHandler.handleCanvasClick);
