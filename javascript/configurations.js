@@ -25,8 +25,8 @@ function getConfigurations() {
                 </p>
                 <p>
                     We hope you enjoy the results!
-                    For more please see additional configurations from the charts
-                    <i class="fa-solid fa-chart-line"></i> toolbar below.
+                    Please see the charts <i class="fa-solid fa-chart-line"></i> toolbar below for
+                    additional illustrations.
                 </p>
             `
         },
@@ -47,7 +47,7 @@ function getConfigurations() {
                 </p>
                 <p>
                     It appears as if the particle paths are getting thicker, but actually we just
-                    detect the particles from further away.
+                    detect them from further away.
                 </p>
                 <p>
                     As we go from left to right we scan for the number of particles in increasing
@@ -77,8 +77,7 @@ function getConfigurations() {
                 <p>
                     Even though the particles have random starting positions and move completely
                     independently, we still see regions where the particle paths appear to
-                    congregate and large gaps where they seem to avoid each other that persist
-                    in time.
+                    congregate and large gaps where they seem to avoid each other over time.
                 </p>
             `
         },
@@ -95,8 +94,8 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    Even with 10,000 particles we can see density regions. Here the brightness
-                    represents how many particles are in one space.
+                    Even with 10,000 particles we can see density regions without everything fading
+                    to a smooth gray.
                 </p>
                 <p>
                     The folds and valleys are noticable on the small scale, but the same kinds of
