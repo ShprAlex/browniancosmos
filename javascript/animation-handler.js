@@ -7,7 +7,7 @@ let GRID_WIDTH;
 let BROWNIAN_VELOCITY;
 let START_WAVELENGTH;
 let END_WAVELENGTH;
-let WAVE_SHAPE;
+let WAVEFORM;
 let INITAL_PARTICLES;
 let MAX_PARTICLES;
 let PALETTE;
@@ -58,7 +58,7 @@ class AnimationHandler {
         MAX_PARTICLES = getParam('particles');
         RAMP_UP_PARTICLES = (START_WAVELENGTH === 0);
         INITAL_PARTICLES = (RAMP_UP_PARTICLES ? 0 : MAX_PARTICLES);
-        WAVE_SHAPE = getParam('waveshape');
+        WAVEFORM = getParam('waveform');
         PALETTE = getParam('palette');
 
         simulation = new BrownianSimulation(INITAL_PARTICLES, GRID_HEIGHT);

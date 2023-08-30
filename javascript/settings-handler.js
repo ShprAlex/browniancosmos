@@ -28,7 +28,7 @@ function showSettingsModal() {
     settingsForm.elements['endw'].value = END_WAVELENGTH;
     settingsForm.elements['cellsize'].value = CELL_SIZE;
     settingsForm.elements['velocity'].value = BROWNIAN_VELOCITY;
-    settingsForm.elements['waveshape'].value = WAVE_SHAPE;
+    settingsForm.elements['waveform'].value = WAVEFORM;
     settingsForm.elements['palette'].value = PALETTE;
     settingsModal.show();
 }

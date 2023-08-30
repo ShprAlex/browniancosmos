@@ -7,7 +7,7 @@ class Renderer {
     static reset() {
         finishedRendering = false;
         progress = 0;
-        DRAW_COLUMN_BATCH_SIZE = (WAVE_SHAPE === 'square' || WAVE_SHAPE === 'none' ? 10 : 2);
+        DRAW_COLUMN_BATCH_SIZE = (WAVEFORM === 'square' || WAVEFORM === 'none' ? 10 : 2);
     }
 
     static drawColumn(x, waveLength) {
@@ -16,10 +16,10 @@ class Renderer {
         let blue_column;
         const histogram = simulation.getHistogram();
         if (END_WAVELENGTH > 1) {
-            red_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength, WAVE_SHAPE);
+            red_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength, WAVEFORM);
             if (PALETTE !== 'bw') {
-                green_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength / 2 + 0.5, WAVE_SHAPE);
-                blue_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength / 4 + 0.75, WAVE_SHAPE);
+                green_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength / 2 + 0.5, WAVEFORM);
+                blue_column = HistogramToWave.toWave(histogram, simulation.POPULATION_SIZE, waveLength / 4 + 0.75, WAVEFORM);
             }
         } else {
             const column = HistogramToWave.toWaveNone(histogram, simulation.POPULATION_SIZE);

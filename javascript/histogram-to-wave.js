@@ -155,17 +155,17 @@ class HistogramToWave {
         return histogram.map((v) => Math.min(v * brightness, 1));
     }
 
-    static toWave(histogram, populationSize, n, waveShape = 'square') {
-        if (waveShape === 'square') {
+    static toWave(histogram, populationSize, n, waveform = 'square') {
+        if (waveform === 'square') {
             return HistogramToWave.toWaveSquare(histogram, populationSize, n);
         }
-        else if (waveShape === 'triangle') {
+        else if (waveform === 'triangle') {
             return HistogramToWave.toWaveTriangle(histogram, populationSize, n);
         }
-        else if (waveShape === 'sine') {
+        else if (waveform === 'sine') {
             return HistogramToWave.toWaveSine(histogram, populationSize, n);
         }
-        else if (waveShape === 'cosine') {
+        else if (waveform === 'cosine') {
             return HistogramToWave.toWaveCosine(histogram, populationSize, n);
         }
         return HistogramToWave.toWaveNone(histogram, populationSize);
