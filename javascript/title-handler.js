@@ -13,9 +13,9 @@ class ApplicationTitle {
             applicationTitleEl.style.opacity = 1;
             applicationTitleEl.style.visibility = 'visible';
         }
-        // change the title state after a delay so when manually scrolling shows it,
+        // change the title state after a delay so when scrolling shows it,
         // it's not immediately hidden by the same scrolling action.
-        setTimeout(function () { titleState = 'visible' }, 1000);
+        setTimeout(function () { titleState = 'visible' }, 2000);
     }
 
     static hide() {

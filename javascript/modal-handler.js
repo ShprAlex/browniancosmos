@@ -3,8 +3,6 @@ const aboutModalEl = document.getElementById('aboutModal');
 const aboutModal = new bootstrap.Modal(aboutModalEl);
 const settingsModalEl = document.getElementById('settingsModal');
 
-window.addEventListener('load', () => { aboutModal.show(); });
-
 class ModalHandler {
     static show() {
         modalVisible = true;
