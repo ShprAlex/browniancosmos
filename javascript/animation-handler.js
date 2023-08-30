@@ -11,6 +11,7 @@ let WAVE_SHAPE;
 let INITAL_PARTICLES;
 let MAX_PARTICLES;
 let PALETTE;
+let RAMP_UP_PARTICLES;
 
 let params;
 let simulation;
@@ -54,9 +55,10 @@ class AnimationHandler {
         BROWNIAN_VELOCITY = getParam('velocity');
         START_WAVELENGTH = getParam('startw');
         END_WAVELENGTH = getParam('endw');
-        WAVE_SHAPE = getParam('waveshape');
-        INITAL_PARTICLES = 0;
         MAX_PARTICLES = getParam('particles');
+        RAMP_UP_PARTICLES = (START_WAVELENGTH === 0);
+        INITAL_PARTICLES = (RAMP_UP_PARTICLES ? 0 : MAX_PARTICLES);
+        WAVE_SHAPE = getParam('waveshape');
         PALETTE = getParam('palette');
 
         simulation = new BrownianSimulation(INITAL_PARTICLES, GRID_HEIGHT);
@@ -70,15 +72,14 @@ class AnimationHandler {
      * number to MAX_PARTICLES over a short duration making their individual paths visible.
      */
     static rampUpParticles() {
-        // initial gap on the left where we don't draw anything.
-        if (progress < 10 && START_WAVELENGTH == 1 && END_WAVELENGTH != 1 && canvas.width > 500 && BROWNIAN_VELOCITY > 0) {
+        if (!RAMP_UP_PARTICLES) {
             return;
         }
-        if (START_WAVELENGTH > 1 || END_WAVELENGTH == 1 || progress > 300 || MAX_PARTICLES < 30 || BROWNIAN_VELOCITY === 0) {
-            simulation.increasePopulation(MAX_PARTICLES);
-        } else if (progress <= MAX_PARTICLES) {
-            simulation.increasePopulation(Math.min(MAX_PARTICLES, Math.max(progress, progress * progress / 100)));
+        // initial gap on the left where we don't draw anything.
+        if (progress < 10) {
+            return;
         }
+        simulation.increasePopulation(Math.min(MAX_PARTICLES, progress * (1 + progress / 100)));
     }
 
     static updateStatusText() {

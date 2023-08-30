@@ -47,50 +47,38 @@ class Renderer {
      * computeWavelenth interpolates the number of columns we've drawn so far to compute the
      * wavelength for processing the next column.
      *
-     * Interpolation allow us to reduce the awkward stage where the wavelength is in the low digits
+     * Interpolation allows us to reduce the awkward stage where the wavelength is in the low digits
      * so we can give more screen space to the nicer looking longer waves. At the same time we want
      * to keep the initial waves with wavelengh = 1 if desired to visually explain what's happening.
      */
     static computeWavelength() {
-        let wavelength_growth_stages = [
-            [1, 1],
-            [Math.min(120, GRID_WIDTH / 8), 1],
-            [400, 15],
-            [800, 25],
-            [GRID_WIDTH, END_WAVELENGTH],
-        ];
+        // We're hacking START_WAVELENGTH === 0 as a signal to ramp up particles, so we need to
+        // bring this back to 1.
+        const FIXED_START_WAVELENGTH = Math.max(START_WAVELENGTH, 1);
 
-        let waveLength = 1;
-        let prevStage = wavelength_growth_stages[0];
-        const lastStage =
-            wavelength_growth_stages[wavelength_growth_stages.length - 1];
-        for (const stage of wavelength_growth_stages) {
-            if (stage !== lastStage && stage[0] * 2 > GRID_WIDTH) {
-                continue;
-            }
-            if (progress < stage[0]) {
-                const prevLength = prevStage[1] + START_WAVELENGTH - 1;
-                const targetLength = Math.min(
-                    END_WAVELENGTH,
-                    stage[1] + START_WAVELENGTH - 1
-                );
-
-                const stage_length = stage[0] - prevStage[0];
-                const stage_progress = progress - prevStage[0];
-
-                const p = Math.pow(targetLength / prevLength, 1 / stage_length);
-                waveLength = prevLength * Math.pow(p, stage_progress);
-                break;
-            }
-            if (progress >= stage[0]) {
-                prevStage = stage;
-                waveLength = stage[1] + START_WAVELENGTH;
-            }
+        let waveRange = END_WAVELENGTH - FIXED_START_WAVELENGTH;
+        if (waveRange <= 0) {
+            return END_WAVELENGTH;
         }
-        waveLength = Math.min(
-            Math.min(END_WAVELENGTH, Math.max(START_WAVELENGTH, waveLength))
-        );
-        return waveLength;
+        if (FIXED_START_WAVELENGTH > 1) {
+            const p = Math.pow(waveRange, 1 / GRID_WIDTH);
+            return FIXED_START_WAVELENGTH + Math.pow(p, progress) - 1;
+        }
+
+        let initial = Math.min(120, GRID_WIDTH / 5);
+        if (progress < initial) {
+            return 1;
+        }
+
+        let linearHeight = (GRID_WIDTH - initial) / 20;
+        let linearFactor = (progress - initial) / 20;
+        if (linearHeight > waveRange) {
+            return FIXED_START_WAVELENGTH + waveRange * (progress - initial) / (GRID_WIDTH - initial);
+        }
+
+        waveRange -= linearHeight;
+        const p = Math.pow(waveRange, 1 / (GRID_WIDTH - initial));
+        return FIXED_START_WAVELENGTH + Math.pow(p, progress - initial) + linearFactor - 1;
     }
 
     static getProgressPercent() {
