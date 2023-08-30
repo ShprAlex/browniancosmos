@@ -54,9 +54,8 @@ function getConfigurations() {
                     vertical intervals.
                     In the vertical direction we scan for 3 interval lengths simultaneously around
                     every point.
-                    If the interval contains enough particels, we color the point red, green, and
-                    blue depending on which of the interval size met the density criteria, and
-                    white if it's all of them.
+                    We color the point red, green, and blue depending on which interval size met
+                    the density criteria, and white if it's all of them.
                 </p>
             `
         },
@@ -76,12 +75,10 @@ function getConfigurations() {
                     Here is what the underlying Brownian motion looks like on its own.
                 </p>
                 <p>
-                    The pattern can be surprisingly pretty and appear almost intentionally designed.
-                </p>
-                <p>
                     Even though the particles have random starting positions and move completely
-                    independently, we still see regions where the particle paths overlap
-                    and large gaps that persist in time.
+                    independently, we still see regions where the particle paths appear to
+                    congregate and large gaps where they seem to avoid each other that persist
+                    in time.
                 </p>
             `
         },
@@ -131,8 +128,8 @@ function getConfigurations() {
                 </p>
                 <p>
                     We also get a type of rainbow diffraction effect because the longer red
-                    intervals are aligned at the top but have their bottom shifted down below the
-                    other ones.
+                    intervals are longer then the green and blue other ones yet they are all
+                    aligned together at the top.
                 </p>
             `
         },
