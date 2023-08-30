@@ -1,6 +1,7 @@
 const fullscreenButton = document.getElementById('fullscreenButton');
 const toolbarEl = document.getElementById('toolbar');
 const chartInfoMenuItem = document.getElementById('chartInfoMenuItem');
+const saveImageMenuItem = document.getElementById('saveImageMenuItem');
 const reloadToobarButton = document.getElementById('reloadToolbarButton');
 const additionalMenuDropdown = document.getElementById('additionalMenuDropdown');
 
@@ -46,6 +47,13 @@ window.addEventListener('load', () => {
 });
 
 chartInfoMenuItem.addEventListener('click', (event) => { event.preventDefault(); aboutModal.show(); });
+saveImageMenuItem.addEventListener('click', () => {
+    const tempLink = document.createElement('a');
+    tempLink.download = `BrownianCosmos${Math.floor(Date.now()/1000)%100000}.png`;
+    tempLink.href = document.getElementById('canvas').toDataURL()
+    tempLink.click();
+    tempLink.remove();
+});
 reloadToobarButton.addEventListener('click', () => {
     ApplicationTitle.hide();
     AnimationHandler.reset();
