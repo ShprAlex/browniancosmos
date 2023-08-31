@@ -168,7 +168,7 @@ function getConfigurations() {
             "height": window.innerHeight,
             "width": window.innerWidth,
             "particles": 50,
-            "startw": 4,
+            "startw": 15,
             "endw": Math.floor(window.innerHeight / 2),
             "waveform": "cosine",
             "cellsize": 1,
@@ -184,8 +184,8 @@ function getConfigurations() {
                     particles.
                 </p>
                 <p>
-                    Alas a lack of distortion can be visually boring, which is why we've opted to
-                    use the other waveforms for the other examples.
+                    Alas a lack of distortion can be less visually intriguing, which is why we've
+                    opted to use the other waveforms for the other examples.
                 </p>
             `
         },

@@ -58,7 +58,7 @@ class Renderer {
 
         let waveRange = END_WAVELENGTH - FIXED_START_WAVELENGTH;
         if (waveRange <= 0) {
-            return END_WAVELENGTH;
+            return Math.max(FIXED_START_WAVELENGTH, END_WAVELENGTH);
         }
         if (FIXED_START_WAVELENGTH > 1) {
             const p = Math.pow(waveRange, 1 / GRID_WIDTH);

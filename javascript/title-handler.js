@@ -9,6 +9,7 @@ class ApplicationTitle {
         clearTimeout(titleTimeoutId);
         titleState = null;
         titleTimeoutId = null;
+        scrollToSeeMore.style.display = 'none';
     }
 
     static show() {
