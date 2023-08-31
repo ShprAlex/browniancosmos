@@ -103,7 +103,7 @@ function getConfigurations() {
                 </p>
                 <p>
                     Mathematically, the expected difference in the number of particles between
-                    two equal sized intervals is roughly proportional to the square root of the
+                    two equal sized intervals grows roughly in proportion to the square root of the
                     interval length.
                 </p>
             `
@@ -125,14 +125,14 @@ function getConfigurations() {
                     particles still.
                 </p>
                 <p>
-                    You can see that the colors come from below the white lines.
-                    This is because for any location we subtract the number of particles above from
-                    those below, and when we're below a line we get a positive difference.
+                    You can see that the colors show up below the white lines.
+                    This is because for any location we subtract the number of particles below from
+                    those above, and when we're below a line we get a positive difference.
                 </p>
                 <p>
-                    We also get a type of rainbow diffraction effect because the red intervals
-                    that show up first are longer then the green and blue ones, and are visible
-                    below them.
+                    We also get a type of rainbow diffraction effect because the red intervals are
+                    longer then the green and blue ones when they first show up, and stick out
+                    at the bottom.
                 </p>
             `
         },
