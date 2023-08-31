@@ -57,7 +57,10 @@ class Scroller {
             scrollLeft = scrollingDiv.scrollLeft;
             scrollTop = scrollingDiv.scrollTop;
         }
-        if (progress > window.innerWidth / CELL_SIZE) {
+        
+        const shortImageFactor = canvas.width / canvas.clientWidth;
+        // check if we've rendered past the right side of the screen
+        if (progress > window.innerWidth / CELL_SIZE * shortImageFactor) {
             if (!startedScrolling) {
                 // extra boost at the start so that autoscroll stop detection doesn't trigger
                 scrollLeft += scrollSpeed * 5;
