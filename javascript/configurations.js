@@ -76,8 +76,8 @@ function getConfigurations() {
                 </p>
                 <p>
                     Even though the particles have random starting positions and move completely
-                    independently, we still see regions where the particle paths appear to
-                    congregate and large gaps where they seem to avoid each other over time.
+                    independently, we still see regions where the particles seem to
+                    congregate and gaps where they appear to avoid each other over time.
                 </p>
             `
         },
@@ -94,13 +94,17 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    Even with 10,000 particles we can see density regions without everything fading
-                    to a smooth gray.
+                    Even with 10,000 particles we can see regions of density.
                 </p>
                 <p>
                     The folds and valleys are noticable on the small scale, but the same kinds of
-                    density differences happen at every scale, for instance if we compare the top and
-                    bottom half of a column.
+                    density differences happen at every scale, for instance if we compare the top
+                    and bottom half of a column.
+                </p>
+                <p>
+                    Mathematically, the expected difference in the number of particles between
+                    two equal sized intervals is roughly proportional to the square root of the
+                    interval length.
                 </p>
             `
         },
@@ -117,18 +121,18 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    The quirks of our density detection algithm are more apperent if we keep the
+                    The quirks of our density detection algorithm are more apperent if we keep the
                     particles still.
                 </p>
                 <p>
-                    You can see that the colors appear below the white lines.
+                    You can see that the colors come from below the white lines.
                     This is because for any location we subtract the number of particles above from
-                    the particles below, and when we're below a line we get a positive difference.
+                    those below, and when we're below a line we get a positive difference.
                 </p>
                 <p>
-                    We also get a type of rainbow diffraction effect because the longer red
-                    intervals are longer then the green and blue other ones yet they are all
-                    aligned together at the top.
+                    We also get a type of rainbow diffraction effect because the red intervals
+                    that show up first are longer then the green and blue ones, and are visible
+                    below them.
                 </p>
             `
         },
@@ -148,16 +152,15 @@ function getConfigurations() {
                     We can use smoothing techniques similar to those for moving averages to
                     produce a cleaner result.
                 </p>
-                <p>
-                    The square wave we've been using has a sharp boundary when particles enter
-                    in and out of our scanning window.
-                    We can smooth things by using a triangle or sine scanning wave to give less
-                    weight to the particles at the ends and more to those in the middle.
-                </p>
                 </p>
                     Smoothed waves better capture density at a specific wavelengh, but they lose
                     some of the texture the square waves preserve.
                 </p>
+                <p>
+                    Here we're using a triangular wavelet for our sliding window to compute the
+                    density difference between the up and down wings of the wave.
+                </p>
+
             `
         },
         "zero-velocity-cosine": {
@@ -173,7 +176,16 @@ function getConfigurations() {
             "palette": "bw",
             "description": `
                 <p>
-                    Cosine shows us what things look like without downward distortion.
+                    The advantage of a cosine wave as opposed to a sine wave is that cosine is
+                    symmetrical around the center.
+                </p>
+                <p>
+                    This means we can show the density regions centered over the underlying
+                    particles.
+                </p>
+                <p>
+                    Alas a lack of distortion can be visually boring, which is why we've opted to
+                    use the other waveforms for the other examples.
                 </p>
             `
         },
