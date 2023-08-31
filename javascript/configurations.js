@@ -220,7 +220,7 @@ function getConfigurations() {
         "big-waves-smoothed": {
             "name": "Big Waves Smoothed",
             "height": window.innerHeight,
-            "width": 3000,
+            "width": Math.max(2000, window.innerWidth),
             "particles": 300,
             "startw": 60,
             "endw": 300,
