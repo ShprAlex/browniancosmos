@@ -79,7 +79,17 @@ class AnimationHandler {
         if (progress < 10) {
             return;
         }
-        simulation.increasePopulation(Math.min(MAX_PARTICLES, progress * (1 + progress / 100)));
+        else {
+            simulation.increasePopulation(
+                Math.min(MAX_PARTICLES,
+                    Math.max(
+                        progress,
+                        progress * progress / 100,
+                        Math.pow(1.03, progress)
+                    ),
+                )
+            );
+        }
     }
 
     static updateStatusText() {
