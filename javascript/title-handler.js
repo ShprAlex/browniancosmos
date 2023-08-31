@@ -4,12 +4,26 @@ let titleState = null;
 let titleTimeoutId = null;
 
 class ApplicationTitle {
-    static reset() {
-        ApplicationTitle.hide();
+    static resetStart() {
         clearTimeout(titleTimeoutId);
+        ApplicationTitle.hide();
         titleState = null;
         titleTimeoutId = null;
         scrollToSeeMore.style.display = 'none';
+    }
+
+    static resetEnd() {
+        setTimeout(
+            () => {
+                if (canvas.width * canvas.height < 2000 * 2000) {
+                    scrollToSeeMore.style.display = 'none';
+                }
+                else {
+                    scrollToSeeMore.style.display = 'inherit';
+                };
+            },
+            1000
+        )
     }
 
     static show() {
@@ -48,6 +62,7 @@ class ApplicationTitle {
             (scrollingDiv.scrollLeft >= rightSide - 150)
             && !modalVisible
             && titleState === null
+            && progress > 10 // don't show title immediately after reset
         ) {
             ApplicationTitle.show();
         }
@@ -68,7 +83,7 @@ class ApplicationTitle {
 
     static handleHideModal() {
         const rightSide = canvas.clientWidth - scrollingDiv.offsetWidth;
-        if (scrollingDiv.scrollLeft >= rightSide - 150) {
+        if (scrollingDiv.scrollLeft >= rightSide - 150 && finishedRendering) {
             ApplicationTitle.show();
         }
     }
@@ -79,19 +94,7 @@ class ApplicationTitle {
         }
     }
 
-    static updateScrollToSeeMore() {
-        setTimeout(
-            () => {
-                if (canvas.width * canvas.height < 2000 * 2000) {
-                    scrollToSeeMore.style.display = 'none';
-                }
-                else {
-                    scrollToSeeMore.style.display = 'inherit';
-                }
-            },
-            1000
-        )
-    }
+
 }
 
 scrollingDiv.addEventListener('scrollend', ApplicationTitle.updateAfterScroll, { passive: true });
@@ -100,8 +103,8 @@ scrollingDiv.addEventListener('touchmove', ApplicationTitle.updateAfterScroll, {
 
 canvas.addEventListener('renderingend', ApplicationTitle.handleRenderingEnd);
 canvas.addEventListener('click', ApplicationTitle.hideUntilReset);
-canvas.addEventListener('resetstart', ApplicationTitle.reset);
-canvas.addEventListener('resetend', ApplicationTitle.updateScrollToSeeMore);
+canvas.addEventListener('resetend', ApplicationTitle.resetStart);
+canvas.addEventListener('resetend', ApplicationTitle.resetEnd);
 
 canvas.addEventListener('showmodal', ApplicationTitle.handleShowModal);
 canvas.addEventListener('hidemodal', ApplicationTitle.handleHideModal);
