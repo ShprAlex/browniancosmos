@@ -1,11 +1,14 @@
 const applicationTitleEl = document.getElementById('applicationTitle');
 const scrollToSeeMore = document.getElementById('applicationTitleScrollForMore');
 let titleState = null;
+let titleTimeoutId = null;
 
 class ApplicationTitle {
     static reset() {
         ApplicationTitle.hide();
+        clearTimeout(titleTimeoutId);
         titleState = null;
+        titleTimeoutId = null;
     }
 
     static show() {
@@ -15,7 +18,15 @@ class ApplicationTitle {
         }
         // change the title state after a delay so when scrolling shows it,
         // it's not immediately hidden by the same scrolling action.
-        setTimeout(function () { titleState = 'visible' }, 2000);
+        if (titleTimeoutId === null) {
+            titleTimeoutId = setTimeout(
+                () => {
+                    titleState = 'visible';
+                    titleTimeoutId = null;
+                },
+                2000
+            );
+        }
     }
 
     static hide() {
