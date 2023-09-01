@@ -5,8 +5,13 @@ let titleTimeoutId = null;
 
 class ApplicationTitle {
     static resetStart() {
-        clearTimeout(titleTimeoutId);
-        ApplicationTitle.hide();
+        if (!isWelcomeConfig()) {
+            clearTimeout(titleTimeoutId);
+            ApplicationTitle.hide();
+        }
+        else {
+            ApplicationTitle.show();
+        }
         titleState = null;
         titleTimeoutId = null;
         scrollToSeeMore.style.display = 'none';
@@ -15,7 +20,7 @@ class ApplicationTitle {
     static resetEnd() {
         setTimeout(
             () => {
-                if (canvas.width * canvas.height < 2000 * 2000) {
+                if (canvas.width * canvas.height < 2000 * 2000 || isWelcomeConfig()) {
                     scrollToSeeMore.style.display = 'none';
                 }
                 else {

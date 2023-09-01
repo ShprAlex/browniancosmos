@@ -11,8 +11,7 @@ function loadAboutText() {
 }
 
 window.addEventListener('load', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.size ===0 || urlParams.get('configuration')) {
+    if (!isWelcomeConfig()) {
         loadAboutText();
         aboutModal.show();
     }

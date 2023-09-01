@@ -34,13 +34,17 @@ function getParam(key) {
     return paramValue;
 }
 
+function isWelcomeConfig() {
+    return params.get('configuration') === null || params.get('configuration') === 'default';
+}
+
 class AnimationHandler {
     static initialize() {
-        params = new URLSearchParams(window.location.search);
         Scroller.initialize();
     }
 
     static reset() {
+        params = new URLSearchParams(window.location.search);
         if (animationRequest) {
             window.cancelAnimationFrame(animationRequest);
         }

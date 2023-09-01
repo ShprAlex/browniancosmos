@@ -2,6 +2,19 @@ function getConfigurations() {
     return {
         "default": {
             "name": "Welcome!",
+            "height": window.innerHeight,
+            "width": 6000,
+            "particles": 20,
+            "startw": Math.floor(window.innerHeight / 2),
+            "endw": Math.floor(window.innerHeight / 2),
+            "waveform": "square",
+            "cellsize": 1,
+            "velocity": 5,
+            "palette": "rgb",
+            "description": ``
+        },
+        "overview": {
+            "name": "Overview",
             "height": 2400,
             "width": 5000,
             "particles": 300,

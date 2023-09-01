@@ -15,7 +15,7 @@ function resetAnimationSettings(settingsData) {
     history.pushState({}, 'BrownianCosmos', `index.html?${params.toString()}`);
     AnimationHandler.reset();
     AnimationHandler.animate();
-    if ('configuration' in settingsData) {
+    if ('configuration' in settingsData && settingsData['configuration']!='default') {
         aboutModal.show();
     }
 }
