@@ -220,37 +220,20 @@ function getConfigurations() {
                 <p>
                     The results look fuzzy, and there is nothing that can be done about that.
                 </p>
-            `
-        },
-        "big-waves-bw": {
-            "name": "Big Waves B&W",
-            "height": 1200,
-            "width": 3000,
-            "particles": 300,
-            "startw": 40,
-            "endw": 200,
-            "waveform": "square",
-            "cellsize": 2,
-            "velocity": 5,
-            "palette": "bw",
-            "description": `
                 <p>
-                    Scanning at large wavelenghts produces nice patterns.
-                </p>
-                <p>
-                    The results look fuzzy, and there is nothing that can be done about that.
+                    Try it in black and white.
                 </p>
             `
         },
         "big-waves-smoothed": {
             "name": "Big Waves Smoothed",
             "height": window.innerHeight,
-            "width": Math.max(1500, window.innerWidth),
+            "width": Math.max(800, window.innerWidth),
             "particles": 300,
             "startw": 60,
             "endw": 300,
             "waveform": "cosine",
-            "cellsize": 1,
+            "cellsize": window.innerHeight < 800 ? 1 : 2,
             "velocity": 5,
             "palette": "rgb",
             "description": `
