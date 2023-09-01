@@ -1,30 +1,41 @@
 const applicationTitleEl = document.getElementById('applicationTitle');
-const scrollToSeeMore = document.getElementById('applicationTitleScrollForMore');
+const applicationTitleThirdLine = document.getElementById('applicationTitleThirdLine');
 let titleState = null;
 let titleTimeoutId = null;
 
 class ApplicationTitle {
     static resetStart() {
+        clearTimeout(titleTimeoutId);
+        titleState = null;
+        titleTimeoutId = null;
         if (!isWelcomeConfig()) {
-            clearTimeout(titleTimeoutId);
             ApplicationTitle.hide();
+            applicationTitleThirdLine.style.display = 'none';
+            applicationTitleThirdLine.innerHTML = `
+                <i class="fa-solid fa-arrows-up-down-left-right"></i>
+                <br />
+                Scroll to see more
+            `;
         }
         else {
             ApplicationTitle.show();
+            applicationTitleThirdLine.style.display = 'inherit';
+            applicationTitleThirdLine.innerHTML = `
+                <i class="fa-solid fa-line-chart"></i>
+                <br />
+                Welcome! Please see the charts menu for more.
+            `;
         }
-        titleState = null;
-        titleTimeoutId = null;
-        scrollToSeeMore.style.display = 'none';
     }
 
     static resetEnd() {
         setTimeout(
             () => {
-                if (canvas.width * canvas.height < 2000 * 2000 || isWelcomeConfig()) {
-                    scrollToSeeMore.style.display = 'none';
+                if (canvas.width * canvas.height < 2000 * 2000 && !isWelcomeConfig()) {
+                    applicationTitleThirdLine.style.display = 'none';
                 }
                 else {
-                    scrollToSeeMore.style.display = 'inherit';
+                    applicationTitleThirdLine.style.display = 'inherit';
                 };
             },
             1000
@@ -76,6 +87,7 @@ class ApplicationTitle {
             if (
                 titleState === 'visible'
                 && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)
+                && !isWelcomeConfig()
             ) {
                 ApplicationTitle.hideUntilReset();
             }
@@ -108,7 +120,7 @@ scrollingDiv.addEventListener('touchmove', ApplicationTitle.updateAfterScroll, {
 
 canvas.addEventListener('renderingend', ApplicationTitle.handleRenderingEnd);
 canvas.addEventListener('click', ApplicationTitle.hideUntilReset);
-canvas.addEventListener('resetend', ApplicationTitle.resetStart);
+canvas.addEventListener('resetstart', ApplicationTitle.resetStart);
 canvas.addEventListener('resetend', ApplicationTitle.resetEnd);
 
 canvas.addEventListener('showmodal', ApplicationTitle.handleShowModal);
