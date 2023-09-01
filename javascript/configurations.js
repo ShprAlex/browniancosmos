@@ -22,7 +22,7 @@ function getConfigurations() {
             "endw": 600,
             "waveform": "square",
             "cellsize": 2,
-            "velocity": 5,
+            "velocity": 4,
             "palette": "rgb",
             "description": `
                 <p>
