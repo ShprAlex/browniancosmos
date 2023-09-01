@@ -16,7 +16,7 @@ class Scroller {
     }
 
     static reset() {
-        scrollSpeed = 2;
+        scrollSpeed = 0.5;
         startedScrolling = false;
         finishedScrolling = false;
 
