@@ -4,7 +4,12 @@ class HistogramToWave {
         if (pointValue === 0 || populationSize === 0) {
             return 0;
         }
-        return Math.max(0, pointValue * Math.sqrt(histogramSize / spanSize / populationSize) / 2.3);
+        let b =  Math.max(0, pointValue * Math.sqrt(histogramSize / spanSize / populationSize) / 2.3);
+        // Scale down the brigest values to below 1, while keeping most of the colors saturated.
+        if (b>0.85) {
+            b=(b-0.85)/5+0.85;
+        }
+        return b;
     }
 
     /**
