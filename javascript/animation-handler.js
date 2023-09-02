@@ -22,8 +22,8 @@ window.addEventListener('load', () => {
 });
 
 function getParam(key) {
-    const configurationName = params.get('configuration') || 'default';
-    const configurationParams = getConfiguration(configurationName) || getConfiguration('default');
+    const configurationId = params.get('configuration') || 'welcome';
+    const configurationParams = getConfiguration(configurationId) || getConfiguration('default');
     let paramValue = params.get(key);
     if (paramValue === null) {
         return configurationParams[key];
@@ -35,8 +35,11 @@ function getParam(key) {
 }
 
 function isWelcomeConfig() {
-    console.log(params);
-    return (params.get('configuration') === null || params.get('configuration') === 'default') && params.size<=1;
+    return params.size==0 || params.get('configuration') === 'welcome';
+}
+
+function isDefaultConfig() {
+    return params.get('configuration') === 'default' || !getConfiguration(configurationId);
 }
 
 class AnimationHandler {

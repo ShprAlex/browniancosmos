@@ -15,7 +15,7 @@ function resetAnimationSettings(settingsData) {
     history.pushState({}, 'BrownianCosmos', `index.html?${params.toString()}`);
     AnimationHandler.reset();
     AnimationHandler.animate();
-    if ('configuration' in settingsData && settingsData['configuration']!='default') {
+    if ('configuration' in settingsData && settingsData['configuration']!='welcome') {
         aboutModal.show();
     }
 }
@@ -38,7 +38,9 @@ function loadSettingsMenu() {
         <li><a class='dropdown-item' data-value='${id}' href='#'>${name}</a></li>
     `;
     for (const [option, data] of Object.entries(getConfigurations())) {
-        settingsMenuItems.innerHTML += menuItemHtml(option, data.name);
+        if (option != 'default') {
+            settingsMenuItems.innerHTML += menuItemHtml(option, data.name);
+        }
     }
     settingsMenuItems.innerHTML += menuItemHtml('custom', 'Custom');
 
@@ -61,7 +63,9 @@ function loadCustomSettingsSelect() {
     customSettingsSelectEl.innerHTML += customSettingsOptionHtml('custom', 'Custom');
 
     for (const [option, data] of Object.entries(getConfigurations())) {
-        customSettingsSelectEl.innerHTML += customSettingsOptionHtml(option, data.name);
+        if (option != 'default') {
+            customSettingsSelectEl.innerHTML += customSettingsOptionHtml(option, data.name);
+        }
     }
 
     customSettingsSelectEl.addEventListener('change', (event) => {
