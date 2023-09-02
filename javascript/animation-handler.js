@@ -35,7 +35,8 @@ function getParam(key) {
 }
 
 function isWelcomeConfig() {
-    return params.get('configuration') === null || params.get('configuration') === 'default';
+    console.log(params);
+    return (params.get('configuration') === null || params.get('configuration') === 'default') && params.size<=1;
 }
 
 class AnimationHandler {
@@ -88,7 +89,7 @@ class AnimationHandler {
                 Math.min(MAX_PARTICLES,
                     Math.max(
                         progress,
-                        progress * progress / 100,
+                        progress * progress / 50,
                         Math.pow(1.03, progress)
                     ),
                 )

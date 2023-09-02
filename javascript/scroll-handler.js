@@ -12,11 +12,23 @@ class Scroller {
         scrollingDiv.addEventListener('touchstart', Scroller.updateAutoScroll, { passive: true });
         scrollingDiv.addEventListener('touchmove', Scroller.updateAutoScroll, { passive: true });
         canvas.addEventListener('showmodal', () => { scrollSpeed = 0.5; });
-        canvas.addEventListener('hidemodal', () => { scrollSpeed = 2; });
+        canvas.addEventListener('hidemodal', () => {
+            if (isWelcomeConfig()) {
+                scrollSpeed = 0.5;
+            }
+            else {
+                scrollSpeed = 2;
+            }
+        });
     }
 
     static reset() {
-        scrollSpeed = 0.5;
+        if (isWelcomeConfig()) {
+            scrollSpeed = 0.5;
+        }
+        else {
+            scrollSpeed = 2;
+        }
         startedScrolling = false;
         finishedScrolling = false;
 
@@ -57,7 +69,7 @@ class Scroller {
             scrollLeft = scrollingDiv.scrollLeft;
             scrollTop = scrollingDiv.scrollTop;
         }
-        
+
         const shortImageFactor = canvas.width / canvas.clientWidth;
         // check if we've rendered past the right side of the screen
         if (progress > window.innerWidth / CELL_SIZE * shortImageFactor) {
