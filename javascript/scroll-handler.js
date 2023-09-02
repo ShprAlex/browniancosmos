@@ -87,9 +87,7 @@ class Scroller {
                 scrollTop -= Math.min(1, scrollTop / distLeft) * scrollSpeed;
                 scrollTop = Math.max(0, scrollTop);
             }
-            if (scrollingDiv.scrollLeft == scrollLeft && scrollingDiv.scrollTop == scrollTop) {
-                finishedScrolling = true;
-            }
+
             scrollingDiv.scrollLeft = scrollLeft;
             scrollingDiv.scrollTop = scrollTop;
         }
