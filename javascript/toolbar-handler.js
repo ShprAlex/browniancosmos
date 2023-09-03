@@ -2,6 +2,7 @@ const fullscreenButton = document.getElementById('fullscreenButton');
 const toolbarEl = document.getElementById('toolbar');
 const chartInfoMenuItem = document.getElementById('chartInfoMenuItem');
 const saveImageMenuItem = document.getElementById('saveImageMenuItem');
+const showTitleMenuIcon = document.getElementById('showTitleMenuItem');
 const reloadToobarButton = document.getElementById('reloadToolbarButton');
 const additionalMenuDropdown = document.getElementById('additionalMenuDropdown');
 
@@ -50,6 +51,7 @@ saveImageMenuItem.addEventListener('click', () => {
     tempLink.click();
     tempLink.remove();
 });
+showTitleMenuIcon.addEventListener('click', () => { ApplicationTitle.forceShow(); });
 reloadToobarButton.addEventListener('click', () => {
     ApplicationTitle.hide();
     AnimationHandler.reset();

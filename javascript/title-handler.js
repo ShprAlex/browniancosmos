@@ -43,10 +43,14 @@ class ApplicationTitle {
     }
 
     static show() {
-        if (titleState !== 'manually-hidden') {
-            applicationTitleEl.style.opacity = 1;
-            applicationTitleEl.style.visibility = 'visible';
+        if (titleState === 'force-hidden') {
+            return;
         }
+
+        applicationTitleEl.style.opacity = 1;
+        applicationTitleEl.style.visibility = 'visible';
+        showTitleMenuIcon.classList.add('disabled');
+
         // change the title state after a delay so when scrolling shows it,
         // it's not immediately hidden by the same scrolling action.
         if (titleTimeoutId === null) {
@@ -60,16 +64,27 @@ class ApplicationTitle {
         }
     }
 
+    static forceShow() {
+        applicationTitleEl.style.opacity = 1;
+        applicationTitleEl.style.visibility = 'visible';
+        titleState = 'force-visible';
+        applicationTitleThirdLine.style.display = 'none';
+        showTitleMenuIcon.classList.add('disabled');
+    }
+
     static hide() {
         applicationTitleEl.style.opacity = 0;
         applicationTitleEl.style.visibility = 'hidden';
+        showTitleMenuIcon.classList.remove('disabled');
     }
 
-    static hideUntilReset() {
-        if (titleState === 'visible') {
-            ApplicationTitle.hide();
-            titleState = 'manually-hidden';
+    static forceHide() {
+        if (!['visible', 'force-visible'].includes(titleState)) {
+            return;
         }
+        ApplicationTitle.hide();
+        titleState = 'force-hidden';
+        showTitleMenuIcon.classList.remove('disabled');
     }
 
     static updateAfterScroll() {
@@ -89,7 +104,7 @@ class ApplicationTitle {
                 && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)
                 && !isWelcomeConfig()
             ) {
-                ApplicationTitle.hideUntilReset();
+                ApplicationTitle.forceHide();
             }
         }
     }
@@ -110,8 +125,6 @@ class ApplicationTitle {
             ApplicationTitle.show();
         }
     }
-
-
 }
 
 scrollingDiv.addEventListener('scrollend', ApplicationTitle.updateAfterScroll, { passive: true });
@@ -119,7 +132,7 @@ scrollingDiv.addEventListener('touchstart', ApplicationTitle.updateAfterScroll, 
 scrollingDiv.addEventListener('touchmove', ApplicationTitle.updateAfterScroll, { passive: true });
 
 canvas.addEventListener('renderingend', ApplicationTitle.handleRenderingEnd);
-canvas.addEventListener('click', ApplicationTitle.hideUntilReset);
+canvas.addEventListener('click', ApplicationTitle.forceHide);
 canvas.addEventListener('resetstart', ApplicationTitle.resetStart);
 canvas.addEventListener('resetend', ApplicationTitle.resetEnd);
 
