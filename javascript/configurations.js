@@ -44,8 +44,9 @@ function getConfigurations() {
                 <p>
                     The idea for BrownianCosmos came about after seeing a surprising pattern in
                     a randomly generated dataset.
-                    It turned out to be due to Brownian motion which makes the clumps and gaps of
-                    independent particles appear to shift in a collective wavelike way.
+                    It turned out to be due to an intrinsic property of Brownian motion which makes
+                    the clumps and gaps of independent particles appear to shift in a collective
+                    wavelike way.
                 </p>
                 <p>
                     Our simulation reveals these waves and shows their fractal nature at different
@@ -63,9 +64,9 @@ function getConfigurations() {
             "width": Math.max(1000, window.innerWidth),
             "particles": 10,
             "startw": 1,
-            "endw": Math.floor(window.innerHeight / 4),
+            "endw": Math.floor(window.innerHeight / 2 / getResolutionFactor()),
             "waveform": "square",
-            "cellsize": 2,
+            "cellsize": getResolutionFactor(),
             "velocity": 4,
             "palette": "rgb",
             "description": `
@@ -169,9 +170,9 @@ function getConfigurations() {
             "width": Math.min(window.innerWidth, Math.max(600, Math.ceil(window.innerHeight * 3 / 4))),
             "particles": 50,
             "startw": 1,
-            "endw": Math.floor(window.innerHeight / 2),
+            "endw": Math.floor(window.innerHeight / getResolutionFactor()),
             "waveform": "triangle",
-            "cellsize": 2,
+            "cellsize": getResolutionFactor(),
             "velocity": 0,
             "palette": "rgb",
             "description": `
@@ -218,13 +219,13 @@ function getConfigurations() {
         },
         "big-waves": {
             "name": "Big Waves",
-            "height": 2400,
-            "width": 6000,
+            "height": 1200 * getResolutionFactor(),
+            "width": 3000 * getResolutionFactor(),
             "particles": 300,
             "startw": 60,
             "endw": 300,
             "waveform": "square",
-            "cellsize": 2,
+            "cellsize": getResolutionFactor(),
             "velocity": 5,
             "palette": "rgb",
             "description": `
@@ -247,7 +248,7 @@ function getConfigurations() {
             "startw": 60,
             "endw": 300,
             "waveform": "cosine",
-            "cellsize": window.innerHeight < 800 ? 1 : 2,
+            "cellsize": getResolutionFactor(),
             "velocity": 5,
             "palette": "rgb",
             "description": `
@@ -277,6 +278,10 @@ function getConfigurations() {
             `
         },
     };
+}
+
+function getResolutionFactor() {
+    return window.innerWidth < 800 ? 1 : 2;
 }
 
 function getConfiguration(option) {
