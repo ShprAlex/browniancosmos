@@ -4,7 +4,7 @@ let titleState = null;
 let titleTimeoutId = null;
 
 class ApplicationTitle {
-    static resetStart() {
+    static handleResetStart() {
         clearTimeout(titleTimeoutId);
         titleState = null;
         titleTimeoutId = null;
@@ -28,7 +28,7 @@ class ApplicationTitle {
         }
     }
 
-    static resetEnd() {
+    static handleResetEnd() {
         setTimeout(
             () => {
                 if (canvas.width * canvas.height < 2000 * 2000 && !isWelcomeConfig()) {
@@ -133,8 +133,8 @@ scrollingDiv.addEventListener('touchmove', ApplicationTitle.updateAfterScroll, {
 
 canvas.addEventListener('renderingend', ApplicationTitle.handleRenderingEnd);
 canvas.addEventListener('click', ApplicationTitle.forceHide);
-canvas.addEventListener('resetstart', ApplicationTitle.resetStart);
-canvas.addEventListener('resetend', ApplicationTitle.resetEnd);
+canvas.addEventListener('resetstart', ApplicationTitle.handleResetStart);
+canvas.addEventListener('resetend', ApplicationTitle.handleResetEnd);
 
 canvas.addEventListener('showmodal', ApplicationTitle.handleShowModal);
 canvas.addEventListener('hidemodal', ApplicationTitle.handleHideModal);

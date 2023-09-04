@@ -34,6 +34,16 @@ class ToolbarHandler {
             ToolbarHandler.hide();
         }
     }
+
+    static handleResetEnd() {
+        console.log("here", getParam('description'));
+        if (getParam('description')) {
+            chartInfoMenuItem.classList.remove('disabled');
+        }
+        else {
+            chartInfoMenuItem.classList.add('disabled');
+        }
+    }
 }
 
 window.addEventListener('load', () => {
@@ -62,5 +72,6 @@ fullscreenButton.addEventListener('click', ToolbarHandler.handleFullscreen);
 
 canvas.addEventListener('showmodal', ToolbarHandler.hide);
 canvas.addEventListener('hidemodal', ToolbarHandler.show);
+canvas.addEventListener('resetend', ToolbarHandler.handleResetEnd);
 canvas.addEventListener('click', ToolbarHandler.handleCanvasClick);
 scrollingDiv.addEventListener('click', ToolbarHandler.handleCanvasClick);
