@@ -59,7 +59,7 @@ class ApplicationTitle {
                     titleState = 'visible';
                     titleTimeoutId = null;
                 },
-                2000
+                1500
             );
         }
     }

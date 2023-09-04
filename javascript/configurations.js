@@ -223,7 +223,7 @@ function getConfigurations() {
             "width": 3000 * getResolutionFactor(),
             "particles": 300,
             "startw": 60,
-            "endw": 300,
+            "endw": 600 / getResolutionFactor(),
             "waveform": "square",
             "cellsize": getResolutionFactor(),
             "velocity": 5,

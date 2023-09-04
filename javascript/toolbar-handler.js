@@ -46,12 +46,12 @@ window.addEventListener('load', () => {
 chartInfoMenuItem.addEventListener('click', (event) => { event.preventDefault(); aboutModal.show(); });
 saveImageMenuItem.addEventListener('click', () => {
     const tempLink = document.createElement('a');
-    tempLink.download = `BrownianCosmos${Math.floor(Date.now()/1000)%100000}.png`;
+    tempLink.download = `BrownianCosmos${Math.floor(Date.now() / 1000) % 100000}.png`;
     tempLink.href = document.getElementById('canvas').toDataURL()
     tempLink.click();
     tempLink.remove();
 });
-showTitleMenuIcon.addEventListener('click', () => { ApplicationTitle.forceShow(); });
+showTitleMenuIcon.addEventListener('click', () => { ApplicationTitle.forceShow(); ToolbarHandler.hide(); });
 reloadToobarButton.addEventListener('click', () => {
     ApplicationTitle.hide();
     AnimationHandler.reset();
