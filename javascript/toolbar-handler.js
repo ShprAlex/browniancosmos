@@ -36,7 +36,6 @@ class ToolbarHandler {
     }
 
     static handleResetEnd() {
-        console.log("here", getParam('description'));
         if (getParam('description')) {
             chartInfoMenuItem.classList.remove('disabled');
         }

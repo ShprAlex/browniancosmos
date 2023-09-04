@@ -1,10 +1,10 @@
 const settingsModal = new bootstrap.Modal(settingsModalEl);
 const settingsForm = document.getElementById('settingsForm');
 const applySettingsButton = document.getElementById('applySettingsButton');
-const customSettingsSelectEl = document.getElementById('customSettingsSelect');
+const configurationSelectEl = document.getElementById('configurationSelect');
 const settingsMenuItems = document.getElementById('settingsMenuItems');
 
-window.addEventListener('load', () => { loadSettingsMenu(); loadCustomSettingsSelect(); });
+window.addEventListener('load', () => { loadSettingsMenu(); loadconfigurationSelect(); });
 
 function resetAnimationSettings(settingsData) {
     // params is defined in animation-handler.js.
@@ -21,6 +21,7 @@ function resetAnimationSettings(settingsData) {
 }
 
 function showSettingsModal() {
+    settingsForm.elements['configurationSelect'].value = getParam('configuration') || 'custom';
     settingsForm.elements['height'].value = canvas.height;
     settingsForm.elements['width'].value = canvas.width;
     settingsForm.elements['particles'].value = MAX_PARTICLES;
@@ -58,17 +59,17 @@ function loadSettingsMenu() {
     });
 }
 
-function loadCustomSettingsSelect() {
+function loadconfigurationSelect() {
     const customSettingsOptionHtml = (id, name) => `<option value='${id}'>${name}</option>`;
-    customSettingsSelectEl.innerHTML += customSettingsOptionHtml('custom', 'Custom');
+    configurationSelectEl.innerHTML += customSettingsOptionHtml('custom', 'Custom');
 
     for (const [option, data] of Object.entries(getConfigurations())) {
         if (option != 'default') {
-            customSettingsSelectEl.innerHTML += customSettingsOptionHtml(option, data.name);
+            configurationSelectEl.innerHTML += customSettingsOptionHtml(option, data.name);
         }
     }
 
-    customSettingsSelectEl.addEventListener('change', (event) => {
+    configurationSelectEl.addEventListener('change', (event) => {
         const configuration = getConfiguration(event.target.value);
         if (configuration) {
             for (const [key, value] of Object.entries(configuration)) {
