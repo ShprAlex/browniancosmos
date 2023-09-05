@@ -17,7 +17,7 @@ function getConfigurations() {
             "name": "Welcome!",
             "height": window.innerHeight,
             "width": 6000,
-            "particles": 20,
+            "particles": 18,
             "startw": Math.floor(window.innerHeight / 2),
             "endw": Math.floor(window.innerHeight / 2),
             "waveform": "square",
@@ -78,10 +78,9 @@ function getConfigurations() {
                     detect them from further away.
                 </p>
                 <p>
-                    As we go from left to right we scan for the number of particles in increasing
-                    vertical intervals.
-                    In the vertical direction we scan for 3 interval lengths simultaneously around
-                    every point.
+                    As we go from left to right we scan for the particles in increasing vertical
+                    intervals.
+                    We scan for 3 interval lengths simultaneously around every point.
                     We color the point red, green, and blue depending on which interval size met
                     the density criteria, and white if it's all of them.
                 </p>
@@ -104,8 +103,8 @@ function getConfigurations() {
                 </p>
                 <p>
                     Even though the particles have random starting positions and move completely
-                    independently, we still see regions where the particles seem to
-                    congregate and gaps where they appear to avoid each other over time.
+                    independently, we still see regions where they congregate and gaps where they
+                    separate for lengths of time.
                 </p>
             `
         },
