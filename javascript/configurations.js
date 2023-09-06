@@ -44,9 +44,8 @@ function getConfigurations() {
                 <p>
                     The idea for BrownianCosmos came about after seeing a surprising pattern in
                     a randomly generated dataset.
-                    It turned out to be due to an intrinsic property of Brownian motion which makes
-                    the clumps and gaps of independent particles appear to shift in a collective
-                    wavelike way.
+                    It turned out to be due to Brownian motion which happens to make the clumps
+                    and gaps of independent particles appear to shift in a collective wavelike way.
                 </p>
                 <p>
                     Our simulation reveals these waves and shows their fractal nature at different
