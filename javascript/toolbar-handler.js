@@ -3,6 +3,7 @@ const toolbarEl = document.getElementById('toolbar');
 const chartInfoMenuItem = document.getElementById('chartInfoMenuItem');
 const saveImageMenuItem = document.getElementById('saveImageMenuItem');
 const showTitleMenuIcon = document.getElementById('showTitleMenuItem');
+const creditsMenuIcon = document.getElementById('showCreditsMenuItem');
 const reloadToobarButton = document.getElementById('reloadToolbarButton');
 const additionalMenuDropdown = document.getElementById('additionalMenuDropdown');
 
@@ -53,6 +54,7 @@ window.addEventListener('load', () => {
 });
 
 chartInfoMenuItem.addEventListener('click', (event) => { event.preventDefault(); aboutModal.show(); });
+creditsMenuItem.addEventListener('click', (event) => { event.preventDefault(); creditsModal.show(); });
 saveImageMenuItem.addEventListener('click', () => {
     const tempLink = document.createElement('a');
     tempLink.download = `BrownianCosmos${Math.floor(Date.now() / 1000) % 100000}.png`;

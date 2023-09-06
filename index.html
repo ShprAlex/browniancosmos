@@ -48,8 +48,42 @@
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div id="aboutText" class="modal-body about-text">
+        <div id="aboutText" class="modal-body modal-text">
           <!-- Filled in dynamically -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Credits Modal -->
+  <div class="modal fade" id="creditsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content modal-dark bg-dark text-light" data-bs-theme="dark">
+        <div class="modal-header">
+          <h5 id="creditsTitle" class="modal-title" data-bs-theme="dark">
+            Credits
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="creditsText" class="modal-body modal-text">
+          <p>
+            BrownianCosmos was conceived and created by Alex Shapiro -
+            <a class="text-light" href="https://github.com/shpralex">@ShprAlex</a>.
+          </p>
+          <p>
+            Alex is a software developer by trade who's a fan of simplifying complex processes
+            and understanding emergent behavior.
+          </p>
+          <p>
+            Please see my github page for more projects including
+            <a class="text-light" href="https://github.com/ShprAlex/SproutLife">SproutLife</a>, a
+            simulation of evolving artificial life!
+          </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -247,6 +281,12 @@
             <a class="dropdown-item disabled" id="showTitleMenuItem" href="#">
               <i class="fa-solid fa-t"></i>
               Show Title
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" id="creditsMenuItem" href="#">
+              <i class="fa-solid fa-at"></i>
+              Credits
             </a>
           </li>
         </ul>

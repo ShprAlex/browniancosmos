@@ -109,7 +109,7 @@ canvas {
     opacity: 0.6 !important;
 }
 
-.about-text {
+.modal-text {
     text-shadow: black 0 0 1px;
     font-weight: 300;
     font-size: 19px;
