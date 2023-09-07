@@ -4,8 +4,8 @@ const fullscreenButton = document.getElementById('fullscreenButton');
 const toolbarEl = document.getElementById('toolbar');
 const chartInfoMenuItem = document.getElementById('chartInfoMenuItem');
 const saveImageMenuItem = document.getElementById('saveImageMenuItem');
-const showTitleMenuIcon = document.getElementById('showTitleMenuItem');
-const creditsMenuIcon = document.getElementById('showCreditsMenuItem');
+const showTitleMenuItem = document.getElementById('showTitleMenuItem');
+const creditsMenuItem = document.getElementById('creditsMenuItem');
 const reloadToobarButton = document.getElementById('reloadToolbarButton');
 const additionalMenuDropdown = document.getElementById('additionalMenuDropdown');
 
@@ -64,7 +64,7 @@ saveImageMenuItem.addEventListener('click', () => {
     tempLink.click();
     tempLink.remove();
 });
-showTitleMenuIcon.addEventListener('click', () => { ApplicationTitle.forceShow(); ToolbarHandler.hide(); });
+showTitleMenuItem.addEventListener('click', () => { ApplicationTitle.forceShow(); ToolbarHandler.hide(); });
 reloadToobarButton.addEventListener('click', () => {
     ApplicationTitle.hide();
     AnimationHandler.reset();
