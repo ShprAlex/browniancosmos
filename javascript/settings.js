@@ -1,4 +1,15 @@
-import { animate, getParam, resetApplication } from './app.js';
+import {
+    BROWNIAN_VELOCITY,
+    CELL_SIZE,
+    END_WAVELENGTH,
+    MAX_PARTICLES,
+    PALETTE,
+    START_WAVELENGTH,
+    WAVEFORM,
+    animate,
+    getParam,
+    resetApplication
+} from './app.js';
 import { getConfiguration, getConfigurations } from './configurations.js';
 import { aboutModal, settingsModal } from './modals.js';
 
