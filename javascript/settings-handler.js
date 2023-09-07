@@ -1,3 +1,5 @@
+"use strict";
+
 const settingsForm = document.getElementById('settingsForm');
 const applySettingsButton = document.getElementById('applySettingsButton');
 const configurationSelectEl = document.getElementById('configurationSelect');

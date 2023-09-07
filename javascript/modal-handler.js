@@ -1,3 +1,5 @@
+"use strict";
+
 let modalVisible;
 const aboutModalEl = document.getElementById('aboutModal');
 const aboutModal = new bootstrap.Modal(aboutModalEl);

@@ -1,3 +1,5 @@
+"use strict";
+
 const fullscreenButton = document.getElementById('fullscreenButton');
 const toolbarEl = document.getElementById('toolbar');
 const chartInfoMenuItem = document.getElementById('chartInfoMenuItem');

@@ -1,3 +1,5 @@
+"use strict";
+
 let finishedRendering;
 let progress = 0;
 

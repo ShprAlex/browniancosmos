@@ -1,3 +1,5 @@
+"use strict";
+
 const applicationTitleEl = document.getElementById('applicationTitle');
 const applicationTitleThirdLine = document.getElementById('applicationTitleThirdLine');
 let titleState = null;

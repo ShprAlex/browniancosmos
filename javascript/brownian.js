@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * This is a simple implementation of a Browninan motion simulator which uses a histogram
  * as the model to keep track of particle positions.

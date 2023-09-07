@@ -1,3 +1,5 @@
+"use strict";
+
 class HistogramToWave {
 
     static normalizeBrightness(histogramSize, populationSize, spanSize, pointValue) {

@@ -1,3 +1,5 @@
+"use strict";
+
 const scrollingDiv = document.getElementById('scrollingDiv');
 
 let scrollSpeed;
