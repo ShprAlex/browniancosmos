@@ -5,7 +5,7 @@ const applySettingsButton = document.getElementById('applySettingsButton');
 const configurationSelectEl = document.getElementById('configurationSelect');
 const settingsMenuItems = document.getElementById('settingsMenuItems');
 
-window.addEventListener('load', () => { loadSettingsMenu(); loadconfigurationSelect(); });
+window.addEventListener('load', () => { loadSettingsMenu(); loadConfigurationSelect(); });
 
 function resetAnimationSettings(settingsData) {
     // params is defined in animation-handler.js.
@@ -14,8 +14,8 @@ function resetAnimationSettings(settingsData) {
     params = new URLSearchParams(settingsData);
     // update the url without reloading.
     history.pushState({}, 'BrownianCosmos', `index.html?${params.toString()}`);
-    AnimationHandler.reset();
-    AnimationHandler.animate();
+    ApplicationController.reset();
+    ApplicationController.animate();
     if ('configuration' in settingsData && settingsData['configuration']!='welcome') {
         aboutModal.show();
     }
@@ -60,7 +60,7 @@ function loadSettingsMenu() {
     });
 }
 
-function loadconfigurationSelect() {
+function loadConfigurationSelect() {
     const customSettingsOptionHtml = (id, name) => `<option value='${id}'>${name}</option>`;
     configurationSelectEl.innerHTML += customSettingsOptionHtml('custom', 'Custom');
 

@@ -8,7 +8,7 @@ const settingsModal = new bootstrap.Modal(settingsModalEl);
 const creditsModalEl = document.getElementById('creditsModal');
 const creditsModal = new bootstrap.Modal(creditsModalEl);
 
-class ModalHandler {
+class ModalController {
     static show() {
         modalVisible = true;
         canvas.dispatchEvent(new CustomEvent('showmodal', { bubbles: true }));
@@ -19,9 +19,9 @@ class ModalHandler {
     }
 }
 
-aboutModalEl.addEventListener('show.bs.modal', ModalHandler.show);
-aboutModalEl.addEventListener('hide.bs.modal', ModalHandler.hide);
-settingsModalEl.addEventListener('show.bs.modal', ModalHandler.show);
-settingsModalEl.addEventListener('hide.bs.modal', ModalHandler.hide);
-creditsModalEl.addEventListener('show.bs.modal', ModalHandler.show);
-creditsModalEl.addEventListener('hide.bs.modal', ModalHandler.hide);
+aboutModalEl.addEventListener('show.bs.modal', ModalController.show);
+aboutModalEl.addEventListener('hide.bs.modal', ModalController.hide);
+settingsModalEl.addEventListener('show.bs.modal', ModalController.show);
+settingsModalEl.addEventListener('hide.bs.modal', ModalController.hide);
+creditsModalEl.addEventListener('show.bs.modal', ModalController.show);
+creditsModalEl.addEventListener('hide.bs.modal', ModalController.hide);

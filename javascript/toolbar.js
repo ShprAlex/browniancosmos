@@ -9,7 +9,7 @@ const creditsMenuItem = document.getElementById('creditsMenuItem');
 const reloadToobarButton = document.getElementById('reloadToolbarButton');
 const additionalMenuDropdown = document.getElementById('additionalMenuDropdown');
 
-class ToolbarHandler {
+class ToolbarController {
     static show() {
         toolbarEl.style.opacity = '1';
         toolbarEl.style.visibility = 'visible';
@@ -32,9 +32,9 @@ class ToolbarHandler {
     static handleCanvasClick(event) {
         event.stopPropagation();
         if (toolbarEl.style.visibility === 'hidden') {
-            ToolbarHandler.show();
+            ToolbarController.show();
         } else {
-            ToolbarHandler.hide();
+            ToolbarController.hide();
         }
     }
 
@@ -64,17 +64,17 @@ saveImageMenuItem.addEventListener('click', () => {
     tempLink.click();
     tempLink.remove();
 });
-showTitleMenuItem.addEventListener('click', () => { ApplicationTitle.forceShow(); ToolbarHandler.hide(); });
+showTitleMenuItem.addEventListener('click', () => { ApplicationTitle.forceShow(); ToolbarController.hide(); });
 reloadToobarButton.addEventListener('click', () => {
     ApplicationTitle.hide();
-    AnimationHandler.reset();
-    AnimationHandler.animate();
+    ApplicationController.reset();
+    ApplicationController.animate();
 });
 
-fullscreenButton.addEventListener('click', ToolbarHandler.handleFullscreen);
+fullscreenButton.addEventListener('click', ToolbarController.handleFullscreen);
 
-canvas.addEventListener('showmodal', ToolbarHandler.hide);
-canvas.addEventListener('hidemodal', ToolbarHandler.show);
-canvas.addEventListener('resetend', ToolbarHandler.handleResetEnd);
-canvas.addEventListener('click', ToolbarHandler.handleCanvasClick);
-scrollingDiv.addEventListener('click', ToolbarHandler.handleCanvasClick);
+canvas.addEventListener('showmodal', ToolbarController.hide);
+canvas.addEventListener('hidemodal', ToolbarController.show);
+canvas.addEventListener('resetend', ToolbarController.handleResetEnd);
+canvas.addEventListener('click', ToolbarController.handleCanvasClick);
+scrollingDiv.addEventListener('click', ToolbarController.handleCanvasClick);

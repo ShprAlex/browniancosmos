@@ -20,7 +20,7 @@ let simulation;
 let animationRequest;
 
 window.addEventListener('load', () => {
-    AnimationHandler.initialize(); AnimationHandler.reset(); AnimationHandler.animate();
+    ApplicationController.initialize(); ApplicationController.reset(); ApplicationController.animate();
 });
 
 function getParam(key) {
@@ -44,7 +44,7 @@ function isDefaultConfig() {
     return params.get('configuration') === 'default' || !getConfiguration(configurationId);
 }
 
-class AnimationHandler {
+class ApplicationController {
     static initialize() {
         Scroller.initialize();
     }
@@ -114,14 +114,14 @@ class AnimationHandler {
 
     static animate() {
         if (!finishedRendering) {
-            Renderer.draw(AnimationHandler.rampUpParticles);
+            Renderer.draw(ApplicationController.rampUpParticles);
         }
         if (!finishedScrolling) {
             Scroller.scroll();
         }
-        AnimationHandler.updateStatusText();
+        ApplicationController.updateStatusText();
         if (!finishedRendering || !finishedScrolling) {
-            animationRequest = requestAnimationFrame(AnimationHandler.animate);
+            animationRequest = requestAnimationFrame(ApplicationController.animate);
         }
     }
 }
