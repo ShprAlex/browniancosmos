@@ -1,4 +1,6 @@
-"use strict";
+import { animate, getParam, resetApplication } from './app.js';
+import { getConfiguration, getConfigurations } from './configurations.js';
+import { aboutModal, settingsModal } from './modals.js';
 
 const settingsForm = document.getElementById('settingsForm');
 const applySettingsButton = document.getElementById('applySettingsButton');
@@ -11,11 +13,11 @@ function resetAnimationSettings(settingsData) {
     // params is defined in animation-handler.js.
     // Setting params here lets us avoid reloading.
     // after animate() is called, params is internally parsed to extract the parameters.
-    params = new URLSearchParams(settingsData);
+    const urlParams = new URLSearchParams(settingsData);
     // update the url without reloading.
-    history.pushState({}, 'BrownianCosmos', `index.html?${params.toString()}`);
-    ApplicationController.reset();
-    ApplicationController.animate();
+    history.pushState({}, 'BrownianCosmos', `index.html?${urlParams.toString()}`);
+    resetApplication();
+    animate();
     if ('configuration' in settingsData && settingsData['configuration']!='welcome') {
         aboutModal.show();
     }

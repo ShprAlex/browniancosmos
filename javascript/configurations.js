@@ -1,5 +1,3 @@
-"use strict";
-
 function getConfigurations() {
     return {
         "default": {
@@ -287,3 +285,5 @@ function getResolutionFactor() {
 function getConfiguration(option) {
     return getConfigurations()[option];
 }
+
+export { getConfiguration, getConfigurations };

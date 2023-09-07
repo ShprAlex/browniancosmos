@@ -1,142 +1,148 @@
-"use strict";
+import { isWelcomeConfig } from './app.js';
+import { modalVisible } from './modals.js';
+import { finishedRendering, rendererProgress } from './renderer.js';
+import { scrollLeft, scrollTop, scrollingDiv } from './scroller.js';
+import { showTitleMenuItem } from './toolbar.js';
 
 const applicationTitleEl = document.getElementById('applicationTitle');
 const applicationTitleThirdLine = document.getElementById('applicationTitleThirdLine');
 let titleState = null;
 let titleTimeoutId = null;
 
-class ApplicationTitle {
-    static handleResetStart() {
-        clearTimeout(titleTimeoutId);
-        titleState = null;
-        titleTimeoutId = null;
-        if (!isWelcomeConfig()) {
-            ApplicationTitle.hide();
-            applicationTitleThirdLine.style.display = 'none';
-            applicationTitleThirdLine.innerHTML = `
-                <i class="fa-solid fa-arrows-up-down-left-right"></i>
-                <br />
-                Scroll to see more
-            `;
-        }
-        else {
-            ApplicationTitle.show();
-            applicationTitleThirdLine.style.display = 'inherit';
-            applicationTitleThirdLine.innerHTML = `
-                <i class="fa-solid fa-line-chart"></i>
-                <br />
-                Welcome! Please see the charts menu for more.
-            `;
-        }
-    }
 
-    static handleResetEnd() {
-        setTimeout(
-            () => {
-                if (canvas.width * canvas.height < 2000 * 2000 && !isWelcomeConfig()) {
-                    applicationTitleThirdLine.style.display = 'none';
-                }
-                else {
-                    applicationTitleThirdLine.style.display = 'inherit';
-                };
-            },
-            1000
-        )
-    }
-
-    static show() {
-        if (titleState === 'force-hidden') {
-            return;
-        }
-
-        applicationTitleEl.style.opacity = 1;
-        applicationTitleEl.style.visibility = 'visible';
-        showTitleMenuIcon.classList.add('disabled');
-
-        // change the title state after a delay so when scrolling shows it,
-        // it's not immediately hidden by the same scrolling action.
-        if (titleTimeoutId === null) {
-            titleTimeoutId = setTimeout(
-                () => {
-                    titleState = 'visible';
-                    titleTimeoutId = null;
-                },
-                1500
-            );
-        }
-    }
-
-    static forceShow() {
-        applicationTitleEl.style.opacity = 1;
-        applicationTitleEl.style.visibility = 'visible';
-        titleState = 'force-visible';
+function handleResetStart() {
+    clearTimeout(titleTimeoutId);
+    titleState = null;
+    titleTimeoutId = null;
+    if (!isWelcomeConfig()) {
+        hide();
         applicationTitleThirdLine.style.display = 'none';
-        showTitleMenuIcon.classList.add('disabled');
+        applicationTitleThirdLine.innerHTML = `
+            <i class="fa-solid fa-arrows-up-down-left-right"></i>
+            <br />
+            Scroll to see more
+        `;
     }
-
-    static hide() {
-        applicationTitleEl.style.opacity = 0;
-        applicationTitleEl.style.visibility = 'hidden';
-        showTitleMenuIcon.classList.remove('disabled');
+    else {
+        show();
+        applicationTitleThirdLine.style.display = 'inherit';
+        applicationTitleThirdLine.innerHTML = `
+            <i class="fa-solid fa-line-chart"></i>
+            <br />
+            Welcome! Please see the charts menu for more.
+        `;
     }
+}
 
-    static forceHide() {
-        if (!['visible', 'force-visible'].includes(titleState)) {
-            return;
-        }
-        ApplicationTitle.hide();
-        titleState = 'force-hidden';
-        showTitleMenuIcon.classList.remove('disabled');
-    }
-
-    static updateAfterScroll() {
-        const rightSide = canvas.clientWidth - scrollingDiv.offsetWidth;
-        if (
-            (scrollingDiv.scrollLeft >= rightSide - 150)
-            && !modalVisible
-            && titleState === null
-            && progress > 10 // don't show title immediately after reset
-        ) {
-            ApplicationTitle.show();
-        }
-        else {
-            // When they manually scroll, hide the title
-            if (
-                titleState === 'visible'
-                && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)
-                && !isWelcomeConfig()
-            ) {
-                ApplicationTitle.forceHide();
+function handleResetEnd() {
+    setTimeout(
+        () => {
+            if (canvas.width * canvas.height < 2000 * 2000 && !isWelcomeConfig()) {
+                applicationTitleThirdLine.style.display = 'none';
             }
-        }
+            else {
+                applicationTitleThirdLine.style.display = 'inherit';
+            };
+        },
+        1000
+    )
+}
+
+function show() {
+    if (titleState === 'force-hidden') {
+        return;
     }
 
-    static handleShowModal() {
-        ApplicationTitle.hide();
-    }
+    applicationTitleEl.style.opacity = 1;
+    applicationTitleEl.style.visibility = 'visible';
+    showTitleMenuItem.classList.add('disabled');
 
-    static handleHideModal() {
-        const rightSide = canvas.clientWidth - scrollingDiv.offsetWidth;
-        if (scrollingDiv.scrollLeft >= rightSide - 150 && finishedRendering) {
-            ApplicationTitle.show();
-        }
+    // change the title state after a delay so when scrolling shows it,
+    // it's not immediately hidden by the same scrolling action.
+    if (titleTimeoutId === null) {
+        titleTimeoutId = setTimeout(
+            () => {
+                titleState = 'visible';
+                titleTimeoutId = null;
+            },
+            1500
+        );
     }
+}
 
-    static handleRenderingEnd() {
-        if (window.innerWidth >= canvas.clientWidth && !modalVisible) {
-            ApplicationTitle.show();
+function forceShow() {
+    applicationTitleEl.style.opacity = 1;
+    applicationTitleEl.style.visibility = 'visible';
+    titleState = 'force-visible';
+    applicationTitleThirdLine.style.display = 'none';
+    showTitleMenuItem.classList.add('disabled');
+}
+
+function hide() {
+    applicationTitleEl.style.opacity = 0;
+    applicationTitleEl.style.visibility = 'hidden';
+    showTitleMenuItem.classList.remove('disabled');
+}
+
+function forceHide() {
+    if (!['visible', 'force-visible'].includes(titleState)) {
+        return;
+    }
+    hide();
+    titleState = 'force-hidden';
+    showTitleMenuItem.classList.remove('disabled');
+}
+
+function updateAfterScroll() {
+    const rightSide = canvas.clientWidth - scrollingDiv.offsetWidth;
+    if (
+        (scrollingDiv.scrollLeft >= rightSide - 150)
+        && !modalVisible
+        && titleState === null
+        && rendererProgress > 10 // don't show title immediately after reset
+    ) {
+        show();
+    }
+    else {
+        // When they manually scroll, hide the title
+        if (
+            titleState === 'visible'
+            && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)
+            && !isWelcomeConfig()
+        ) {
+            forceHide();
         }
     }
 }
 
-scrollingDiv.addEventListener('scrollend', ApplicationTitle.updateAfterScroll, { passive: true });
-scrollingDiv.addEventListener('touchstart', ApplicationTitle.updateAfterScroll, { passive: true });
-scrollingDiv.addEventListener('touchmove', ApplicationTitle.updateAfterScroll, { passive: true });
+function handleShowModal() {
+    hide();
+}
 
-canvas.addEventListener('renderingend', ApplicationTitle.handleRenderingEnd);
-canvas.addEventListener('click', ApplicationTitle.forceHide);
-canvas.addEventListener('resetstart', ApplicationTitle.handleResetStart);
-canvas.addEventListener('resetend', ApplicationTitle.handleResetEnd);
+function handleHideModal() {
+    const rightSide = canvas.clientWidth - scrollingDiv.offsetWidth;
+    if (scrollingDiv.scrollLeft >= rightSide - 150 && finishedRendering) {
+        show();
+    }
+}
 
-canvas.addEventListener('showmodal', ApplicationTitle.handleShowModal);
-canvas.addEventListener('hidemodal', ApplicationTitle.handleHideModal);
+function handleRenderingEnd() {
+    if (window.innerWidth >= canvas.clientWidth && !modalVisible) {
+        show();
+    }
+}
+
+
+scrollingDiv.addEventListener('scrollend', updateAfterScroll, { passive: true });
+scrollingDiv.addEventListener('touchstart', updateAfterScroll, { passive: true });
+scrollingDiv.addEventListener('touchmove', updateAfterScroll, { passive: true });
+
+canvas.addEventListener('renderingend', handleRenderingEnd);
+canvas.addEventListener('click', forceHide);
+canvas.addEventListener('resetstart', handleResetStart);
+canvas.addEventListener('resetend', handleResetEnd);
+
+canvas.addEventListener('showmodal', handleShowModal);
+canvas.addEventListener('hidemodal', handleHideModal);
+
+export { forceShow as forceShowTitle, hide as hideTitle };

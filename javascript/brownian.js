@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * This is a simple implementation of a Browninan motion simulator which uses a histogram
  * as the model to keep track of particle positions.
@@ -16,6 +14,7 @@ class BrownianSimulation {
     }
 
     initializePopulation() {
+
         this.histogram = new Array(this.HISTOGRAM_SIZE).fill(0);
         for (let i = 0; i < this.POPULATION_SIZE; i++) {
             this.histogram[Math.floor(Math.random() * this.HISTOGRAM_SIZE)]++;
@@ -53,3 +52,5 @@ class BrownianSimulation {
         }
     }
 }
+
+export default BrownianSimulation;

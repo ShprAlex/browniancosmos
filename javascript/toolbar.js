@@ -1,4 +1,7 @@
-"use strict";
+import './about.js';
+import { animate, getParam, resetApplication } from './app.js';
+import { aboutModal, creditsModal } from './modals.js';
+import { forceShowTitle, hideTitle } from './title.js';
 
 const fullscreenButton = document.getElementById('fullscreenButton');
 const toolbarEl = document.getElementById('toolbar');
@@ -9,44 +12,44 @@ const creditsMenuItem = document.getElementById('creditsMenuItem');
 const reloadToobarButton = document.getElementById('reloadToolbarButton');
 const additionalMenuDropdown = document.getElementById('additionalMenuDropdown');
 
-class ToolbarController {
-    static show() {
-        toolbarEl.style.opacity = '1';
-        toolbarEl.style.visibility = 'visible';
-    }
 
-    static hide() {
-        toolbarEl.style.opacity = '0';
-        toolbarEl.style.visibility = 'hidden';
-    }
+function show() {
+    toolbarEl.style.opacity = '1';
+    toolbarEl.style.visibility = 'visible';
+}
 
-    static handleFullscreen(event) {
-        event.stopPropagation();
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
-        } else {
-            document.exitFullscreen();
-        }
-    }
+function hide() {
+    toolbarEl.style.opacity = '0';
+    toolbarEl.style.visibility = 'hidden';
+}
 
-    static handleCanvasClick(event) {
-        event.stopPropagation();
-        if (toolbarEl.style.visibility === 'hidden') {
-            ToolbarController.show();
-        } else {
-            ToolbarController.hide();
-        }
-    }
-
-    static handleResetEnd() {
-        if (getParam('description')) {
-            chartInfoMenuItem.classList.remove('disabled');
-        }
-        else {
-            chartInfoMenuItem.classList.add('disabled');
-        }
+function handleFullscreen(event) {
+    event.stopPropagation();
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } else {
+        document.exitFullscreen();
     }
 }
+
+function handleCanvasClick(event) {
+    event.stopPropagation();
+    if (toolbarEl.style.visibility === 'hidden') {
+        show();
+    } else {
+        hide();
+    }
+}
+
+function handleResetEnd() {
+    if (getParam('description')) {
+        chartInfoMenuItem.classList.remove('disabled');
+    }
+    else {
+        chartInfoMenuItem.classList.add('disabled');
+    }
+}
+
 
 window.addEventListener('load', () => {
     if (!document.fullscreenEnabled) {
@@ -64,17 +67,19 @@ saveImageMenuItem.addEventListener('click', () => {
     tempLink.click();
     tempLink.remove();
 });
-showTitleMenuItem.addEventListener('click', () => { ApplicationTitle.forceShow(); ToolbarController.hide(); });
+showTitleMenuItem.addEventListener('click', () => { forceShowTitle(); hide(); });
 reloadToobarButton.addEventListener('click', () => {
-    ApplicationTitle.hide();
-    ApplicationController.reset();
-    ApplicationController.animate();
+    hideTitle();
+    resetApplication();
+    animate();
 });
 
-fullscreenButton.addEventListener('click', ToolbarController.handleFullscreen);
+fullscreenButton.addEventListener('click', handleFullscreen);
 
-canvas.addEventListener('showmodal', ToolbarController.hide);
-canvas.addEventListener('hidemodal', ToolbarController.show);
-canvas.addEventListener('resetend', ToolbarController.handleResetEnd);
-canvas.addEventListener('click', ToolbarController.handleCanvasClick);
-scrollingDiv.addEventListener('click', ToolbarController.handleCanvasClick);
+canvas.addEventListener('showmodal', hide);
+canvas.addEventListener('hidemodal', show);
+canvas.addEventListener('resetend', handleResetEnd);
+canvas.addEventListener('click', handleCanvasClick);
+scrollingDiv.addEventListener('click', handleCanvasClick);
+
+export { showTitleMenuItem };
