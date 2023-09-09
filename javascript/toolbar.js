@@ -1,5 +1,5 @@
 import './about.js';
-import { animate, getParam, resetApplication } from './app.js';
+import { animate, configuration, resetApplication } from './app.js';
 import { aboutModal, creditsModal } from './modals.js';
 import { forceShowTitle, hideTitle } from './title.js';
 
@@ -42,7 +42,7 @@ function handleCanvasClick(event) {
 }
 
 function handleResetEnd() {
-    if (getParam('description')) {
+    if (configuration.description) {
         chartInfoMenuItem.classList.remove('disabled');
     }
     else {

@@ -1,5 +1,5 @@
 import BrownianSimulation from './brownian.js';
-import { getConfiguration } from './configurations.js';
+import { loadConfiguration } from './configurations.js';
 import {
     finishedRendering,
     getRendererProgressPercent,
@@ -10,7 +10,6 @@ import {
 import { finishedScrolling, initializeScroller, resetScroller, scroll } from './scroller.js';
 import './settings.js';
 import './toolbar.js';
-
 
 const canvas = document.getElementById('canvas');
 
@@ -26,7 +25,7 @@ let MAX_PARTICLES;
 let PALETTE;
 let RAMP_UP_PARTICLES;
 
-let params;
+let configuration;
 let simulation;
 let animationRequest;
 
@@ -34,57 +33,39 @@ window.addEventListener('load', () => {
     initialize(); reset(); animate();
 });
 
-function getConfigurationId() {
-    return params.get('configuration') || 'welcome';
-}
-
-function getParam(key) {
-    const configurationParams = getConfiguration(getConfigurationId()) || getConfiguration('default');
-    let paramValue = params.get(key);
-    if (paramValue === null) {
-        return configurationParams[key];
-    }
-    if (!isNaN(paramValue)) {
-        paramValue = parseFloat(paramValue);
-    }
-    return paramValue;
-}
-
 function isWelcomeConfig() {
-    return params.size == 0 || params.get('configuration') === 'welcome';
+    return configuration.id === 'welcome';
 }
 
-function isDefaultConfig() {
-    const configurationId = params.get('configuration');
-    return configurationId === 'default' || !getConfiguration(configurationId);
+function isCustomConfig() {
+    return configuration.id === 'custom';
 }
-
 
 function initialize() {
     initializeScroller();
 }
 
 function reset() {
-    params = new URLSearchParams(window.location.search);
+    configuration = loadConfiguration(new URLSearchParams(window.location.search));
     if (animationRequest) {
         window.cancelAnimationFrame(animationRequest);
     }
     canvas.dispatchEvent(new CustomEvent('resetstart', { bubbles: true }));
 
-    canvas.width = getParam('width');
-    canvas.height = getParam('height');
+    canvas.width = configuration.width;
+    canvas.height = configuration.height;
 
-    CELL_SIZE = getParam('cellsize');
+    CELL_SIZE = configuration.cellsize;
     GRID_HEIGHT = Math.floor(canvas.height / CELL_SIZE);
     GRID_WIDTH = Math.ceil(canvas.width / CELL_SIZE);
-    BROWNIAN_VELOCITY = getParam('velocity');
-    START_WAVELENGTH = getParam('startw');
-    END_WAVELENGTH = getParam('endw');
-    MAX_PARTICLES = getParam('particles');
+    BROWNIAN_VELOCITY = configuration.velocity;
+    START_WAVELENGTH = configuration.startw;
+    END_WAVELENGTH = configuration.endw;
+    MAX_PARTICLES = configuration.particles;
     RAMP_UP_PARTICLES = (START_WAVELENGTH === 0);
     INITAL_PARTICLES = (RAMP_UP_PARTICLES ? 0 : MAX_PARTICLES);
-    WAVEFORM = getParam('waveform');
-    PALETTE = getParam('palette');
+    WAVEFORM = configuration.waveform;
+    PALETTE = configuration.palette;
 
     simulation = new BrownianSimulation(INITAL_PARTICLES, GRID_HEIGHT);
     resetRenderer();
@@ -153,9 +134,8 @@ export {
     START_WAVELENGTH,
     WAVEFORM,
     animate as animate,
-    getConfigurationId,
-    getParam,
-    isDefaultConfig,
+    configuration,
+    isCustomConfig,
     isWelcomeConfig,
     reset as resetApplication,
     simulation

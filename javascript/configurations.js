@@ -286,4 +286,33 @@ function getConfiguration(option) {
     return getConfigurations()[option];
 }
 
-export { getConfiguration, getConfigurations };
+function loadConfiguration(urlParams) {
+    let configurationId = urlParams.get('configuration') || 'welcome';
+    if (!getConfiguration(configurationId)) {
+        configurationId = 'default';
+    }
+    const configuration = getConfiguration(configurationId);
+    if (
+        (!urlParams.get('configuration') && urlParams.size > 0)
+        || urlParams.size > 1
+        || configurationId === 'default'
+    ) {
+        // default config is just a fallback, so call it 'custom' anyway.
+        configuration.id = 'custom';
+    }
+    else {
+        configuration.id = configurationId;
+    }
+
+    urlParams.forEach((value, key) => {
+        if (!isNaN(value)) {
+            configuration[key] = parseFloat(value);
+        }
+        else {
+            configuration[key] = value;
+        }
+    });
+    return configuration;
+}
+
+export { getConfiguration, getConfigurations, loadConfiguration };

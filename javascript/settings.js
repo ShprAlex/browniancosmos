@@ -1,50 +1,37 @@
 import {
-    BROWNIAN_VELOCITY,
-    CELL_SIZE,
-    END_WAVELENGTH,
-    MAX_PARTICLES,
-    PALETTE,
-    START_WAVELENGTH,
-    WAVEFORM,
     animate,
-    getParam,
+    configuration,
+    isCustomConfig,
+    isWelcomeConfig,
     resetApplication
 } from './app.js';
 import { getConfiguration, getConfigurations } from './configurations.js';
 import { aboutModal, settingsModal } from './modals.js';
 
 const settingsForm = document.getElementById('settingsForm');
-const applySettingsButton = document.getElementById('applySettingsButton');
 const configurationSelectEl = document.getElementById('configurationSelect');
 const settingsMenuItems = document.getElementById('settingsMenuItems');
 
 window.addEventListener('load', () => { loadSettingsMenu(); loadConfigurationSelect(); });
 
 function resetAnimationSettings(settingsData) {
-    // params is defined in animation-handler.js.
-    // Setting params here lets us avoid reloading.
-    // after animate() is called, params is internally parsed to extract the parameters.
     const urlParams = new URLSearchParams(settingsData);
     // update the url without reloading.
     history.pushState({}, 'BrownianCosmos', `index.html?${urlParams.toString()}`);
     resetApplication();
     animate();
-    if ('configuration' in settingsData && settingsData['configuration']!='welcome') {
+    if (!isWelcomeConfig() && !isCustomConfig()) {
         aboutModal.show();
     }
 }
 
 function showSettingsModal() {
-    settingsForm.elements['configurationSelect'].value = getParam('configuration') || 'custom';
-    settingsForm.elements['height'].value = canvas.height;
-    settingsForm.elements['width'].value = canvas.width;
-    settingsForm.elements['particles'].value = MAX_PARTICLES;
-    settingsForm.elements['startw'].value = START_WAVELENGTH;
-    settingsForm.elements['endw'].value = END_WAVELENGTH;
-    settingsForm.elements['cellsize'].value = CELL_SIZE;
-    settingsForm.elements['velocity'].value = BROWNIAN_VELOCITY;
-    settingsForm.elements['waveform'].value = WAVEFORM;
-    settingsForm.elements['palette'].value = PALETTE;
+    Array.from(settingsForm.elements).forEach((element) => {
+        if (element.name in configuration) {
+            element.value = configuration[element.name];
+        }
+    });
+    settingsForm.elements['configurationSelect'].value = configuration.id;
     settingsModal.show();
 }
 
