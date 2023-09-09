@@ -85,9 +85,7 @@ function hide() {
 }
 
 function forceHide() {
-    if (!['visible', 'force-visible'].includes(titleState)) {
-        return;
-    }
+    clearTimeout(titleTimeoutId);
     hide();
     titleState = 'force-hidden';
     showTitleMenuItem.classList.remove('disabled');
