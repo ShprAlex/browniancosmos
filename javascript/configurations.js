@@ -278,12 +278,11 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    The pixelated view highlights the Brownian motion component which is the source
-                    of our data.
+                    The pixelated view highlights the Brownian motion at the source of our data.
                 </p>
                 <p>
-                    The pixelation is there in the motion itself, at each step right the particles
-                    move one step up, down, or stay with equal probablility.
+                    At each step right the underlying particles move one step up, down, or stay
+                    with equal probablility.
                 </p>
                 <p>
                     This is a fun and artistic perspective which appears to convert a digital
