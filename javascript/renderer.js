@@ -26,32 +26,32 @@ function reset() {
 }
 
 function drawColumn(x, waveLength) {
-    let red_column;
-    let green_column;
-    let blue_column;
+    let redColumn;
+    let greenColumn;
+    let blueColumn;
     const histogram = simulation.getHistogram();
     if (END_WAVELENGTH > 1) {
-        red_column = toWave(histogram, simulation.POPULATION_SIZE, waveLength, WAVEFORM);
+        redColumn = toWave(histogram, simulation.POPULATION_SIZE, waveLength, WAVEFORM);
         if (PALETTE !== 'bw') {
-            green_column = toWave(histogram, simulation.POPULATION_SIZE, waveLength / 2 + 0.5, WAVEFORM);
-            blue_column = toWave(histogram, simulation.POPULATION_SIZE, waveLength / 4 + 0.75, WAVEFORM);
+            greenColumn = toWave(histogram, simulation.POPULATION_SIZE, waveLength / 2 + 0.5, WAVEFORM);
+            blueColumn = toWave(histogram, simulation.POPULATION_SIZE, waveLength / 4 + 0.75, WAVEFORM);
         }
     } else {
         const column = toWaveNone(histogram, simulation.POPULATION_SIZE);
-        red_column = column;
-        green_column = column;
-        blue_column = column;
+        redColumn = column;
+        greenColumn = column;
+        blueColumn = column;
     }
 
     for (let y = 0; y < GRID_HEIGHT; y++) {
         let r, g, b;
         if (PALETTE === 'bw') {
-            r = g = b = Math.round(red_column[y] * 255);
+            r = g = b = Math.round(redColumn[y] * 255);
         }
         else {
-            r = Math.round(red_column[y] * 255);
-            g = Math.round(green_column[y] * 255);
-            b = Math.round(blue_column[y] * 255);
+            r = Math.round(redColumn[y] * 255);
+            g = Math.round(greenColumn[y] * 255);
+            b = Math.round(blueColumn[y] * 255);
         }
         ctx.fillStyle = "rgb(" + r + ", " + g + ", " + b + ")";
         ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);

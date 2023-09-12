@@ -20,19 +20,19 @@ function toWaveSquare(histogram, populationSize, n) {
     let column = new Array(HISTOGRAM_SIZE).fill(0);
     let r = Math.floor(n);
     let fraction = n - r;
-    let running_sum = 0;
+    let runningSum = 0;
 
     const modh = (v) => (v % HISTOGRAM_SIZE + HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
 
     for (let j = 0; j < r; j++) {
-        running_sum += histogram[modh(j)];
+        runningSum += histogram[modh(j)];
     }
 
     for (let i = 0; i < HISTOGRAM_SIZE; i++) {
-        column[i] -= running_sum;
-        column[modh(i + r)] += running_sum;
-        running_sum -= histogram[i];
-        running_sum += histogram[modh(i + r)];
+        column[i] -= runningSum;
+        column[modh(i + r)] += runningSum;
+        runningSum -= histogram[i];
+        runningSum += histogram[modh(i + r)];
     }
 
     if (fraction > 0) {
