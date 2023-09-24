@@ -1,19 +1,41 @@
-function normalizeBrightness(histogramSize, populationSize, spanSize, pointValue) {
-    if (pointValue === 0 || populationSize === 0) {
+/**
+ * Convert a histogram to a "wave" by moving a sliding window over the histogram, taking the
+ * difference between the first and second half of the window, and smoothing the results
+ * depending on the waveform.
+ */
+
+/**
+ * As a last step in converting a histogram to a "wave" array, we want to normalize the values at
+ * each position to the range of 0-1 so they can later be displayed as a color brigness.
+ *
+ * @param {number} histogramSize - Size of the histogram.
+ * @param {number} populationSize - Total number of particles.
+ * @param {number} spanSize - The size of the sliding window.
+ * @param {number} spanValue - For a square wave, this is the difference in the number of points
+ *     between the first half and second half of the wave.
+ * @returns {number} - Normalized brightness.
+ */
+function normalizeBrightness(histogramSize, populationSize, spanSize, spanValue) {
+    if (spanValue === 0 || populationSize === 0) {
         return 0;
     }
-    let b = Math.max(0, pointValue * Math.sqrt(histogramSize / spanSize / populationSize) / 2.3);
+    let b = Math.max(0, spanValue * Math.sqrt(histogramSize / spanSize / populationSize) / 2.3);
     // Scale down the brigest values to below 1, while keeping most of the colors saturated.
     if (b > 0.85) {
         b = (b - 0.85) / 5 + 0.85;
     }
-    return b;
+    return Math.min(1, b);
 }
 
 /**
  * Scans over the histogram and for every index subtracts the sum of the next n numbers from
  * the previous n numbers. This simple sum is a bit like a 'square' wave that has sharp
  * boundary conditions sensitive to noise.
+ *
+ * @param {Array} histogram - Original histogram data.
+ * @param {number} populationSize - Total number of particles.
+ * @param {number} n - The size of the wave as a decimal.
+ * @returns {Array} - A computed array of equivalent size as the input.
  */
 function toWaveSquare(histogram, populationSize, n) {
     let HISTOGRAM_SIZE = histogram.length;
@@ -55,6 +77,11 @@ function toWaveSquare(histogram, populationSize, n) {
  * greatest weight is given to the middle of the n numbers, forming a kind of "triangle"
  * wave. This has the benefit of being less affected by noise at the edges where the weights
  * are low.
+ *
+ * @param {Array} histogram - Original histogram data.
+ * @param {number} populationSize - Total number of particles.
+ * @param {number} n - The size of the wave as a decimal.
+ * @returns {Array} - A computed array of equivalent size as the input.
  */
 function toWaveTriangle(histogram, populationSize, n) {
     let HISTOGRAM_SIZE = histogram.length;
@@ -93,6 +120,11 @@ function toWaveTriangle(histogram, populationSize, n) {
  * range of -n to n. This has the same effect as a triangle wave where the goal is to give
  * greater weight to the middle of the intervals ahead and behind and lower weights to their
  * ends to reduce noise.
+ *
+ * @param {Array} histogram - Original histogram data.
+ * @param {number} populationSize - Total number of particles.
+ * @param {number} n - The size of the wave as a decimal.
+ * @returns {Array} - A computed array of equivalent size as the input.
  */
 function toWaveSine(histogram, populationSize, n) {
     let HISTOGRAM_SIZE = histogram.length;
@@ -126,6 +158,11 @@ function toWaveSine(histogram, populationSize, n) {
 /**
  * This produces surprisingly good results. We're doing a symmetrical comparison using a Cos
  * curve subtracting the particles in the middle from the particles at the ends.
+ *
+ * @param {Array} histogram - Original histogram data.
+ * @param {number} populationSize - Total number of particles.
+ * @param {number} n - The size of the wave as a decimal.
+ * @returns {Array} - A computed array of equivalent size as the input.
  */
 function toWaveCosine(histogram, populationSize, n) {
     let HISTOGRAM_SIZE = histogram.length;
@@ -151,6 +188,10 @@ function toWaveCosine(histogram, populationSize, n) {
 
 /**
  * Returns the original histogram adjusted for brightness.
+ *
+ * @param {Array} histogram - Original histogram data.
+ * @param {number} populationSize - Total number of particles.
+ * @returns {Array} - A computed array of equivalent size as the input.
  */
 function toWaveNone(histogram, populationSize) {
     let HISTOGRAM_SIZE = histogram.length;
@@ -158,6 +199,13 @@ function toWaveNone(histogram, populationSize) {
     return histogram.map((v) => Math.min(v * brightness, 1));
 }
 
+/**
+ * Converts histogram data into the specified waveform representation.
+ * @param {Array} histogram - Original histogram data.
+ * @param {number} populationSize - Total number of particles.
+ * @param {number} n - The size of the wave as a decimal.
+ * @returns {Array} - A computed array of equivalent size as the input.
+ */
 function toWave(histogram, populationSize, n, waveform = 'square') {
     if (waveform === 'square') {
         return toWaveSquare(histogram, populationSize, n);
