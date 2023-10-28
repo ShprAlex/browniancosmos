@@ -44,7 +44,7 @@ function toWaveSquare(histogram, populationSize, n) {
     let fraction = n - r;
     let runningSum = 0;
 
-    const modh = (v) => (v % HISTOGRAM_SIZE + HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
+    const modh = v => mod(v, HISTOGRAM_SIZE);
 
     for (let j = 0; j < r; j++) {
         runningSum += histogram[modh(j)];
@@ -89,7 +89,7 @@ function toWaveTriangle(histogram, populationSize, n) {
     let r = Math.floor(n);
     let fraction = n - r;
 
-    const modh = (v) => (v % HISTOGRAM_SIZE + HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
+    const modh = v => mod(v, HISTOGRAM_SIZE);
 
     for (let i = 0; i < HISTOGRAM_SIZE; i++) {
         for (let j = -r; j < 0; j++) {
@@ -132,7 +132,7 @@ function toWaveSine(histogram, populationSize, n) {
     let r = Math.floor(n);
     let fraction = n - r;
 
-    const modh = (v) => (v % HISTOGRAM_SIZE + HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
+    const modh = v => mod(v, HISTOGRAM_SIZE);
 
     for (let i = 0; i < HISTOGRAM_SIZE; i++) {
         for (let j = -r - 1; j < r + 1; j++) {
@@ -169,7 +169,7 @@ function toWaveCosine(histogram, populationSize, n) {
     let column = new Array(HISTOGRAM_SIZE).fill(0);
     n = n + 0.5;
     let r = Math.floor(n);
-    const modh = (v) => (v % HISTOGRAM_SIZE + HISTOGRAM_SIZE) % HISTOGRAM_SIZE;
+    const modh = v => mod(v, HISTOGRAM_SIZE);
 
     for (let i = 0; i < HISTOGRAM_SIZE; i++) {
         for (let j = -r; j < r + 1; j++) {
@@ -220,6 +220,16 @@ function toWave(histogram, populationSize, n, waveform = 'square') {
         return toWaveCosine(histogram, populationSize, n);
     }
     return toWaveNone(histogram, populationSize);
+}
+
+/**
+ * Helper function to properly compute modulo for negative numbers in javascript.
+ * @param {number} a - The number to take the modulo of.
+ * @param {number} b - The modulo.
+ * @returns {number} - The resulting remainder.
+ */
+function mod(a, b) {
+    return (a % b + b) % b;
 }
 
 export { toWave, toWaveNone };
