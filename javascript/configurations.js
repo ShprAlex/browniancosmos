@@ -48,8 +48,7 @@ function getConfigurations() {
                 </p>
                 <p>
                     Our simulation reveals the fractal nature of these waves. The following charts
-                    explain the visualization techniques we're using as well as the underlying
-                    data.
+                    explain the visualization techniques as well as the underlying data.
                 </p>
                 <p>
                     We hope you enjoy the results!
@@ -148,18 +147,14 @@ function getConfigurations() {
             "description": `
                 <p>
                     With zero velocity, you can see how individual particles on the left are
-                    grouped together into clumps of color on the right.
+                    grouped together into clumps of color on the right. Isolated particles
+                    fade out and clustered particles get brighter.
                 </p>
                 <p>
-                    This reveals the quirks of our density detection algorithm.
+                    A quirk of our algorithm is that the clored density regions are not centered.
                     The colors show up below the white lines because for any location we subtract
                     the number of particles above from those below, and when we're below a
                     line we get a positive difference.
-                </p>
-                <p>
-                    We get a type of rainbow diffraction effect because the red intervals are
-                    longer then the green and blue ones when they first show up, and stick out
-                    at the bottom.
                 </p>
             `
         },
@@ -199,13 +194,9 @@ function getConfigurations() {
             "palette": "bw",
             "description": `
                 <p>
-                    The seemingly merging paths illustrate the workings of our refined density
-                    detection algorithm resolving larger clusters of particles from further
-                    away.
-                </p>
-                <p>
-                    The advantage of a Cosine wave as opposed to a sine wave is that it is
-                    symmetrical around the center.
+                    A refined density detection algorithm using a cosine scanning wavelet, as
+                    opposed to a sine or square wave, produces a result that's symmetrical around
+                    the center.
                 </p>
                 <p>
                     Alas, a lack of distortion can be less visually intriguing, which is why we've
@@ -253,7 +244,7 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    This is how the waves look using a smoothed density detection technique.
+                    This is how the waves look using the smoothed density detection technique.
                 </p>
                 <p>
                     The detected red waves are 2x the thickness of the green waves, which are
