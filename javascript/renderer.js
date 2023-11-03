@@ -64,7 +64,7 @@ function drawColumn(x, waveLength) {
  *
  * Interpolation allows us to reduce the awkward stage where the wavelength is in the low digits
  * so we can give more screen space to the nicer looking longer waves. At the same time we want
- * to keep the initial waves with wavelengh = 1 if desired to visually explain what's happening.
+ * to keep the initial waves with wavelength = 1 if desired to visually explain what's happening.
  */
 function computeWavelength() {
     // We're hacking START_WAVELENGTH === 0 as a signal to ramp up particles, so we need to
