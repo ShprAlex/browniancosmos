@@ -35,10 +35,6 @@ function handleResetStart() {
 }
 
 function show() {
-    if (titleState === 'force-hidden') {
-        return;
-    }
-
     applicationTitleEl.style.opacity = 1;
     applicationTitleEl.style.visibility = 'visible';
     showTitleMenuItem.classList.add('disabled');
@@ -71,13 +67,6 @@ function hide() {
     showTitleMenuItem.classList.remove('disabled');
 }
 
-function forceHide() {
-    clearTimeout(titleTimeoutId);
-    hide();
-    titleState = 'force-hidden';
-    showTitleMenuItem.classList.remove('disabled');
-}
-
 function updateAfterScroll() {
     const rightSide = canvas.clientWidth - scrollingDiv.offsetWidth;
     if (
@@ -95,7 +84,7 @@ function updateAfterScroll() {
             && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)
             && !isWelcomeConfig()
         ) {
-            forceHide();
+            hide();
         }
     }
 }
@@ -139,9 +128,7 @@ scrollingDiv.addEventListener('touchstart', updateAfterScroll, { passive: true }
 scrollingDiv.addEventListener('touchmove', updateAfterScroll, { passive: true });
 
 canvas.addEventListener('renderingend', handleRenderingEnd);
-canvas.addEventListener('click', () => {
-    applicationTitleEl.style.visibility === 'visible' && forceHide();
-});
+canvas.addEventListener('click', hide);
 canvas.addEventListener('resetstart', handleResetStart);
 
 canvas.addEventListener('showmodal', handleShowModal);
@@ -152,5 +139,6 @@ applicationTitleInfoButton.addEventListener('click', (event) => { event.preventD
 
 export {
     forceShow as forceShowTitle,
-    hide as hideTitle
+    hide as hideTitle,
+    show as showTitle
 };
