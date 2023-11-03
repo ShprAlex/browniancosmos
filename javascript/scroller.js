@@ -84,7 +84,7 @@ function scroll() {
         scrollLeft = Math.min(scrollLeft, canvas.clientWidth - scrollingDiv.offsetWidth);
         // When starting waves are small, start scrolling up a quarter of the way through the animation.
         // Don't scroll up if the canvas height is only a little bigger than the window height.
-        if ((scrollLeft > canvas.clientWidth / 4 || !RAMP_UP_PARTICLES) && canvas.clientHeight > window.innerHeight * 1.2) {
+        if ((scrollLeft > canvas.clientWidth / 5 || !RAMP_UP_PARTICLES) && canvas.clientHeight > window.innerHeight * 1.2) {
             const distLeft = Math.max(0.01, canvas.clientWidth - scrollingDiv.offsetWidth - scrollLeft);
             scrollTop -= Math.min(1, scrollTop / distLeft) * scrollSpeed;
             scrollTop = Math.max(0, scrollTop);

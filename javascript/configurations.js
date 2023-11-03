@@ -28,8 +28,8 @@ function getConfigurations() {
         },
         "overview": {
             "name": "Overview",
-            "height": 2400,
-            "width": 5000,
+            "height": 2000,
+            "width": 4000,
             "particles": 300,
             "startw": 0,
             "endw": 600,
