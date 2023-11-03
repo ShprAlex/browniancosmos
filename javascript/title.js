@@ -3,11 +3,10 @@ import { getConfigurations } from './configurations.js';
 import { aboutModal, modalVisible } from './modals.js';
 import { finishedRendering, rendererProgress } from './renderer.js';
 import { scrollLeft, scrollTop, scrollingDiv } from './scroller.js';
-import { showTitleMenuItem } from './toolbar.js';
 
 const applicationTitleEl = document.getElementById('applicationTitle');
 const applicationTitleThirdLine = document.getElementById('applicationTitleThirdLine');
-const applicationTitleStartButton = document.getElementById('applicationTitleStartButton');
+const applicationTitleNextButton = document.getElementById('applicationTitleNextButton');
 const applicationTitleInfoButton = document.getElementById('applicationTitleInfoButton');
 
 let titleState = null;
@@ -20,14 +19,14 @@ function handleResetStart() {
     titleTimeoutId = null;
     if (!isWelcomeConfig()) {
         hide();
-        applicationTitleStartButton.innerHTML = `
+        applicationTitleNextButton.innerHTML = `
             Next <i class="fa-solid fa-chart-line"></i>
         `;
         applicationTitleInfoButton.style.display = 'initial';
     }
     else {
         show();
-        applicationTitleStartButton.innerHTML = `
+        applicationTitleNextButton.innerHTML = `
             Start <i class="fa-solid fa-rocket"></i>
         `;
         applicationTitleInfoButton.style.display = 'none';
@@ -37,7 +36,6 @@ function handleResetStart() {
 function show() {
     applicationTitleEl.style.opacity = 1;
     applicationTitleEl.style.visibility = 'visible';
-    showTitleMenuItem.classList.add('disabled');
     applicationTitleThirdLine.style.display = 'initial';
 
     // change the title state after a delay so when scrolling shows it,
@@ -58,13 +56,12 @@ function forceShow() {
     applicationTitleEl.style.visibility = 'visible';
     titleState = 'force-visible';
     applicationTitleThirdLine.style.display = 'none';
-    showTitleMenuItem.classList.add('disabled');
 }
 
 function hide() {
     applicationTitleEl.style.opacity = 0;
     applicationTitleEl.style.visibility = 'hidden';
-    showTitleMenuItem.classList.remove('disabled');
+    titleState = 'hidden';
 }
 
 function updateAfterScroll() {
@@ -106,11 +103,11 @@ function handleRenderingEnd() {
     }
 }
 
-function loadNextConfiguration() {
+function loadNextConfiguration(event) {
+    event.stopPropagation();
     let previousConfiguration = configuration.id;
     const configurations = getConfigurations();
     for (const configurationId in configurations) {
-        console.log(previousConfiguration, configurationId);
         if (previousConfiguration === null) {
             resetSettings({ configuration: configurationId });
             return;
@@ -121,7 +118,6 @@ function loadNextConfiguration() {
     }
     resetSettings({ configuration: 'welcome' });
 }
-
 
 scrollingDiv.addEventListener('scrollend', updateAfterScroll, { passive: true });
 scrollingDiv.addEventListener('touchstart', updateAfterScroll, { passive: true });
@@ -134,7 +130,7 @@ canvas.addEventListener('resetstart', handleResetStart);
 canvas.addEventListener('showmodal', handleShowModal);
 canvas.addEventListener('hidemodal', handleHideModal);
 
-applicationTitleStartButton.addEventListener('click', loadNextConfiguration);
+applicationTitleNextButton.addEventListener('click', loadNextConfiguration);
 applicationTitleInfoButton.addEventListener('click', (event) => { event.preventDefault(); aboutModal.show(); });
 
 export {

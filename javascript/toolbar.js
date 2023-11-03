@@ -1,6 +1,6 @@
 import './about.js';
 import { animate, configuration, resetApplication } from './app.js';
-import { aboutModal, creditsModal } from './modals.js';
+import { aboutModal, creditsModal, modalVisible } from './modals.js';
 import { forceShowTitle, hideTitle, showTitle } from './title.js';
 
 const fullscreenButton = document.getElementById('fullscreenButton');
@@ -36,7 +36,9 @@ function handleCanvasClick(event) {
     event.stopPropagation();
     if (toolbarEl.style.visibility === 'hidden') {
         show();
-        showTitle();
+        if (!modalVisible) {
+            showTitle();
+        }
     } else {
         hide();
     }
@@ -50,7 +52,6 @@ function handleResetEnd() {
         chartInfoMenuItem.classList.add('disabled');
     }
 }
-
 
 window.addEventListener('load', () => {
     if (!document.fullscreenEnabled) {
