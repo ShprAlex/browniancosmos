@@ -28,6 +28,7 @@ canvas {
     font-family: 'Inder', sans-serif;
     text-shadow: black 0 0 2px, black 0 0 4px;
     opacity: 0;
+    visibility: hidden;
     transition: visibility 1s, opacity 1s;
     pointer-events: none;
 }
@@ -38,11 +39,16 @@ canvas {
 
 #applicationTitle h2 {
     font-size: max(20px, 1.4vw);
-    margin: 0 0 100px;
+    margin: 0 0 50px;
 }
 
-#applicationTitle h3 {
-    font-size: max(18px, 1.25vw);
+#applicationTitleInfoButton {
+    display: none;
+}
+
+.title-button {
+    font-size: max(20px, 1.4vw);
+    pointer-events: all;
 }
 
 #toolbar {

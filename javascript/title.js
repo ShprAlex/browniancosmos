@@ -1,11 +1,15 @@
-import { isWelcomeConfig } from './app.js';
-import { modalVisible } from './modals.js';
+import { configuration, isWelcomeConfig, resetSettings } from './app.js';
+import { getConfigurations } from './configurations.js';
+import { aboutModal, modalVisible } from './modals.js';
 import { finishedRendering, rendererProgress } from './renderer.js';
 import { scrollLeft, scrollTop, scrollingDiv } from './scroller.js';
 import { showTitleMenuItem } from './toolbar.js';
 
 const applicationTitleEl = document.getElementById('applicationTitle');
 const applicationTitleThirdLine = document.getElementById('applicationTitleThirdLine');
+const applicationTitleStartButton = document.getElementById('applicationTitleStartButton');
+const applicationTitleInfoButton = document.getElementById('applicationTitleInfoButton');
+
 let titleState = null;
 let titleTimeoutId = null;
 
@@ -16,36 +20,18 @@ function handleResetStart() {
     titleTimeoutId = null;
     if (!isWelcomeConfig()) {
         hide();
-        applicationTitleThirdLine.style.display = 'none';
-        applicationTitleThirdLine.innerHTML = `
-            <i class="fa-solid fa-arrows-up-down-left-right"></i>
-            <br />
-            Scroll to see more
+        applicationTitleStartButton.innerHTML = `
+            Next <i class="fa-solid fa-chart-line"></i>
         `;
+        applicationTitleInfoButton.style.display = 'initial';
     }
     else {
         show();
-        applicationTitleThirdLine.style.display = 'inherit';
-        applicationTitleThirdLine.innerHTML = `
-            <i class="fa-solid fa-line-chart"></i>
-            <br />
-            Welcome! Please see the charts menu for more.
+        applicationTitleStartButton.innerHTML = `
+            Start <i class="fa-solid fa-rocket"></i>
         `;
+        applicationTitleInfoButton.style.display = 'none';
     }
-}
-
-function handleResetEnd() {
-    setTimeout(
-        () => {
-            if (canvas.width * canvas.height < 2000 * 2000 && !isWelcomeConfig()) {
-                applicationTitleThirdLine.style.display = 'none';
-            }
-            else {
-                applicationTitleThirdLine.style.display = 'inherit';
-            };
-        },
-        1000
-    )
 }
 
 function show() {
@@ -56,6 +42,7 @@ function show() {
     applicationTitleEl.style.opacity = 1;
     applicationTitleEl.style.visibility = 'visible';
     showTitleMenuItem.classList.add('disabled');
+    applicationTitleThirdLine.style.display = 'initial';
 
     // change the title state after a delay so when scrolling shows it,
     // it's not immediately hidden by the same scrolling action.
@@ -130,17 +117,40 @@ function handleRenderingEnd() {
     }
 }
 
+function loadNextConfiguration() {
+    let previousConfiguration = configuration.id;
+    const configurations = getConfigurations();
+    for (const configurationId in configurations) {
+        console.log(previousConfiguration, configurationId);
+        if (previousConfiguration === null) {
+            resetSettings({ configuration: configurationId });
+            return;
+        }
+        if (previousConfiguration === configurationId) {
+            previousConfiguration = null;
+        }
+    }
+    resetSettings({ configuration: 'welcome' });
+}
+
 
 scrollingDiv.addEventListener('scrollend', updateAfterScroll, { passive: true });
 scrollingDiv.addEventListener('touchstart', updateAfterScroll, { passive: true });
 scrollingDiv.addEventListener('touchmove', updateAfterScroll, { passive: true });
 
 canvas.addEventListener('renderingend', handleRenderingEnd);
-canvas.addEventListener('click', forceHide);
+canvas.addEventListener('click', () => {
+    applicationTitleEl.style.visibility === 'visible' && forceHide();
+});
 canvas.addEventListener('resetstart', handleResetStart);
-canvas.addEventListener('resetend', handleResetEnd);
 
 canvas.addEventListener('showmodal', handleShowModal);
 canvas.addEventListener('hidemodal', handleHideModal);
 
-export { forceShow as forceShowTitle, hide as hideTitle };
+applicationTitleStartButton.addEventListener('click', loadNextConfiguration);
+applicationTitleInfoButton.addEventListener('click', (event) => { event.preventDefault(); aboutModal.show(); });
+
+export {
+    forceShow as forceShowTitle,
+    hide as hideTitle
+};

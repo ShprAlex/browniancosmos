@@ -1,29 +1,15 @@
 import {
-    animate,
     configuration,
-    isCustomConfig,
-    isWelcomeConfig,
-    resetApplication
+    resetSettings
 } from './app.js';
 import { getConfiguration, getConfigurations } from './configurations.js';
-import { aboutModal, settingsModal } from './modals.js';
+import { settingsModal } from './modals.js';
 
 const settingsForm = document.getElementById('settingsForm');
 const configurationSelectEl = document.getElementById('configurationSelect');
 const settingsMenuItems = document.getElementById('settingsMenuItems');
 
 window.addEventListener('load', () => { loadSettingsMenu(); loadConfigurationSelect(); });
-
-function resetAnimationSettings(settingsData) {
-    const urlParams = new URLSearchParams(settingsData);
-    // update the url without reloading.
-    history.pushState({}, 'BrownianCosmos', `index.html?${urlParams.toString()}`);
-    resetApplication();
-    animate();
-    if (!isWelcomeConfig() && !isCustomConfig()) {
-        aboutModal.show();
-    }
-}
 
 function showSettingsModal() {
     for (const [key, value] of Object.entries(configuration)) {
@@ -54,7 +40,7 @@ function loadSettingsMenu() {
                 showSettingsModal();
             }
             else {
-                resetAnimationSettings({ configuration: configurationId });
+                resetSettings({ configuration: configurationId });
             }
         });
     });
@@ -89,5 +75,5 @@ settingsForm.addEventListener('submit', function (event) {
     settingsModal.hide();
     const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
-    resetAnimationSettings(formDataObj);
+    resetSettings(formDataObj);
 });

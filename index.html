@@ -21,7 +21,7 @@
 <body>
   <div id="scrollingDiv">
     <canvas id="canvas"></canvas>
-    <div id="applicationTitle" style="opacity:0; visibility: hidden;">
+    <div id="applicationTitle">
       <h1>
         BrownianCosmos
       </h1>
@@ -30,11 +30,16 @@
         <br />
         Brownian motion.
       </h2>
-      <h3 id="applicationTitleThirdLine">
-        <i class="fa-solid fa-arrows-up-down-left-right"></i>
-        <br />
-        Scroll to see more
-      </h3>
+      <div id="applicationTitleThirdLine">
+        <button id="applicationTitleStartButton" type="button" class="btn btn-lg btn-secondary title-button me-2">
+          Start
+          <i class="fa-solid fa-rocket"></i>
+        </button>
+        <button id="applicationTitleInfoButton" type="button" class="btn btn-lg btn-secondary title-button">
+          Info
+          <i class="fa-solid fa-info-circle"></i>
+        </button>
+      </div>
     </div>
   </div>
 

@@ -1,5 +1,6 @@
 import BrownianSimulation from './brownian.js';
 import { loadConfiguration } from './configurations.js';
+import { aboutModal } from './modals.js';
 import {
     finishedRendering,
     getRendererProgressPercent,
@@ -43,6 +44,17 @@ function isCustomConfig() {
 
 function initialize() {
     initializeScroller();
+}
+
+function resetSettings(settingsData) {
+    const urlParams = new URLSearchParams(settingsData);
+    // update the url without reloading.
+    history.pushState({}, 'BrownianCosmos', `index.html?${urlParams.toString()}`);
+    reset();
+    animate();
+    if (!isWelcomeConfig() && !isCustomConfig()) {
+        aboutModal.show();
+    }
 }
 
 function reset() {
@@ -100,7 +112,7 @@ function rampUpParticles() {
 
 function updateStatusText() {
     const statusTextEl = document.getElementById('statusText');
-    if (!finishedRendering) {
+    if (!finishedRendering && !isWelcomeConfig()) {
         statusTextEl.textContent = `Loading ${getRendererProgressPercent()}%`;
     }
     else {
@@ -138,5 +150,6 @@ export {
     isCustomConfig,
     isWelcomeConfig,
     reset as resetApplication,
+    resetSettings,
     simulation
 };
