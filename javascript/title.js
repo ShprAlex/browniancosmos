@@ -46,7 +46,7 @@ function show() {
                 titleState = 'visible';
                 titleTimeoutId = null;
             },
-            1500
+            3000
         );
     }
 }
@@ -61,7 +61,9 @@ function forceShow() {
 function hide() {
     applicationTitleEl.style.opacity = 0;
     applicationTitleEl.style.visibility = 'hidden';
-    titleState = 'hidden';
+    if (titleState!==null) {
+        titleState = 'hidden';
+    }
 }
 
 function updateAfterScroll() {
