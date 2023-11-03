@@ -39,17 +39,17 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    Hello!
+                    Hello! The idea for BrownianCosmos came about after seeing a surprising pattern
+                    in a randomly generated dataset.
                 </p>
                 <p>
-                    The idea for BrownianCosmos came about after seeing a surprising pattern in
-                    a randomly generated dataset.
-                    It turned out to be due to Brownian motion which happens to make the clumps
-                    and gaps of independent particles appear to shift in a collective wavelike way.
+                    It turns out that Brownian motion makes the clumps and gaps of independent
+                    particles appear to shift in a collective wavelike way.
                 </p>
                 <p>
-                    Our simulation reveals these waves and shows their fractal nature at different
-                    scales.
+                    Our simulation reveals the fractal nature of these waves. The following charts
+                    explain the visualization techniques we're using as well as the underlying
+                    data.
                 </p>
                 <p>
                     We hope you enjoy the results!
