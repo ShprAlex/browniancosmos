@@ -69,7 +69,7 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    This shows our density detection applied to just 10 particles.
+                    This shows our density visualization applied to just 10 particles.
                 </p>
                 <p>
                     It appears as if the particle paths are getting thicker, but actually we just
@@ -146,15 +146,15 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    With zero velocity, you can see how individual particles on the left are
-                    grouped together into clumps of color on the right. Isolated particles
-                    fade out and clustered particles get brighter.
+                    With zero velocity, you can see the isolated effect of increasing the scanning
+                    wavelength interval. What starts our as separate particles on the left merge
+                    into clumps of color on the right.
                 </p>
                 <p>
                     A quirk of our algorithm is that the clored density regions are not centered.
-                    The colors show up below the white lines because for any location we subtract
-                    the number of particles above from those below, and when we're below a
-                    line we get a positive difference.
+                    The colors are shifted down below the white lines. This is because for any
+                    location we subtract the number of particles above from those below, and
+                    when we're below a line we get a positive difference.
                 </p>
             `
         },
