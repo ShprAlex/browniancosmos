@@ -34,6 +34,10 @@ window.addEventListener('load', () => {
     initialize(); reset(); animate();
 });
 
+window.addEventListener('popstate', () => {
+    location.reload();
+});
+
 function isWelcomeConfig() {
     return configuration.id === 'welcome';
 }
