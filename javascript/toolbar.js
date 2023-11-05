@@ -69,7 +69,11 @@ saveImageMenuItem.addEventListener('click', () => {
     tempLink.click();
     tempLink.remove();
 });
-showTitleMenuItem.addEventListener('click', () => { forceShowTitle(); hide(); });
+showTitleMenuItem.addEventListener('click', (event) => {
+    event.preventDefault();
+    forceShowTitle();
+    hide();
+});
 reloadToobarButton.addEventListener('click', () => {
     hideTitle();
     resetApplication();
