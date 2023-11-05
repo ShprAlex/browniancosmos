@@ -62,7 +62,8 @@ window.addEventListener('load', () => {
 
 chartInfoMenuItem.addEventListener('click', (event) => { event.preventDefault(); aboutModal.show(); });
 creditsMenuItem.addEventListener('click', (event) => { event.preventDefault(); creditsModal.show(); });
-saveImageMenuItem.addEventListener('click', () => {
+saveImageMenuItem.addEventListener('click', (event) => {
+    event.preventDefault();
     const tempLink = document.createElement('a');
     tempLink.download = `BrownianCosmos${Math.floor(Date.now() / 1000) % 100000}.png`;
     tempLink.href = document.getElementById('canvas').toDataURL()
