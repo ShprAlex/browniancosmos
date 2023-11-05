@@ -1,0 +1,10 @@
+{
+    "name": "browniancosmos",
+    "description": "An exploration of the surprising patterns in Brownian motion.",
+    "version": "1.0.0",
+    "dependencies": {},
+    "devDependencies": {},
+    "scripts": {
+        "start": "http-server javascript -p 80"
+    }
+}
