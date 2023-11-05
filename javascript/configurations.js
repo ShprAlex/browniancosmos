@@ -247,8 +247,8 @@ function getConfigurations() {
                     This is how the waves look using the smoothed density detection technique.
                 </p>
                 <p>
-                    The detected red waves are 2x the thickness of the green waves, which are
-                    2x as thick as the blue waves.
+                    The red waves are 2x the thickness of the green waves, which are 2x as thick
+                    as the blue waves, in proportion to the 3 scanning intervals.
                 </p>
                 <p>
                     For a wave to move, all the underlying particles need to move in the same
