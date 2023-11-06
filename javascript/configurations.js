@@ -69,15 +69,15 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    This shows our density visualization applied to just 10 particles.
+                    We visualize variations in particle density by comparing particle counts
+                    in adjacent intervals. Here we do it for only 10 particles.
                 </p>
                 <p>
                     It appears as if the particle paths are getting thicker, but actually we just
                     detect them from further away.
                 </p>
                 <p>
-                    As we go from left to right we scan for the particles in increasing vertical
-                    intervals.
+                    As we go from left to right we scan over increasing vertical interval sizes.
                     We scan for 3 interval lengths simultaneously around every point.
                     We color the point red, green, and blue depending on which interval size met
                     the density criteria, and white if it's all of them.
@@ -104,6 +104,10 @@ function getConfigurations() {
                     independently, we still see regions where they congregate and gaps where they
                     separate for lengths of time.
                 </p>
+                <p>
+                    This coincidental clustering is not just an illusion but rather the statistical
+                    nature of a random distribution under brownian motion.
+                </p>
             `
         },
         "pure-brownian-10000": {
@@ -122,7 +126,7 @@ function getConfigurations() {
                     Even with 10,000 particles we can see regions of density.
                 </p>
                 <p>
-                    The folds and valleys are noticeable on the small scale, but the same kinds of
+                    The textured folds are noticeable on the small scale, but the same kinds of
                     density differences happen at every scale, for instance if we compare the top
                     and bottom half of a column.
                 </p>
