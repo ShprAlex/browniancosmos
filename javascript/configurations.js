@@ -69,15 +69,15 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    We visualize variations in particle density by comparing particle counts
-                    in adjacent intervals. Here we do it for only 10 particles.
+                    Here is how our visualization works for 10 particles.
                 </p>
                 <p>
                     It appears as if the particle paths are getting thicker, but actually we just
                     detect them from further away.
                 </p>
                 <p>
-                    As we go from left to right we scan over increasing vertical interval sizes.
+                    As we go from left to right we scan for the number of particles in increasingly
+                    sized vertical intervals.
                     We scan for 3 interval lengths simultaneously around every point.
                     We color the point red, green, and blue depending on which interval size met
                     the density criteria, and white if it's all of them.
@@ -150,12 +150,12 @@ function getConfigurations() {
             "palette": "rgb",
             "description": `
                 <p>
-                    With zero velocity, you can see the isolated effect of increasing the scanning
-                    wavelength interval. What starts our as separate particles on the left merge
-                    into clumps of color on the right.
+                    With zero velocity, you can see the isolated effects of our density detection.
+                    As we increase the scanning interval the separate particle paths on the left
+                    merge into clusters of color on the right.
                 </p>
                 <p>
-                    A quirk of our algorithm is that the clored density regions are not centered.
+                    A quirk of our algorithm is that the colored density regions are not centered.
                     The colors are shifted down below the white lines. This is because for any
                     location we subtract the number of particles above from those below, and
                     when we're below a line we get a positive difference.
@@ -231,7 +231,7 @@ function getConfigurations() {
                     rather than zooming out.
                 </p>
                 <p>
-                    Tip: use custom settings to view this is black and white.
+                    Tip: use custom settings to view this in black and white.
                 </p>
             `
         },
