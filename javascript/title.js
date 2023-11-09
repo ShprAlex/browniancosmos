@@ -2,20 +2,20 @@ import { configuration, isWelcomeConfig, resetSettings } from './app.js';
 import { getConfigurations } from './configurations.js';
 import { aboutModal, modalVisible } from './modals.js';
 import { finishedRendering, rendererProgress } from './renderer.js';
-import { scrollLeft, scrollTop, scrollingDiv } from './scroller.js';
+import { finishedScrolling, scrollingDiv } from './scroller.js';
 
 const applicationTitleEl = document.getElementById('applicationTitle');
 const applicationTitleThirdLine = document.getElementById('applicationTitleThirdLine');
 const applicationTitleNextButton = document.getElementById('applicationTitleNextButton');
 const applicationTitleInfoButton = document.getElementById('applicationTitleInfoButton');
 
-let titleState = null;
-let titleTimeoutId = null;
+let titleState;
+let titleTimeoutId;
 
 
 function handleResetStart() {
     clearTimeout(titleTimeoutId);
-    titleState = null;
+    titleState = 'hidden';
     titleTimeoutId = null;
     if (!isWelcomeConfig()) {
         hide();
@@ -37,6 +37,14 @@ function show() {
     applicationTitleEl.style.opacity = 1;
     applicationTitleEl.style.visibility = 'visible';
     applicationTitleThirdLine.style.display = 'initial';
+    titleState = 'visible';
+}
+
+function showAfterScroll() {
+    applicationTitleEl.style.opacity = 1;
+    applicationTitleEl.style.visibility = 'visible';
+    applicationTitleThirdLine.style.display = 'initial';
+    titleState = 'visible-after-scroll';
 
     // change the title state after a delay so when scrolling shows it,
     // it's not immediately hidden by the same scrolling action.
@@ -59,10 +67,24 @@ function forceShow() {
 }
 
 function hide() {
+    clearTimeout(titleTimeoutId);
+    titleTimeoutId = null;
     applicationTitleEl.style.opacity = 0;
     applicationTitleEl.style.visibility = 'hidden';
-    if (titleState!==null) {
-        titleState = 'hidden';
+    titleState = 'hidden';
+}
+
+function hideAfterScroll() {
+    if (titleTimeoutId === null) {
+        titleTimeoutId = setTimeout(
+            () => {
+                applicationTitleEl.style.opacity = 0;
+                applicationTitleEl.style.visibility = 'hidden';
+                titleState = 'hidden';
+                titleTimeoutId = null;
+            },
+            2000
+        );
     }
 }
 
@@ -71,19 +93,16 @@ function updateAfterScroll() {
     if (
         (scrollingDiv.scrollLeft >= rightSide - 150)
         && !modalVisible
-        && titleState === null
+        && titleState === 'hidden'
         && rendererProgress > 10 // don't show title immediately after reset
     ) {
-        show();
+        if (!finishedScrolling) {
+            showAfterScroll();
+        }
     }
     else {
-        // When they manually scroll, hide the title
-        if (
-            titleState === 'visible'
-            && (scrollLeft != scrollingDiv.scrollLeft || scrollTop != scrollingDiv.scrollTop)
-            && !isWelcomeConfig()
-        ) {
-            hide();
+        if (titleState === 'visible' && !isWelcomeConfig()) {
+            hideAfterScroll();
         }
     }
 }
@@ -105,6 +124,10 @@ function handleRenderingEnd() {
     }
 }
 
+function titleVisible() {
+    return applicationTitleEl.style.visibility === 'visible';
+}
+
 function loadNextConfiguration(event) {
     event.stopPropagation();
     let previousConfiguration = configuration.id;
@@ -121,12 +144,11 @@ function loadNextConfiguration(event) {
     resetSettings({ configuration: 'welcome' });
 }
 
-scrollingDiv.addEventListener('scrollend', updateAfterScroll, { passive: true });
+scrollingDiv.addEventListener('scroll', updateAfterScroll, { passive: true });
 scrollingDiv.addEventListener('touchstart', updateAfterScroll, { passive: true });
 scrollingDiv.addEventListener('touchmove', updateAfterScroll, { passive: true });
 
 canvas.addEventListener('renderingend', handleRenderingEnd);
-canvas.addEventListener('click', hide);
 canvas.addEventListener('resetstart', handleResetStart);
 
 canvas.addEventListener('showmodal', handleShowModal);
@@ -138,5 +160,6 @@ applicationTitleInfoButton.addEventListener('click', (event) => { event.preventD
 export {
     forceShow as forceShowTitle,
     hide as hideTitle,
-    show as showTitle
+    show as showTitle,
+    titleVisible
 };

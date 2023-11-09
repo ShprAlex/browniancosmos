@@ -1,7 +1,7 @@
 import './about.js';
 import { animate, configuration, resetApplication } from './app.js';
 import { aboutModal, creditsModal, modalVisible } from './modals.js';
-import { forceShowTitle, hideTitle, showTitle } from './title.js';
+import { forceShowTitle, hideTitle, showTitle, titleVisible } from './title.js';
 
 const fullscreenButton = document.getElementById('fullscreenButton');
 const toolbarEl = document.getElementById('toolbar');
@@ -34,13 +34,13 @@ function handleFullscreen(event) {
 
 function handleCanvasClick(event) {
     event.stopPropagation();
-    if (toolbarEl.style.visibility === 'hidden') {
-        show();
-        if (!modalVisible) {
-            showTitle();
-        }
-    } else {
+    if (titleVisible()) {
+        hideTitle();
         hide();
+    }
+    else if (!modalVisible) {
+        showTitle();
+        show();
     }
 }
 
