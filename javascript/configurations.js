@@ -105,8 +105,8 @@ function getConfigurations() {
                     separate for lengths of time.
                 </p>
                 <p>
-                    This coincidental clustering is not just an illusion but rather the statistical
-                    nature of a random distribution under brownian motion.
+                    The abundance of coincidental clustering is not just an illusion but rather
+                    the statistical nature of a random distribution under Brownian motion.
                 </p>
             `
         },
