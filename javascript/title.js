@@ -1,4 +1,4 @@
-import { configuration, isWelcomeConfig, resetSettings } from './app.js';
+import { configuration, isCustomConfig, isWelcomeConfig, resetSettings } from './app.js';
 import { getConfigurations } from './configurations.js';
 import { aboutModal, modalVisible } from './modals.js';
 import { finishedRendering, rendererProgress } from './renderer.js';
@@ -17,33 +17,36 @@ function handleResetStart() {
     clearTimeout(titleTimeoutId);
     titleState = 'hidden';
     titleTimeoutId = null;
-    if (!isWelcomeConfig()) {
-        hide();
-        applicationTitleNextButton.innerHTML = `
-            Next <i class="fa-solid fa-chart-line"></i>
-        `;
-        applicationTitleInfoButton.style.display = 'initial';
-    }
-    else {
+    if (isWelcomeConfig()) {
         show();
         applicationTitleNextButton.innerHTML = `
             Start <i class="fa-solid fa-rocket"></i>
         `;
         applicationTitleInfoButton.style.display = 'none';
     }
+    else {
+        hide();
+        applicationTitleNextButton.innerHTML = `
+            Next <i class="fa-solid fa-chart-line"></i>
+        `;
+        applicationTitleInfoButton.style.display = 'initial';
+    }
 }
 
 function show() {
     applicationTitleEl.style.opacity = 1;
     applicationTitleEl.style.visibility = 'visible';
-    applicationTitleThirdLine.style.display = 'initial';
+    if (isCustomConfig()) {
+        applicationTitleThirdLine.style.display = 'none';
+    }
+    else {
+        applicationTitleThirdLine.style.display = 'initial';
+    }
     titleState = 'visible';
 }
 
 function showAfterScroll() {
-    applicationTitleEl.style.opacity = 1;
-    applicationTitleEl.style.visibility = 'visible';
-    applicationTitleThirdLine.style.display = 'initial';
+    show();
     titleState = 'visible-after-scroll';
 
     // change the title state after a delay so when scrolling shows it,
