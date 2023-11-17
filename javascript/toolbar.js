@@ -32,8 +32,7 @@ function handleFullscreen(event) {
     }
 }
 
-function handleCanvasClick(event) {
-    event.stopPropagation();
+function handleBackgroundClick(event) {
     if (titleVisible()) {
         hideTitle();
         hide();
@@ -86,7 +85,6 @@ fullscreenButton.addEventListener('click', handleFullscreen);
 canvas.addEventListener('showmodal', hide);
 canvas.addEventListener('hidemodal', show);
 canvas.addEventListener('resetend', handleResetEnd);
-canvas.addEventListener('click', handleCanvasClick);
-scrollingDiv.addEventListener('click', handleCanvasClick);
+scrollingDiv.addEventListener('click', handleBackgroundClick);
 
 export { showTitleMenuItem };
