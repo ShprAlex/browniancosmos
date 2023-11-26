@@ -118,7 +118,7 @@ function getConfigurations() {
             "startw": 1,
             "endw": 1,
             "waveform": "square",
-            "cellsize": 2,
+            "cellsize": getResolutionFactor(),
             "velocity": 4,
             "palette": "rgb",
             "description": `
